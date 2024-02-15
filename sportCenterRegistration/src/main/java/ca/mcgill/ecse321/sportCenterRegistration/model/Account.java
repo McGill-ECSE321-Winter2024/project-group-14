@@ -1,0 +1,101 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
+package ca.mcgill.ecse321.sportCenterRegistration.model;
+
+
+// line 2 "model.ump"
+// line 75 "model.ump"
+public abstract class Account
+{
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //Account Attributes
+  private String id;
+  private String username;
+  private String email;
+  private String password;
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public Account(String aId, String aUsername, String aEmail, String aPassword)
+  {
+    id = aId;
+    username = aUsername;
+    email = aEmail;
+    password = aPassword;
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    id = aId;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setUsername(String aUsername)
+  {
+    boolean wasSet = false;
+    username = aUsername;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setEmail(String aEmail)
+  {
+    boolean wasSet = false;
+    email = aEmail;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setPassword(String aPassword)
+  {
+    boolean wasSet = false;
+    password = aPassword;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public String getId()
+  {
+    return id;
+  }
+
+  public String getUsername()
+  {
+    return username;
+  }
+
+  public String getEmail()
+  {
+    return email;
+  }
+
+  public String getPassword()
+  {
+    return password;
+  }
+
+  public void delete()
+  {}
+
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "id" + ":" + getId()+ "," +
+            "username" + ":" + getUsername()+ "," +
+            "email" + ":" + getEmail()+ "," +
+            "password" + ":" + getPassword()+ "]";
+  }
+}
