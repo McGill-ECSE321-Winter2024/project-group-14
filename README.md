@@ -26,9 +26,18 @@ Welcome to the Sport Center Registration Application! Our goal is to develop a w
 | Huang Stephen | -- | -- | -- | -- |
 | Luo Loridy | -- | -- | -- | -- |
 
-
 ## Sprint 1 effort table
 
+| Team Member | Contributions  | Effort (Hours) |
+| -- | -- | -- | 
+| Hammad Muhammad | -- | -- |
+| Motta Vivek | -- | -- |
+| Marji David | -- | -- | 
+| Yue Ming Xuan | -- | -- | 
+| Huang Stephen | -- | -- |
+| Luo Loridy | -- | -- |
+
 ## Sprint 1 Project report
+
 
 
