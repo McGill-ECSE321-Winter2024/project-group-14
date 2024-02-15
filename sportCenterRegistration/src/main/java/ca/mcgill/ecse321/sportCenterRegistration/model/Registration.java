@@ -4,6 +4,8 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 import java.sql.Date;
 
+import jakarta.persistence.*;
+
 // line 51 "model.ump"
 // line 107 "model.ump"
 @Entity
@@ -13,7 +15,7 @@ public class Registration
   //------------------------
   // MEMBER VARIABLES
   //------------------------
-  @id
+  @Id
   @GeneratedValue
   //Registration Attributes
   private int id;

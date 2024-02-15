@@ -2,6 +2,11 @@
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.sportCenterRegistration.model;
 
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.generatedValue;
+//import jakarta.persistence.Id;
+//import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
 // line 2 "model.ump"
 // line 75 "model.ump"
@@ -14,7 +19,7 @@ public abstract class Account
   //------------------------
 
   //Account Attributes
-  @id
+  @Id
   @GeneratedValue
   private int id;
   private String username;

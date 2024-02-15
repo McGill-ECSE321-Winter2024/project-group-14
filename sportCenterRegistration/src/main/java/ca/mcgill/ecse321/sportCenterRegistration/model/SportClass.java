@@ -2,7 +2,7 @@
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.sportCenterRegistration.model;
 
-
+import jakarta.persistence.*;
 // line 63 "model.ump"
 // line 124 "model.ump"
 @Entity
@@ -14,7 +14,7 @@ public class SportClass
   //------------------------
 
   //SportClass Attributes
-  @id
+  @Id
   @GeneratedValue
   private int id;
   private String name;

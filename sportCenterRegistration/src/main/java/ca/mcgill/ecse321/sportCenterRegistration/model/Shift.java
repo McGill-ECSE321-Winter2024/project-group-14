@@ -5,6 +5,7 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 import java.sql.Time;
 import java.sql.Date;
 
+import jakarta.persistence.*;
 // line 31 "model.ump"
 // line 93 "model.ump"
 @Entity
@@ -16,7 +17,7 @@ public class Shift
   //------------------------
 
   //Shift Attributes
-  @id
+  @Id
   @GeneratedValue
   private int id;
   private Time startTime;

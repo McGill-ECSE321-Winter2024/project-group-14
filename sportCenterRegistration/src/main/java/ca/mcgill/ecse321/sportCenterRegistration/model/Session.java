@@ -5,6 +5,8 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 import java.sql.Time;
 import java.sql.Date;
 
+
+import jakarta.persistence.*;
 // line 40 "model.ump"
 // line 100 "model.ump"
 @Entity
@@ -16,7 +18,7 @@ public class Session
   //------------------------
 
   //Session Attributes
-  @id
+  @Id
   @GeneratedValue
   private int id;
   private Time startTime;
