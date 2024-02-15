@@ -18,12 +18,12 @@ Welcome to the Sport Center Registration Application! Our goal is to develop a w
 ## Overview Table
 
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
-| Hammad Muhammad | |  |  | |
-| Motta Vivek | |  |  | |
-| Marji David | |  | | |
-| Yue Ming Xuan | | | | |
-| Huang Stephen | | | | |
-| Luo Loridy | | | | |
+| Hammad Muhammad | -- | -- | --  | -- |
+| Motta Vivek | -- | -- | -- | -- |
+| Marji David | -- | -- | -- | -- |
+| Yue Ming Xuan | -- | -- | -- | -- |
+| Huang Stephen | -- | -- | -- | -- |
+| Luo Loridy | -- | -- | -- | -- |
 
 
 ## Sprint 1 effort table
