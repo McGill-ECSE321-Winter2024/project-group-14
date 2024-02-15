@@ -5,6 +5,7 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 // line 63 "model.ump"
 // line 124 "model.ump"
+@Entity
 public class SportClass
 {
 
@@ -13,16 +14,19 @@ public class SportClass
   //------------------------
 
   //SportClass Attributes
-  private String id;
+  @id
+  @GeneratedValue
+  private int id;
   private String name;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public SportClass(String aId, String aName)
+  @SuppressWarnings("unused")
+  private SportClass(){}
+  public SportClass(String aName)
   {
-    id = aId;
     name = aName;
   }
 
@@ -30,7 +34,7 @@ public class SportClass
   // INTERFACE
   //------------------------
 
-  public boolean setId(String aId)
+  public boolean setId(int aId)
   {
     boolean wasSet = false;
     id = aId;
@@ -46,7 +50,7 @@ public class SportClass
     return wasSet;
   }
 
-  public String getId()
+  public int getId()
   {
     return id;
   }
@@ -56,14 +60,14 @@ public class SportClass
     return name;
   }
 
-  public void delete()
-  {}
+//  public void delete()
+//  {}
 
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
-            "name" + ":" + getName()+ "]";
-  }
+//  public String toString()
+//  {
+//    return super.toString() + "["+
+//            "id" + ":" + getId()+ "," +
+//            "name" + ":" + getName()+ "]";
+//  }
 }

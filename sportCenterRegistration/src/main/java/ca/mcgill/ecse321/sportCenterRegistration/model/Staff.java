@@ -5,6 +5,7 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 // line 58 "model.ump"
 // line 118 "model.ump"
+@MappedSuperclass
 public class Staff extends Account
 {
 
@@ -15,19 +16,20 @@ public class Staff extends Account
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
-  public Staff(String aId, String aUsername, String aEmail, String aPassword)
+  @SuppressWarnings("unused")
+  private Staff(){}
+  public Staff(String aUsername, String aEmail, String aPassword)
   {
-    super(aId, aUsername, aEmail, aPassword);
+    super(aUsername, aEmail, aPassword);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public void delete()
-  {
-    super.delete();
-  }
+//  public void delete()
+//  {
+//    super.delete();
+//  }
 
 }

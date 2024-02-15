@@ -6,15 +6,17 @@ import java.sql.Date;
 
 // line 51 "model.ump"
 // line 107 "model.ump"
+@Entity
 public class Registration
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
-
+  @id
+  @GeneratedValue
   //Registration Attributes
-  private String id;
+  private int id;
   private Date date;
 
   //Registration Associations
@@ -25,9 +27,10 @@ public class Registration
   // CONSTRUCTOR
   //------------------------
 
-  public Registration(String aId, Date aDate, Account aAccount, Session aSession)
+  @SuppressWarnings("unused")
+  private Registration(){}
+  public Registration(Date aDate, Account aAccount, Session aSession)
   {
-    id = aId;
     date = aDate;
     if (!setAccount(aAccount))
     {
@@ -43,7 +46,7 @@ public class Registration
   // INTERFACE
   //------------------------
 
-  public boolean setId(String aId)
+  public boolean setId(int aId)
   {
     boolean wasSet = false;
     id = aId;
@@ -59,7 +62,7 @@ public class Registration
     return wasSet;
   }
 
-  public String getId()
+  public int getId()
   {
     return id;
   }
@@ -101,19 +104,19 @@ public class Registration
     return wasSet;
   }
 
-  public void delete()
-  {
-    account = null;
-    session = null;
-  }
+//  public void delete()
+//  {
+//    account = null;
+//    session = null;
+//  }
 
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "account = "+(getAccount()!=null?Integer.toHexString(System.identityHashCode(getAccount())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "session = "+(getSession()!=null?Integer.toHexString(System.identityHashCode(getSession())):"null");
-  }
+//  public String toString()
+//  {
+//    return super.toString() + "["+
+//            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+//            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+//            "  " + "account = "+(getAccount()!=null?Integer.toHexString(System.identityHashCode(getAccount())):"null") + System.getProperties().getProperty("line.separator") +
+//            "  " + "session = "+(getSession()!=null?Integer.toHexString(System.identityHashCode(getSession())):"null");
+//  }
 }

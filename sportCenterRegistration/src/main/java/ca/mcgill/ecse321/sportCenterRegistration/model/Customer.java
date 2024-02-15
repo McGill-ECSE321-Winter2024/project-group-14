@@ -5,6 +5,7 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 // line 25 "model.ump"
 // line 88 "model.ump"
+@Entity
 public class Customer extends Account
 {
 
@@ -15,19 +16,20 @@ public class Customer extends Account
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
-  public Customer(String aId, String aUsername, String aEmail, String aPassword)
+  @SuppressWarnings("unused")
+  private Customer(){}
+  public Customer(String aUsername, String aEmail, String aPassword)
   {
-    super(aId, aUsername, aEmail, aPassword);
+    super(aUsername, aEmail, aPassword);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public void delete()
-  {
-    super.delete();
-  }
+//  public void delete()
+//  {
+//    super.delete();
+//  }
 
 }

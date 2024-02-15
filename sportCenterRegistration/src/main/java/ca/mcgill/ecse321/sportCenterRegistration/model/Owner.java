@@ -5,6 +5,7 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 // line 19 "model.ump"
 // line 83 "model.ump"
+@Entity
 public class Owner extends Staff
 {
 
@@ -15,19 +16,20 @@ public class Owner extends Staff
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
-  public Owner(String aId, String aUsername, String aEmail, String aPassword)
+  @SuppressWarnings("unused")
+  private Owner(){}
+  public Owner(String aUsername, String aEmail, String aPassword)
   {
-    super(aId, aUsername, aEmail, aPassword);
+    super(aUsername, aEmail, aPassword);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public void delete()
-  {
-    super.delete();
-  }
+//  public void delete()
+//  {
+//    super.delete();
+//  }
 
 }

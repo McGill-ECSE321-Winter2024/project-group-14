@@ -7,6 +7,7 @@ import java.sql.Date;
 
 // line 40 "model.ump"
 // line 100 "model.ump"
+@Entity
 public class Session
 {
 
@@ -15,7 +16,9 @@ public class Session
   //------------------------
 
   //Session Attributes
-  private String id;
+  @id
+  @GeneratedValue
+  private int id;
   private Time startTime;
   private Time endTime;
   private String location;
@@ -28,10 +31,10 @@ public class Session
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
-  public Session(String aId, Time aStartTime, Time aEndTime, String aLocation, Date aDate, Instructor aInstructor, SportClass aSportClass)
+  @SuppressWarnings("unused")
+  private Session(){}
+  public Session(Time aStartTime, Time aEndTime, String aLocation, Date aDate, Instructor aInstructor, SportClass aSportClass)
   {
-    id = aId;
     startTime = aStartTime;
     endTime = aEndTime;
     location = aLocation;
@@ -50,7 +53,7 @@ public class Session
   // INTERFACE
   //------------------------
 
-  public boolean setId(String aId)
+  public boolean setId(int aId)
   {
     boolean wasSet = false;
     id = aId;
@@ -90,7 +93,7 @@ public class Session
     return wasSet;
   }
 
-  public String getId()
+  public int getId()
   {
     return id;
   }
@@ -147,22 +150,22 @@ public class Session
     return wasSet;
   }
 
-  public void delete()
-  {
-    instructor = null;
-    sportClass = null;
-  }
+//  public void delete()
+//  {
+//    instructor = null;
+//    sportClass = null;
+//  }
 
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
-            "location" + ":" + getLocation()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "instructor = "+(getInstructor()!=null?Integer.toHexString(System.identityHashCode(getInstructor())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "sportClass = "+(getSportClass()!=null?Integer.toHexString(System.identityHashCode(getSportClass())):"null");
-  }
+//  public String toString()
+//  {
+//    return super.toString() + "["+
+//            "id" + ":" + getId()+ "," +
+//            "location" + ":" + getLocation()+ "]" + System.getProperties().getProperty("line.separator") +
+//            "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+//            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+//            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+//            "  " + "instructor = "+(getInstructor()!=null?Integer.toHexString(System.identityHashCode(getInstructor())):"null") + System.getProperties().getProperty("line.separator") +
+//            "  " + "sportClass = "+(getSportClass()!=null?Integer.toHexString(System.identityHashCode(getSportClass())):"null");
+//  }
 }

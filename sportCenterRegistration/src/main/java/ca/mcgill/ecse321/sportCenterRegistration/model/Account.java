@@ -5,6 +5,7 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 // line 2 "model.ump"
 // line 75 "model.ump"
+@MappedSuperclass
 public abstract class Account
 {
 
@@ -13,7 +14,9 @@ public abstract class Account
   //------------------------
 
   //Account Attributes
-  private String id;
+  @id
+  @GeneratedValue
+  private int id;
   private String username;
   private String email;
   private String password;
@@ -22,9 +25,10 @@ public abstract class Account
   // CONSTRUCTOR
   //------------------------
 
-  public Account(String aId, String aUsername, String aEmail, String aPassword)
+  @SuppressWarnings("unused")
+  private Account(){}
+  public Account(String aUsername, String aEmail, String aPassword)
   {
-    id = aId;
     username = aUsername;
     email = aEmail;
     password = aPassword;
@@ -34,7 +38,7 @@ public abstract class Account
   // INTERFACE
   //------------------------
 
-  public boolean setId(String aId)
+  public boolean setId(int aId)
   {
     boolean wasSet = false;
     id = aId;
@@ -66,7 +70,7 @@ public abstract class Account
     return wasSet;
   }
 
-  public String getId()
+  public int getId()
   {
     return id;
   }
@@ -86,16 +90,16 @@ public abstract class Account
     return password;
   }
 
-  public void delete()
-  {}
+//  public void delete()
+//  {}
 
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
-            "username" + ":" + getUsername()+ "," +
-            "email" + ":" + getEmail()+ "," +
-            "password" + ":" + getPassword()+ "]";
-  }
+//  public String toString()
+//  {
+//    return super.toString() + "["+
+//            "id" + ":" + getId()+ "," +
+//            "username" + ":" + getUsername()+ "," +
+//            "email" + ":" + getEmail()+ "," +
+//            "password" + ":" + getPassword()+ "]";
+//  }
 }
