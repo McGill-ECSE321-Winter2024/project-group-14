@@ -1,6 +1,13 @@
-# project-group-14
-project-group-14 created by GitHub Classroom
+# ECSE 321 - Introduction to Software Engineering Project Group 14
 
-Group 14 members: David Marji, Wensheng Huang, Ming Xuan Yue, Loridy LUO Ruidi, Muhammad 
+## Project Overview
 
-Group 14 developed an application to help a local sports centre manage their business. 
+## Meet the team
+
+## Overview Table
+
+## Sprint 1 effort table
+
+## Sprint 1 Project report
+
+
