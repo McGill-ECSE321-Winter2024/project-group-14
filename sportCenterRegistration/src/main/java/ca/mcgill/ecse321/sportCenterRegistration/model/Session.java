@@ -1,14 +1,14 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 import java.sql.Time;
 import java.sql.Date;
 
 
-import jakarta.persistence.*;
-// line 40 "model.ump"
-// line 100 "model.ump"
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.ManyToOne;
+
 @Entity
 public class Session
 {
@@ -27,7 +27,9 @@ public class Session
   private Date date;
 
   //Session Associations
+  @ManyToOne
   private Instructor instructor;
+  @ManyToOne
   private SportClass sportClass;
 
   //------------------------
@@ -51,9 +53,6 @@ public class Session
     }
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
 
   public boolean setId(int aId)
   {
@@ -152,22 +151,4 @@ public class Session
     return wasSet;
   }
 
-//  public void delete()
-//  {
-//    instructor = null;
-//    sportClass = null;
-//  }
-
-
-//  public String toString()
-//  {
-//    return super.toString() + "["+
-//            "id" + ":" + getId()+ "," +
-//            "location" + ":" + getLocation()+ "]" + System.getProperties().getProperty("line.separator") +
-//            "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-//            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-//            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-//            "  " + "instructor = "+(getInstructor()!=null?Integer.toHexString(System.identityHashCode(getInstructor())):"null") + System.getProperties().getProperty("line.separator") +
-//            "  " + "sportClass = "+(getSportClass()!=null?Integer.toHexString(System.identityHashCode(getSportClass())):"null");
-//  }
 }

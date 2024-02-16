@@ -1,24 +1,18 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.sportCenterRegistration.model;
 
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.generatedValue;
-//import jakarta.persistence.Id;
-//import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.*;
 
-// line 2 "model.ump"
-// line 75 "model.ump"
-@MappedSuperclass
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Account
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //Account Attributes
   @Id
   @GeneratedValue
   private int id;
@@ -26,12 +20,8 @@ public abstract class Account
   private String email;
   private String password;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
-  @SuppressWarnings("unused")
-  private Account(){}
+  protected Account(){}
   public Account(String aUsername, String aEmail, String aPassword)
   {
     username = aUsername;
@@ -39,9 +29,6 @@ public abstract class Account
     password = aPassword;
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
 
   public boolean setId(int aId)
   {
@@ -94,17 +81,4 @@ public abstract class Account
   {
     return password;
   }
-
-//  public void delete()
-//  {}
-
-
-//  public String toString()
-//  {
-//    return super.toString() + "["+
-//            "id" + ":" + getId()+ "," +
-//            "username" + ":" + getUsername()+ "," +
-//            "email" + ":" + getEmail()+ "," +
-//            "password" + ":" + getPassword()+ "]";
-//  }
 }

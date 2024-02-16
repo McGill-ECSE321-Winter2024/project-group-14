@@ -4,17 +4,16 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 import java.sql.Date;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.ManyToOne;
 
-// line 51 "model.ump"
-// line 107 "model.ump"
 @Entity
 public class Registration
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+
   @Id
   @GeneratedValue
   //Registration Attributes
@@ -22,12 +21,11 @@ public class Registration
   private Date date;
 
   //Registration Associations
+  @ManyToOne
   private Account account;
+  @ManyToOne
   private Session session;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
   @SuppressWarnings("unused")
   private Registration(){}
@@ -44,9 +42,6 @@ public class Registration
     }
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
 
   public boolean setId(int aId)
   {
@@ -106,19 +101,5 @@ public class Registration
     return wasSet;
   }
 
-//  public void delete()
-//  {
-//    account = null;
-//    session = null;
-//  }
 
-
-//  public String toString()
-//  {
-//    return super.toString() + "["+
-//            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
-//            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-//            "  " + "account = "+(getAccount()!=null?Integer.toHexString(System.identityHashCode(getAccount())):"null") + System.getProperties().getProperty("line.separator") +
-//            "  " + "session = "+(getSession()!=null?Integer.toHexString(System.identityHashCode(getSession())):"null");
-//  }
 }

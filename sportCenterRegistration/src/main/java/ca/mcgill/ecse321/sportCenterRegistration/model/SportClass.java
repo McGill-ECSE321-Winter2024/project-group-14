@@ -2,16 +2,13 @@
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.sportCenterRegistration.model;
 
-import jakarta.persistence.*;
-// line 63 "model.ump"
-// line 124 "model.ump"
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+
 @Entity
 public class SportClass
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
   //SportClass Attributes
   @Id
@@ -19,9 +16,6 @@ public class SportClass
   private int id;
   private String name;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
   @SuppressWarnings("unused")
   private SportClass(){}
@@ -30,9 +24,6 @@ public class SportClass
     name = aName;
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
 
   public boolean setId(int aId)
   {
@@ -60,14 +51,4 @@ public class SportClass
     return name;
   }
 
-//  public void delete()
-//  {}
-
-
-//  public String toString()
-//  {
-//    return super.toString() + "["+
-//            "id" + ":" + getId()+ "," +
-//            "name" + ":" + getName()+ "]";
-//  }
 }
