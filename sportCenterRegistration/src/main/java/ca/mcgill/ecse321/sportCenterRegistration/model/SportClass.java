@@ -2,35 +2,30 @@
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.sportCenterRegistration.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
 
-// line 63 "model.ump"
-// line 124 "model.ump"
+@Entity
 public class SportClass
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
   //SportClass Attributes
-  private String id;
+  @Id
+  @GeneratedValue
+  private int id;
   private String name;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
-  public SportClass(String aId, String aName)
+  @SuppressWarnings("unused")
+  private SportClass(){}
+  public SportClass(String aName)
   {
-    id = aId;
     name = aName;
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
 
-  public boolean setId(String aId)
+  public boolean setId(int aId)
   {
     boolean wasSet = false;
     id = aId;
@@ -46,7 +41,7 @@ public class SportClass
     return wasSet;
   }
 
-  public String getId()
+  public int getId()
   {
     return id;
   }
@@ -56,14 +51,4 @@ public class SportClass
     return name;
   }
 
-  public void delete()
-  {}
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
-            "name" + ":" + getName()+ "]";
-  }
 }

@@ -1,35 +1,33 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.sportCenterRegistration.model;
 
 import java.sql.Time;
 import java.sql.Date;
 
-// line 31 "model.ump"
-// line 93 "model.ump"
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.ManyToOne;
+@Entity
 public class Shift
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
   //Shift Attributes
-  private String id;
+  @Id
+  @GeneratedValue
+  private int id;
   private Time startTime;
   private Time endTime;
   private Date date;
 
   //Shift Associations
+  @ManyToOne
   private Staff staff;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
-  public Shift(String aId, Time aStartTime, Time aEndTime, Date aDate, Staff aStaff)
+  @SuppressWarnings("unused")
+  private Shift(){}
+  public Shift(Time aStartTime, Time aEndTime, Date aDate, Staff aStaff)
   {
-    id = aId;
     startTime = aStartTime;
     endTime = aEndTime;
     date = aDate;
@@ -39,11 +37,8 @@ public class Shift
     }
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
 
-  public boolean setId(String aId)
+  public boolean setId(int aId)
   {
     boolean wasSet = false;
     id = aId;
@@ -75,7 +70,7 @@ public class Shift
     return wasSet;
   }
 
-  public String getId()
+  public int getId()
   {
     return id;
   }
@@ -111,19 +106,4 @@ public class Shift
     return wasSet;
   }
 
-  public void delete()
-  {
-    staff = null;
-  }
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "staff = "+(getStaff()!=null?Integer.toHexString(System.identityHashCode(getStaff())):"null");
-  }
 }
