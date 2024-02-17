@@ -4,6 +4,8 @@
 
 Welcome to the Sport Center Registration Application! Our goal is to develop a web application to assist a local sports center in managing its operations effectively. This application will enable the center's owner and instructors to organize various types of classes. Additionally, customers will be able to browse available classes, register for sessions, and manage their bookings through their accounts. Stay tuned as we work to deliver a solution that simplifies the management of sports center activities for all stakeholders involved.
 
+### Please check our [Wiki](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki) for more details!
+
 ## Meet the team
 
 | Team Member | Team Role | Github Profile |
