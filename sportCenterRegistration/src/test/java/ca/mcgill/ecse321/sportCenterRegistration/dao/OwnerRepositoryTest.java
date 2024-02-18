@@ -37,7 +37,8 @@ public class OwnerRepositoryTest{
         int adminId = admin.getId();
 
         // Read from database
-        Owner result = repo.findOwnerById(adminId);
+//        Owner result = repo.findOwnerById(adminId);
+        Owner result = repo.findOwnerByUsername(username);
 
         assertNotNull(result);
         assertEquals(adminId, result.getId());

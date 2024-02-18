@@ -37,7 +37,8 @@ public class InstructorRepositoryTest{
         int instructorId = instructor.getId();
 
         // Read from database
-        Instructor result = repo.findInstructorById(instructorId);
+//        Instructor result = repo.findInstructorById(instructorId);
+        Instructor result = repo.findInstructorByUsername(username);
 
         assertNotNull(result);
         assertEquals(instructorId, result.getId());

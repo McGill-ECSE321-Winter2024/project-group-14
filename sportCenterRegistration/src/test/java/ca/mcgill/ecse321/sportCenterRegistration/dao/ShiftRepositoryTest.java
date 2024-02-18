@@ -63,7 +63,7 @@ public class ShiftRepositoryTest{
         for (Shift shift: shifts){
             shift = repoShift.save(shift);
         }
-        List<Shift> result = repoShift.findByStaffAndDate(instructor, date1);
+        List<Shift> result = repoShift.findShiftByStaffAndDate(instructor, date1);
 
         assertNotNull(result);
         assertEquals(2, result.size()); // test size day 1
@@ -106,8 +106,8 @@ public class ShiftRepositoryTest{
         }
         Date d1 = Date.valueOf("2024-02-16");
         Date d2 = Date.valueOf("2024-02-17");
-        List<Shift> result1 = repoShift.findByStaffAndDate(instructor, d1);
-        List<Shift> result2 = repoShift.findByStaffAndDate(instructor, d2);
+        List<Shift> result1 = repoShift.findShiftByStaffAndDate(instructor, d1);
+        List<Shift> result2 = repoShift.findShiftByStaffAndDate(instructor, d2);
 
         assertNotNull(result1);
         assertNotNull(result2);
@@ -155,11 +155,11 @@ public class ShiftRepositoryTest{
 
         // Retrieve shifts from the database for Instructor 1 on different days
         Date d1 = Date.valueOf("2024-02-16");
-        List<Shift> result1 = repoShift.findByStaffAndDate(instructor1, d1);
+        List<Shift> result1 = repoShift.findShiftByStaffAndDate(instructor1, d1);
 
         // Retrieve shifts from the database for Instructor 2 on different days
         Date d2 = Date.valueOf("2024-02-16");
-        List<Shift> result2 = repoShift.findByStaffAndDate(instructor2, d2);
+        List<Shift> result2 = repoShift.findShiftByStaffAndDate(instructor2, d2);
 
         // Assertions
         assertNotNull(result1);

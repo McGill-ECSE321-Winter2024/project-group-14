@@ -10,6 +10,6 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 public interface ShiftRepository extends CrudRepository<Shift, Integer>{
 //    public Owner findOwnerById(int id);
-    public List<Shift> findByStaffAndDate(Staff staff, Date date);
+    public List<Shift> findShiftByStaffAndDate(Staff staff, Date date);
 
 }
