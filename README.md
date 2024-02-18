@@ -8,7 +8,7 @@ Welcome to the Sport Center Registration Application! Our goal is to develop a w
 ### Please check our [Wiki](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki) for more details!
 
 ## Our Team
-<br> ### Hammad Muhammad
+### <br> Hammad Muhammad
 <br> Motta Vivek
 <br> Marji David
 <br> Yue Ming Xuan <br>
