@@ -52,6 +52,6 @@ Hi, I am a second-year software engineering student. I have a decent knowledge o
 | Luo Loridy | -- | -- |
 
 ## Sprint 1 Project report
-
+The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Deliverable-1#sprint-report)
 
 
