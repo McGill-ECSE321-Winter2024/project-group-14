@@ -9,12 +9,12 @@ Welcome to the Sport Center Registration Application! Our goal is to develop a w
 
 ## Our Team
 ### <br> Hammad Muhammad
-<br> Motta Vivek
-<br> Marji David
-<br> Yue Ming Xuan <br>
+### <br> Motta Vivek
+### <br> Marji David
+### <br> Yue Ming Xuan <br>
 Hi, I am a second-year software engineering student. I have a decent knowledge of Python, Java, C, and HTML. I am interested in exploring in depth the myth behind machine learning and AI algorithms. I will be able to contribute a lot to the domain model design, the software design and the documentation of the project.
-<br> Huang Stephen
-<br> Luo Loridy
+### <br> Huang Stephen
+### <br> Luo Loridy
 
 ## Meet the team
 
