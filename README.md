@@ -38,7 +38,7 @@ Hi, I am a second-year software engineering student. I have a decent knowledge o
 | Huang Stephen | -- | -- | -- | -- |
 | Luo Loridy | -- | -- | -- | -- |
 
-### Deliverable 1
+# Deliverable 1
 ## Links
 ## Sprint 1 effort table
 
