@@ -37,7 +37,9 @@ public class SportClassRespositoryTest{
         // Read from database
         SportClass result = repo.findSportClassByName(name);
 
+        // check objects
         assertNotNull(result);
+        //check attributes
         assertEquals(sportClassId, result.getId());
         assertEquals(name, result.getName());
 

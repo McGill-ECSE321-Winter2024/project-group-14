@@ -40,7 +40,9 @@ public class OwnerRepositoryTest{
 //        Owner result = repo.findOwnerById(adminId);
         Owner result = repo.findOwnerByUsername(username);
 
+        // check objects
         assertNotNull(result);
+        // check attributes
         assertEquals(adminId, result.getId());
         assertEquals(username, result.getUsername());
         assertEquals(email, result.getEmail());

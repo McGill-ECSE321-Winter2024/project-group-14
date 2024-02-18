@@ -40,7 +40,10 @@ public class CustomerRepositoryTest{
 //        Customer result = repo.findCustomerById(customerId);
         Customer result = repo.findCustomerByUsername(username);
 
+        // check objects
         assertNotNull(result);
+
+        // check attributes
         assertEquals(customerId, result.getId());
         assertEquals(username, result.getUsername());
         assertEquals(email, result.getEmail());

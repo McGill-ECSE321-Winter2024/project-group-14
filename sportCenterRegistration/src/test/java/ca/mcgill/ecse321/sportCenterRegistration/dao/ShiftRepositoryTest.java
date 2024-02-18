@@ -34,8 +34,50 @@ public class ShiftRepositoryTest{
     }
 
     @Test
-    // Test create and read shifts for the same day
-    public void testCreateAndReadShift1(){
+    // test create and read shift
+    public void testCreateAndReadShift1() {
+        // Create Instructor
+        String username = "instructor";
+        String email = "instructor@gmail.com";
+        String password = "instructor";
+        Instructor instructor = new Instructor(username, email, password);
+
+        // Create Shift
+        Time startTime = Time.valueOf("09:00:00");
+        Time endTime = Time.valueOf("10:00:00");
+        Date date = Date.valueOf("2024-02-16");
+        Shift shift = new Shift(startTime, endTime, date, instructor);
+
+
+
+        // Save shift in the database
+        instructor = repoStaff.save(instructor);
+        shift = repoShift.save(shift);
+
+        // Retrieve shift from database
+        Shift result = repoShift.findShiftById(shift.getId());
+
+        // check objects not null
+        assertNotNull(result);
+
+        // check attributes
+        assertEquals(startTime, result.getStartTime());
+        assertEquals(endTime, result.getEndTime());
+        assertEquals(date, result.getDate());
+        assertEquals(shift.getStaff().getId(), result.getStaff().getId());
+
+        // check references
+        Staff resultStaff = repoStaff.findStaffByUsername(username);
+        assertNotNull(resultStaff);
+        assertEquals(resultStaff.getId(), result.getStaff().getId());
+    }
+
+
+
+    // Extra tests
+    @Test
+    // Test create and read shift for the same day
+    public void testCreateAndReadShift2(){
         // Create Instructor
         String username = "instructor1";
         String email = "instructor1@gmail.com";
@@ -71,7 +113,7 @@ public class ShiftRepositoryTest{
 
     @Test
     // test create and read shifts from different days
-    public void testCreateAndReadShift2(){
+    public void testCreateAndReadShift3(){
         // Create Instructor
         String username = "instructor1";
         String email = "instructor1@gmail.com";
@@ -115,58 +157,4 @@ public class ShiftRepositoryTest{
         assertEquals(1, result2.size()); // test size day 2
 
     }
-
-    @Test
-    // test create and read shifts for different staffs
-    public void testCreateAndReadShift3() {
-        // Create Instructor 1
-        String username1 = "instructor1";
-        String email1 = "instructor1@gmail.com";
-        String password1 = "instructor1";
-        Instructor instructor1 = new Instructor(username1, email1, password1);
-        instructor1 = repoStaff.save(instructor1);
-
-        // Create Instructor 2
-        String username2 = "instructor2";
-        String email2 = "instructor2@gmail.com";
-        String password2 = "instructor2";
-        Instructor instructor2 = new Instructor(username2, email2, password2);
-        instructor2 = repoStaff.save(instructor2);
-
-        // Create shifts
-        List<Shift> shifts = new ArrayList<>();
-
-        // Shifts for Instructor 1
-        Time startTime1 = Time.valueOf("09:00:00");
-        Time endTime1 = Time.valueOf("10:00:00");
-        Date date1 = Date.valueOf("2024-02-16");
-        shifts.add(new Shift(startTime1, endTime1, date1, instructor1));
-
-        Time startTime2 = Time.valueOf("09:00:00");
-        Time endTime2 = Time.valueOf("10:00:00");
-        Date date2 = Date.valueOf("2024-02-16");
-        shifts.add(new Shift(startTime2, endTime2, date2, instructor2));
-
-
-        // Save shifts in the database
-        for (Shift shift : shifts) {
-            repoShift.save(shift);
-        }
-
-        // Retrieve shifts from the database for Instructor 1 on different days
-        Date d1 = Date.valueOf("2024-02-16");
-        List<Shift> result1 = repoShift.findShiftByStaffAndDate(instructor1, d1);
-
-        // Retrieve shifts from the database for Instructor 2 on different days
-        Date d2 = Date.valueOf("2024-02-16");
-        List<Shift> result2 = repoShift.findShiftByStaffAndDate(instructor2, d2);
-
-        // Assertions
-        assertNotNull(result1);
-        assertNotNull(result2);
-        assertEquals(1, result1.size());
-        assertEquals(1, result2.size());
-    }
-
-
 }

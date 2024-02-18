@@ -79,6 +79,16 @@ public class SessionRepositoryTest{
         assertEquals(trottSession.getEndTime(), result.getEndTime());
         assertEquals(trottSession.getLocation(), result.getLocation());
         assertEquals(trottSession.getDate(), result.getDate());
+        assertEquals(trottSession.getSportClass().getId(), result.getSportClass().getId());
+        assertEquals(trottSession.getInstructor().getId(), result.getInstructor().getId());
+
+        // check references
+        Instructor resultInstructor = instructorRepo.findInstructorByUsername(username);
+        SportClass resultSportClass = sportClassRepo.findSportClassByName(name);
+        assertNotNull(resultInstructor);
+        assertNotNull(resultSportClass);
+        assertEquals(resultSportClass.getId(), result.getSportClass().getId());
+        assertEquals(resultInstructor.getId(), result.getInstructor().getId());
 
     }
 

@@ -54,11 +54,9 @@ public class AccountRepositoryTest {
         // Read from database
         // Staff result = repo.findStaffById(stephenId);
         Account resultAccount = accountRepo.findAccountByUsername(username);
-        Owner resultOwner = ownerRepo.findOwnerByUsername(username);
 
         // check objects
         assertNotNull(resultAccount);
-        assertNotNull(resultOwner);
 
         // check attributes
         assertEquals(stephenId , resultAccount.getId());
@@ -67,6 +65,8 @@ public class AccountRepositoryTest {
         assertEquals(password, resultAccount.getPassword());
 
         // check reference
+        Owner resultOwner = ownerRepo.findOwnerByUsername(username);
+        assertNotNull(resultOwner);
         assertEquals(resultAccount.getId(), resultOwner.getId());
     }
     @Test
@@ -85,11 +85,9 @@ public class AccountRepositoryTest {
         // Read from database
         // Staff result = repo.findStaffById(stephenId);
         Account resultAccount = accountRepo.findAccountByUsername(username);
-        Instructor resultInstructor = instructorRepo.findInstructorByUsername(username);
 
         // check objects
         assertNotNull(resultAccount);
-        assertNotNull(resultInstructor);
 
         // check attributes
         assertEquals(stephenId , resultAccount.getId());
@@ -98,6 +96,8 @@ public class AccountRepositoryTest {
         assertEquals(password, resultAccount.getPassword());
 
         // check reference
+        Instructor resultInstructor = instructorRepo.findInstructorByUsername(username);
+        assertNotNull(resultInstructor);
         assertEquals(resultAccount.getId(), resultInstructor.getId());
 
     }
@@ -117,11 +117,9 @@ public class AccountRepositoryTest {
         // Read from database
         // Staff result = repo.findStaffById(stephenId);
         Account resultAccount = accountRepo.findAccountByUsername(username);
-        Customer resultCustomer = customerRepo.findCustomerByUsername(username);
 
         // check objects
         assertNotNull(resultAccount);
-        assertNotNull(resultCustomer);
 
         // check attributes
         assertEquals(stephenId , resultAccount.getId());
@@ -130,6 +128,8 @@ public class AccountRepositoryTest {
         assertEquals(password, resultAccount.getPassword());
 
         // check reference
+        Customer resultCustomer = customerRepo.findCustomerByUsername(username);
+        assertNotNull(resultCustomer);
         assertEquals(resultAccount.getId(), resultCustomer.getId());
 
     }

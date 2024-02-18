@@ -44,11 +44,9 @@ public class StaffRepositoryTest {
         // Read from database
         // Staff result = repo.findStaffById(stephenId);
         Staff resultStaff = repo.findStaffByUsername(username);
-        Owner resultOwner = repoOwner.findOwnerByUsername(username);
 
         // check objects
         assertNotNull(resultStaff);
-        assertNotNull(resultOwner);
 
         // check attributes
         assertEquals(stephenId , resultStaff.getId());
@@ -57,6 +55,8 @@ public class StaffRepositoryTest {
         assertEquals(password, resultStaff.getPassword());
 
         // check reference
+        Owner resultOwner = repoOwner.findOwnerByUsername(username);
+        assertNotNull(resultOwner);
         assertEquals(resultStaff.getId(), resultOwner.getId());
 
     }
