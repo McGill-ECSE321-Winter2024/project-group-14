@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
+import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
 
 @SpringBootTest
 public class SportClassRespositoryTest{
     @Autowired
-    private StaffRepository repo;
+    private SportClassRepository repo;
 
     @BeforeEach
     @AfterEach
@@ -25,25 +25,23 @@ public class SportClassRespositoryTest{
     }
 
     @Test
-    public void testCreateAndReadCustomer(){
+    public void testCreateAndReadSportClass(){
         // Create Customer
-        String username = "customer1";
-        String email = "customer1@gmail.com";
-        String password = "customer1";
-        Customer customer = new Customer(username, email, password);
+        String name = "cardio";
+        SportClass sportClass = new SportClass(name);
 
         // Save in the database
-        customer = repo.save(customer);
-        int customerId = customer.getId();
+        sportClass = repo.save(sportClass);
+        int sportClassId = sportClass.getId();
 
         // Read from database
-        Customer result = repo.findCustomerById(customerId);
+        SportClass result = repo.findSportClassByName(name);
 
+        // check objects
         assertNotNull(result);
-        assertEquals(customerId, result.getId());
-        assertEquals(username, result.getUsername());
-        assertEquals(email, result.getEmail());
-        assertEquals(password, result.getPassword());
+        //check attributes
+        assertEquals(sportClassId, result.getId());
+        assertEquals(name, result.getName());
 
     }
 }
