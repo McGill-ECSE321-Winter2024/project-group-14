@@ -102,7 +102,7 @@ public class AccountRepositoryTest {
 
     }
     @Test
-    // Test creating and reading account As a owner
+    // Test creating and reading account As a customer
     public void testCreateAndReadAccount3() {
         // create account
         String username = "Stephen";
