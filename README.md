@@ -51,9 +51,9 @@ To run the tests locally, follow these steps:
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
 | -- | -- | --  | -- | -- |
 | Hammad Muhammad | 35 | -- | --  | -- |
-| Motta Vivek | 30 | -- | -- | -- |
+| Motta Vivek | 35 | -- | -- | -- |
 | Marji David | 30 | -- | -- | -- |
-| Yue Ming Xuan | 30 | -- | -- | -- |
+| Yue Ming Xuan | 35 | -- | -- | -- |
 | Huang Stephen | 40 | -- | -- | -- |
 | Luo Loridy | 40 | -- | -- | -- |
 
@@ -63,12 +63,12 @@ To run the tests locally, follow these steps:
 
 | Team Member | Contributions  | Effort (Hours) |
 | -- | -- | -- | 
-| Hammad Muhammad | Functional Requirements, Non-Functional Requirements, Use Case Specifications, Persistence Layer Testing, Domain Model | -- |
-| Motta Vivek | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Use Case Specifications | -- |
-| Marji David | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Meeting Minutes, Use Case Specifications | -- | 
-| Yue Ming Xuan | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications | -- | 
-| Huang Stephen | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications, Use Case Diagrams | -- |
-| Luo Loridy | Persistence Layer, Domain Model, Functional Requirements, Non-Functional Requirements, Use Case Specifications | -- |
+| Hammad Muhammad | Functional Requirements, Non-Functional Requirements, Use Case Specifications, Persistence Layer Testing, Domain Model | 35 |
+| Motta Vivek | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Use Case Specifications | 35 |
+| Marji David | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Meeting Minutes, Use Case Specifications | 30 | 
+| Yue Ming Xuan | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications | 35 | 
+| Huang Stephen | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications, Use Case Diagrams | 30 |
+| Luo Loridy | Persistence Layer, Domain Model, Functional Requirements, Non-Functional Requirements, Use Case Specifications | 30 |
 
 ## Sprint 1 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Deliverable-1#sprint-report)
