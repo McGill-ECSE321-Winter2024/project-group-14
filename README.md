@@ -71,6 +71,6 @@ To run the tests locally, follow these steps:
 | Luo Loridy | Persistence Layer, Domain Model, Functional Requirements, Non-Functional Requirements, Use Case Specifications | 30 |
 
 ## Sprint 1 Project report
-The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Deliverable-1#sprint-report)
+The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-1)
 
 
