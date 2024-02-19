@@ -45,12 +45,12 @@ To run the tests locally, follow these steps:
 
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
 | -- | -- | --  | -- | -- |
-| Hammad Muhammad | -- | -- | --  | -- |
-| Motta Vivek | -- | -- | -- | -- |
-| Marji David | -- | -- | -- | -- |
-| Yue Ming Xuan | -- | -- | -- | -- |
-| Huang Stephen | -- | -- | -- | -- |
-| Luo Loridy | -- | -- | -- | -- |
+| Hammad Muhammad | 35 | -- | --  | -- |
+| Motta Vivek | 30 | -- | -- | -- |
+| Marji David | 30 | -- | -- | -- |
+| Yue Ming Xuan | 30 | -- | -- | -- |
+| Huang Stephen | 40 | -- | -- | -- |
+| Luo Loridy | 40 | -- | -- | -- |
 
 # Deliverable 1
 ## Links
@@ -58,12 +58,12 @@ To run the tests locally, follow these steps:
 
 | Team Member | Contributions  | Effort (Hours) |
 | -- | -- | -- | 
-| Hammad Muhammad | -- | -- |
-| Motta Vivek | -- | -- |
-| Marji David | -- | -- | 
-| Yue Ming Xuan | -- | -- | 
-| Huang Stephen | -- | -- |
-| Luo Loridy | -- | -- |
+| Hammad Muhammad | Functional Requirements, Non-Functional Requirements, Use Case Specifications, Persistence Layer Testing, Domain Model | -- |
+| Motta Vivek | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Use Case Specifications | -- |
+| Marji David | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Meeting Minutes, Use Case Specifications | -- | 
+| Yue Ming Xuan | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications | -- | 
+| Huang Stephen | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications, Use Case Diagrams | -- |
+| Luo Loridy | Persistence Layer, Domain Model, Functional Requirements, Non-Functional Requirements, Use Case Specifications | -- |
 
 ## Sprint 1 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Deliverable-1#sprint-report)
