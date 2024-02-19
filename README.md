@@ -9,12 +9,17 @@ Welcome to the Sport Center Registration Application! Our goal is to develop a w
 
 ## Our Team
 ### <br> Hammad Muhammad
+A U1 Software Engineering student with a passion for software engineering. Muhammad has 2 years of experience with Java and Python.
 ### <br> Motta Vivek
+A Software Engineering student with a passion for coding, Vivek has many years of experience with Java.
 ### <br> Marji David
+A Jordanian U1 software engineering student who is very passionate about coding and he has around 4 years of experience with Java.
 ### <br> Yue Ming Xuan <br>
 Hi, I am a second-year software engineering student. I have a decent knowledge of Python, Java, C, and HTML. I am interested in exploring in depth the myth behind machine learning and AI algorithms. I will be able to contribute a lot to the domain model design, the software design and the documentation of the project.
 ### <br> Huang Stephen
+U2 Computer engineering student. Has 2 years experience with Java.
 ### <br> Luo Loridy
+An exchange student from the University of Hong Kong with experience in Python, Java, JavaScript
 
 ## Meet the team
 
