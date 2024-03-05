@@ -7,7 +7,7 @@ import jakarta.persistence.InheritanceType;
 // line 118 "model.ump"
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Staff extends Account
+public abstract class Staff extends Account
 {
 
   protected Staff(){

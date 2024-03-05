@@ -19,11 +19,14 @@ public class StaffRepositoryTest {
 
     @Autowired
     private StaffRepository repo;
+    @Autowired
+    private OwnerRepository repoOwner;
 
     @BeforeEach
     @AfterEach
     public void clearDatabase() {
         repo.deleteAll();
+        repoOwner.deleteAll();
     }
 
     @Test
@@ -32,20 +35,29 @@ public class StaffRepositoryTest {
         String username = "Stephen";
         String email = "stephen@gmail.com";
         String password = "stephen123";
-        Staff stephen = new Staff(username, email, password);
-
+        Owner stephenOwner = new Owner(username, email, password);
+        Staff stephenStaff = stephenOwner;
         // Save in the database
-        stephen = repo.save(stephen);
-        int stephenId = stephen.getId();
+        stephenOwner = repoOwner.save(stephenOwner);
+        int stephenId = stephenOwner.getId();
 
         // Read from database
-        Staff result = repo.findStaffById(stephenId);// error here
+        // Staff result = repo.findStaffById(stephenId);
+        Staff resultStaff = repo.findStaffByUsername(username);
 
-        assertNotNull(result);
-        assertEquals(stephenId, result.getId());
-        assertEquals(username, result.getUsername());
-        assertEquals(email, result.getEmail());
-        assertEquals(password, result.getPassword());
+        // check objects
+        assertNotNull(resultStaff);
+
+        // check attributes
+        assertEquals(stephenId , resultStaff.getId());
+        assertEquals(username, resultStaff.getUsername());
+        assertEquals(email, resultStaff.getEmail());
+        assertEquals(password, resultStaff.getPassword());
+
+        // check reference
+        Owner resultOwner = repoOwner.findOwnerByUsername(username);
+        assertNotNull(resultOwner);
+        assertEquals(resultStaff.getId(), resultOwner.getId());
 
     }
 }

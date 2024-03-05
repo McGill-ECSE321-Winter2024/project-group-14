@@ -37,9 +37,13 @@ public class CustomerRepositoryTest{
         int customerId = customer.getId();
 
         // Read from database
-        Customer result = repo.findCustomerById(customerId);
+//find the customer by their username 
+        Customer result = repo.findCustomerByUsername(username);
 
+        // check objects
         assertNotNull(result);
+
+        // check attributes
         assertEquals(customerId, result.getId());
         assertEquals(username, result.getUsername());
         assertEquals(email, result.getEmail());
