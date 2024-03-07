@@ -54,8 +54,7 @@ public class SportCenterRegistrationService {
 
 
 
-    /*note: all the below are going to be our wrapper classes annotated with transactional. If you use 
-    something that should be wrapped just add it in here */
+
     
 
     /*
