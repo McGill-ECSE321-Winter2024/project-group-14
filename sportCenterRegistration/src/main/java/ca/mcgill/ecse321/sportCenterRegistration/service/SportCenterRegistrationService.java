@@ -53,8 +53,25 @@ public class SportCenterRegistrationService {
 	StaffRepository StaffRepository;
 
 
+	@Transactional
+	public Instructor getInstructor(String username) {
+		Instructor instructor = InstructorRepository.findInstructorByUsername(username);
+		return instructor;
+	}
+
+	@Transactional
+	public Customer getCustomer(String username) {
+		Customer customer = CustomerRepository.findCustomerByUsername(username);
+		return customer;
+	}
+
+	
+	
 
 
+
+    /*note: all the below are going to be our wrapper classes annotated with transactional. If you use 
+    something that should be wrapped just add it in here */
     
 
     /*
