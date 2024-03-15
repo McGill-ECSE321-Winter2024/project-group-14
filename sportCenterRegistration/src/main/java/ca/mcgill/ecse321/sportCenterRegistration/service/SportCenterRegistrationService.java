@@ -2,9 +2,11 @@ package ca.mcgill.ecse321.sportCenterRegistration.service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,8 +58,99 @@ public class SportCenterRegistrationService {
 
     /*note: all the below are going to be our wrapper classes annotated with transactional. If you use 
     something that should be wrapped just add it in here */
+
+
+
+    // Author: Stephen Huang (use case: change schedule)
+	@Transactional
+	public Session createSession(Time startTime, Time endTime, String location, Date date) {
+
+		String error = "";
+ 		if (location == null) {
+			error = error + "Session location cannot be empty! ";
+		}
+		if (date == null) {
+			error = error + "Session date cannot be empty! ";
+		}
+		if (startTime == null) {
+			error = error + "Session start time cannot be empty! ";
+		}
+		if (endTime == null) {
+			error = error + "Session end time cannot be empty! ";
+		}
+		if (endTime != null && startTime != null && endTime.before(startTime)) {
+			error = error + "Session end time cannot be before Session start time! ";
+		}
+
+		Session session = new Session();
+
+		session.setDate(date);
+		session.setStartTime(startTime);
+		session.setEndTime(endTime);
+		session.setLocation(location);
+
+	    SessionRepository.save(session);
+
+		return session;
+}
+
+	@Transactional
+	public List<Session> getAllSessions() {
+		return toList(SessionRepository.findAll());
+}
+
+	@Transactional
+	public Session getSessionByDate(Date date) {
+		if (date == null) {
+			throw new IllegalArgumentException("Date cannot be empty!");
+		}
+		for (Session sn : SessionRepository.findAll()) {
+			if (sn.getDate().equals(date)) {
+				return sn;
+			}
+		}
+		return null;
+	}
+		
+	@Transactional
+	public Session getSessionByStaffAndDate(String username, Date date) {
+
+		Account account = getAccount(username);
+		if (account != null && account.getStaff() ) {
+			Shift shift = getShiftByOwner(username);
+			if ( shift!= null) {
+				for (Session sn : shift.getSession()) {
+					if (sn.getDate().equals(date)) {
+						return sn;
+					}
+				}
+			} else {
+				throw new IllegalArgumentException("Owner is not assigned a schedule.");
+			}
+		} else {
+			throw new IllegalArgumentException("The username does not belong to any Owner.");
+		}
+		return null;
+	}
+
+	@Transactional
+	public Session updateSessionByStaffAndDate(String username, DayOfWeek dayOfWeek, Time startTime,
+			Time endTime) {
+
+		Session sn = getSessionByStaffAndDate(username, dayOfWeek);
+
+		sn.setStartTime(startTime);
+		sn.setEndTime(endTime);
+		SessionRepository.save(sn);
+
+		return sn;
+	}
+	// finish (use case: change schedule)
     
 
+
+
+	
     /*
 	@Transactional
 	public Person createPerson(String name) {
