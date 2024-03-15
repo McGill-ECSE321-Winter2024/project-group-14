@@ -28,15 +28,8 @@ public class SportCenterRegistrationRestController {
 	IllegalArgumentException {
 		service.deleteInstructor(username);
 	}
-
-
-
 	
 	
-	
-
-	
-
 	
 
 }

@@ -55,18 +55,38 @@ public class SportCenterRegistrationService {
 
 	@Transactional
 	public Instructor getInstructor(String username) {
+		if (username == null || username.trim().length() == 0) {
+			throw new IllegalArgumentException("Instructor name cannot be empty!");
+		}
+
 		Instructor instructor = InstructorRepository.findInstructorByUsername(username);
 		return instructor;
 	}
 
 	@Transactional
 	public Customer getCustomer(String username) {
+		if (username == null || username.trim().length() == 0) {
+			throw new IllegalArgumentException("Customer name cannot be empty!");
+		}
 		Customer customer = CustomerRepository.findCustomerByUsername(username);
 		return customer;
 	}
 
 	
+	@Transactional
+	public Boolean deleteInstructor(String username) {
+		Instructor instructorToDelete = getInstructor(username);
+		InstructorRepository.delete(instructorToDelete);
+		return true;
+	}
 	
+	@Transactional
+	public Boolean deleteCustomer(String username) {
+		Customer customerToDelete = getCustomer(username);
+		CustomerRepository.delete(customerToDelete);
+		return true;
+	}
+
 
 
 
