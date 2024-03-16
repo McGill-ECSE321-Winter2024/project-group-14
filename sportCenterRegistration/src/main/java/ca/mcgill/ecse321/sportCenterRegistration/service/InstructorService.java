@@ -89,10 +89,10 @@ public class InstructorService {
 	}
 
 	@Transactional
-	public List<Instructor> getAllInstructors() {
+	public List<Instructor> getAllInstructors() {		
 		return toList(InstructorRepository.findAll());
 	}
-	
+
 
 
 }

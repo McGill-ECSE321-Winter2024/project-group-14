@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.sportCenterRegistration.service; 
 
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -29,10 +30,17 @@ import org.mockito.stubbing.Answer;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 
+import ca.mcgill.ecse321.sportCenterRegistration.service.CustomerService;
+
+
+
+
+
 import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 
-import ca.mcgill.ecse321.sportCenterRegistration.service.SportCenterRegistrationService;
+
+
 
 
 
@@ -45,7 +53,7 @@ class CustomerServiceTest {
 private CustomerRepository CustomerDao;
 
 @InjectMocks
-private SportCenterRegistrationService service;
+private CustomerService service;
 
 private static final String Customer_USERNAME = "TestCustomerUsername";
 private static final String Customer_EMAIL = "TestCustomerEmail";
@@ -75,6 +83,7 @@ public void setMockOutput() {
 		assertEquals(Customer_EMAIL, service.getCustomer(Customer_USERNAME).getEmail());
 		assertEquals(Customer_PASSWORD, service.getCustomer(Customer_USERNAME).getPassword());
 	}
+
 
 	@Test
 	public void testGetNonExistingCustomer() {
