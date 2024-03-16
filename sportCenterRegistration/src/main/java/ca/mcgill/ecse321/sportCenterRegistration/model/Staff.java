@@ -3,8 +3,6 @@ package ca.mcgill.ecse321.sportCenterRegistration.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-// line 58 "model.ump"
-// line 118 "model.ump"
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Staff extends Account
