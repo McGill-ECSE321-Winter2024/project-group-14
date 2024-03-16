@@ -37,24 +37,62 @@ public class InstructorService {
     @Autowired
 	InstructorRepository InstructorRepository;
 
+
+	private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
+	}
+
+
 	@Transactional
 	public Instructor getInstructor(String username) {
-		if (username == null || username.trim().length() == 0) {
-			throw new IllegalArgumentException("Instructor name cannot be empty!");
-		}
+        Instructor instructor = InstructorRepository.findInstructorByUsername(username);
 
-		Instructor instructor = InstructorRepository.findInstructorByUsername(username);
+        if (instructor == null) {
+			throw new IllegalArgumentException("Instructor name is invalid");
+		}
 		return instructor;
 	}
 
 
     @Transactional
 	public Boolean deleteInstructor(String username) {
+        if (username == null || username.trim().length() == 0) {
+			throw new IllegalArgumentException("Instructor name cannot be empty!");
+		}
+
 		Instructor instructorToDelete = getInstructor(username);
 		InstructorRepository.delete(instructorToDelete);
 		return true;
 	}
 
+	@Transactional
+    public Instructor createInstructor(String username, String email, String password ) {
+		
+
+        if (username == null) {
+            throw new IllegalArgumentException("Username cannot be empty!");
+        }
+        if (email == null) {
+            throw new IllegalArgumentException("Email cannot be empty!");
+        }
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be empty!");
+        }
+
+		Instructor instructor = new Instructor(username, email, password);
+		InstructorRepository.save(instructor);
+		return instructor;
+	}
+
+	@Transactional
+	public List<Instructor> getAllInstructors() {
+		return toList(InstructorRepository.findAll());
+	}
+	
 
 
 }
