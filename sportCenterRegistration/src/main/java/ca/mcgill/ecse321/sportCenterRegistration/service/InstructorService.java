@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.RegistrationRepository;
@@ -21,7 +20,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.dao.StaffRepository;
 
 
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
+import ca.mcgill.ecse321.sportCenterRegistration.model.instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
@@ -31,12 +30,14 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 
+
+
+
 @Service
 public class InstructorService {
     
     @Autowired
 	InstructorRepository InstructorRepository;
-
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
@@ -47,39 +48,36 @@ public class InstructorService {
 	}
 
 
-	@Transactional
+    @Transactional
 	public Instructor getInstructor(String username) {
-        Instructor instructor = InstructorRepository.findInstructorByUsername(username);
-
+		Instructor instructor = InstructorRepository.findInstructorByUsername(username);
         if (instructor == null) {
-			throw new IllegalArgumentException("Instructor name is invalid");
-		}
+            throw new IllegalArgumentException("instructor name is invalid");
+        }
 		return instructor;
 	}
-
 
     @Transactional
 	public Boolean deleteInstructor(String username) {
         if (username == null || username.trim().length() == 0) {
-			throw new IllegalArgumentException("Instructor name cannot be empty!");
+			throw new IllegalArgumentException("instructor name cannot be empty!");
 		}
-
 		Instructor instructorToDelete = getInstructor(username);
 		InstructorRepository.delete(instructorToDelete);
 		return true;
 	}
 
-	@Transactional
+    @Transactional
     public Instructor createInstructor(String username, String email, String password ) {
 		
 
-        if (username == null) {
+        if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
-        if (email == null) {
+        if (email == null || email.strip() == "") {
             throw new IllegalArgumentException("Email cannot be empty!");
         }
-        if (password == null) {
+        if (password == null || password.strip() == "") {
             throw new IllegalArgumentException("Password cannot be empty!");
         }
 
@@ -89,11 +87,14 @@ public class InstructorService {
 	}
 
 	@Transactional
-	public List<Instructor> getAllInstructors() {		
+	public List<Instructor> getAllInstructors() {
 		return toList(InstructorRepository.findAll());
 	}
 
 
 
-}
+ 
+ 
 
+
+}

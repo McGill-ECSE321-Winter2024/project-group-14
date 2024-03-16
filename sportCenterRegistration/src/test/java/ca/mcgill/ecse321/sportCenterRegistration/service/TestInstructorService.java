@@ -32,34 +32,34 @@ import org.mockito.stubbing.Answer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 
 
 
 @ExtendWith(MockitoExtension.class)
-public class TestCustomerService {
+public class TestInstructorService {
 
 @Mock
-private CustomerRepository customerDao;
+private InstructorRepository InstructorDao;
 
 @InjectMocks
-private CustomerService service;
+private InstructorService service;
 
-private static final String Customer_USERNAME = "TestCustomerUsername";
-private static final String Customer_EMAIL = "TestCustomerEmail";
-private static final String Customer_PASSWORD = "TestCustomerPassword";
+private static final String Instructor_USERNAME = "TestInstructorUsername";
+private static final String Instructor_EMAIL = "TestInstructorEmail";
+private static final String Instructor_PASSWORD = "TestInstructorPassword";
 
-private static final String NONEXISTING_Customer_USERNAME = "NotAnCustomerUsername";
-private static final String NONEXISTING_Customer_EMAIL = "NotAnCustomerEmail";
-private static final String NONEXISTING_Customer_PASSWORD = "NotAnCustomerPassword";
+private static final String NONEXISTING_Instructor_USERNAME = "NotAnInstructorUsername";
+private static final String NONEXISTING_Instructor_EMAIL = "NotAnInstructorEmail";
+private static final String NONEXISTING_Instructor_PASSWORD = "NotAnInstructorPassword";
 
 @BeforeEach
 public void setMockOutput() {
-    lenient().when(customerDao.findCustomerByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-        if(invocation.getArgument(0).equals(Customer_USERNAME)) {
-            Customer Customer = new Customer(Customer_USERNAME, Customer_EMAIL, Customer_PASSWORD);
-            return Customer;
+    lenient().when(InstructorDao.findInstructorByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+        if(invocation.getArgument(0).equals(Instructor_USERNAME)) {
+            Instructor Instructor = new Instructor(Instructor_USERNAME, Instructor_EMAIL, Instructor_PASSWORD);
+            return Instructor;
         } else {
             return null;
         }
@@ -68,147 +68,147 @@ public void setMockOutput() {
 
 
 @Test
-public void testGetExistingCustomer() {
-    assertEquals(Customer_USERNAME, service.getCustomer(Customer_USERNAME).getUsername());
-    assertEquals(Customer_EMAIL, service.getCustomer(Customer_USERNAME).getEmail());
-    assertEquals(Customer_PASSWORD, service.getCustomer(Customer_USERNAME).getPassword());
+public void testGetExistingInstructor() {
+    assertEquals(Instructor_USERNAME, service.getInstructor(Instructor_USERNAME).getUsername());
+    assertEquals(Instructor_EMAIL, service.getInstructor(Instructor_USERNAME).getEmail());
+    assertEquals(Instructor_PASSWORD, service.getInstructor(Instructor_USERNAME).getPassword());
 }
 
 
 @Test
-public void testGetNonExistingCustomer() {
+public void testGetNonExistingInstructor() {
 
     assertThrows(IllegalArgumentException.class, () -> {
-        service.getCustomer(NONEXISTING_Customer_USERNAME);
+        service.getInstructor(NONEXISTING_Instructor_USERNAME);
     });
 
 }
 
 @Test
-public void testCreateCustomer() {
-		assertEquals(0, service.getAllCustomers().size());
+public void testCreateInstructor() {
+		assertEquals(0, service.getAllInstructors().size());
 
 		String username = "Muhammad";
         String email = "Memail";
         String password = "Mpass";
-		Customer customer = null;
+		Instructor Instructor = null;
 		try {
-			customer = service.createCustomer(username, email, password);
+			Instructor = service.createInstructor(username, email, password);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
-		assertNotNull(customer);
-		assertEquals(username, customer.getUsername());
-        assertEquals(email, customer.getEmail());
-        assertEquals(password, customer.getPassword());
+		assertNotNull(Instructor);
+		assertEquals(username, Instructor.getUsername());
+        assertEquals(email, Instructor.getEmail());
+        assertEquals(password, Instructor.getPassword());
     }
 
     @Test
-	public void testCreateCustomerNullUsername() {
+	public void testCreateInstructorNullUsername() {
 		String username = null;
 		String email = "email";
 		String password = "password";
-        Customer customer = null;
+        Instructor Instructor = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Instructor = service.createInstructor(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Instructor);
 		
 		assertEquals("Username cannot be empty!", error);
 	}
 
     @Test
-	public void testCreateCustomerNullEmail() {
+	public void testCreateInstructorNullEmail() {
 		String username = "username";
 		String email = null;
 		String password = "password";
-        Customer customer = null;
+        Instructor Instructor = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Instructor = service.createInstructor(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Instructor);
 		
 		assertEquals("Email cannot be empty!", error);
 	}
 
     @Test
-	public void testCreateCustomerNullPassword() {
+	public void testCreateInstructorNullPassword() {
 		String username = "username";
 		String email = "email";
         String password = null;
-        Customer customer = null;
+        Instructor Instructor = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Instructor = service.createInstructor(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Instructor);
 		
 		assertEquals("Password cannot be empty!", error);
 	}
 
 
     @Test
-	public void testCreateCustomerEmptyUsername() {
+	public void testCreateInstructorEmptyUsername() {
 		String username = "";
 		String email = "email";
 		String password = "password";
-        Customer customer = null;
+        Instructor Instructor = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Instructor = service.createInstructor(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Instructor);
 		
 		assertEquals("Username cannot be empty!", error);
 	}
 
     @Test
-	public void testCreateCustomerEmptyEmail() {
+	public void testCreateInstructorEmptyEmail() {
 		String username = "username";
 		String email = "";
 		String password = "password";
-        Customer customer = null;
+        Instructor Instructor = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Instructor = service.createInstructor(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Instructor);
 		
 		assertEquals("Email cannot be empty!", error);
 	}
 
 
     @Test
-	public void testCreateCustomerEmptyPassword() {
+	public void testCreateInstructorEmptyPassword() {
 		String username = "username";
 		String email = "email";
 		String password = "";
-        Customer customer = null;
+        Instructor Instructor = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Instructor = service.createInstructor(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Instructor);
 		
 		assertEquals("Password cannot be empty!", error);
 	}
@@ -216,13 +216,13 @@ public void testCreateCustomer() {
 
     //the below test probably isnt working because the projcet isnt compiling properly
     @Test
-    public void deleteCustomer() {
-        assertEquals(0, service.getAllCustomers().size());
+    public void deleteInstructor() {
+        assertEquals(0, service.getAllInstructors().size());
         String username = "Muhammad";
         String email = "Memail";
         String password = "Mpass";
-		service.createCustomer(username, email, password);
-        assertEquals(1, service.getAllCustomers().size());
+		service.createInstructor(username, email, password);
+        assertEquals(1, service.getAllInstructors().size());
 
 
 
