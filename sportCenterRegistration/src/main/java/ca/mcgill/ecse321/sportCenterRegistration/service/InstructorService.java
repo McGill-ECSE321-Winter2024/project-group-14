@@ -38,6 +38,10 @@ public class InstructorService {
     
     @Autowired
 	InstructorRepository InstructorRepository;
+	@Autowired
+	AccountRepository accountRepository;
+	@Autowired
+	StaffRepository staffRepository;
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
@@ -83,6 +87,8 @@ public class InstructorService {
 
 		Instructor instructor = new Instructor(username, email, password);
 		InstructorRepository.save(instructor);
+	        accountRepository.save(instructor);
+		staffRepository.save(instructor);
 		return instructor;
 	}
 
