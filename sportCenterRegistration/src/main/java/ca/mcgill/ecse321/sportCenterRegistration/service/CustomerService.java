@@ -72,13 +72,13 @@ public class CustomerService {
     public Customer createCustomer(String username, String email, String password ) {
 		
 
-        if (username == null) {
+        if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
-        if (email == null) {
+        if (email == null || email.strip() == "") {
             throw new IllegalArgumentException("Email cannot be empty!");
         }
-        if (password == null) {
+        if (password == null || password.strip() == "") {
             throw new IllegalArgumentException("Password cannot be empty!");
         }
 

@@ -102,4 +102,127 @@ public void testCreateCustomer() {
         assertEquals(email, customer.getEmail());
         assertEquals(password, customer.getPassword());
     }
+
+    @Test
+	public void testCreateCustomerNullUsername() {
+		String username = null;
+		String email = "email";
+		String password = "password";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Username cannot be empty!", error);
+	}
+
+    @Test
+	public void testCreateCustomerNullEmail() {
+		String username = "username";
+		String email = null;
+		String password = "password";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Email cannot be empty!", error);
+	}
+
+    @Test
+	public void testCreateCustomerNullPassword() {
+		String username = "username";
+		String email = "email";
+        String password = null;
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Password cannot be empty!", error);
+	}
+
+
+    @Test
+	public void testCreateCustomerEmptyUsername() {
+		String username = "";
+		String email = "email";
+		String password = "password";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Username cannot be empty!", error);
+	}
+
+    @Test
+	public void testCreateCustomerEmptyEmail() {
+		String username = "username";
+		String email = "";
+		String password = "password";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Email cannot be empty!", error);
+	}
+
+
+    @Test
+	public void testCreateCustomerEmptyPassword() {
+		String username = "username";
+		String email = "email";
+		String password = "";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Password cannot be empty!", error);
+	}
+    
+    @Test
+    public void deleteCustomer() {
+        assertEquals(0, service.getAllCustomers().size());
+        String username = "Muhammad";
+        String email = "Memail";
+        String password = "Mpass";
+		service.createCustomer(username, email, password);
+        assertEquals(1, service.getAllCustomers().size());
+
+
+
+    }
 }
