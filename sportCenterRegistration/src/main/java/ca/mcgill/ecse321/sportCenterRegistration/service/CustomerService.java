@@ -39,6 +39,8 @@ public class CustomerService {
     
     @Autowired
 	CustomerRepository CustomerRepository;
+	@Autowired
+	AccountRepository accountRepository;
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
@@ -84,6 +86,7 @@ public class CustomerService {
 
 		Customer customer = new Customer(username, email, password);
 		CustomerRepository.save(customer);
+	        accountRepository.save(customer);
 		return customer;
 	}
 
