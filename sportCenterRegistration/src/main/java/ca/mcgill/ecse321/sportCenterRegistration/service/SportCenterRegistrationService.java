@@ -87,6 +87,9 @@ public class SportCenterRegistrationService {
 		return true;
 	}
 
+	
+	
+
 
 
 

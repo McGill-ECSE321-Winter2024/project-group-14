@@ -28,6 +28,10 @@ import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+
+import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
+
 import ca.mcgill.ecse321.sportCenterRegistration.service.SportCenterRegistrationService;
 
 
@@ -35,7 +39,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.service.SportCenterRegistration
 
 
 @ExtendWith(MockitoExtension.class)
-class SportCenterRegistrationApplicationTests {
+class InstructorServiceTest {
 
 @Mock
 private InstructorRepository InstructorDao;
@@ -62,6 +66,7 @@ public void setMockOutput() {
             return null;
         }
     });
+	
 }
 	
 	@Test
