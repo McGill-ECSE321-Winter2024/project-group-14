@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.RegistrationRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.SessionRepository;
@@ -21,8 +20,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.dao.StaffRepository;
 
 
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
@@ -35,10 +33,10 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 
 @Service
-public class CustomerService {
+public class OwnerService {
     
     @Autowired
-	CustomerRepository CustomerRepository;
+	OwnerRepository OwnerRepository;
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
@@ -50,26 +48,26 @@ public class CustomerService {
 
 
     @Transactional
-	public Customer getCustomer(String username) {
-		Customer customer = CustomerRepository.findCustomerByUsername(username);
-        if (customer == null) {
-            throw new IllegalArgumentException("Customer name is invalid");
+	public Owner getOwner(String username) {
+		Owner Owner = OwnerRepository.findOwnerByUsername(username);
+        if (Owner == null) {
+            throw new IllegalArgumentException("Owner name is invalid");
         }
-		return customer;
+		return Owner;
 	}
 
     @Transactional
-	public Boolean deleteCustomer(String username) {
+	public Boolean deleteOwner(String username) {
         if (username == null || username.trim().length() == 0) {
-			throw new IllegalArgumentException("Customer name cannot be empty!");
+			throw new IllegalArgumentException("Owner name cannot be empty!");
 		}
-		Customer customerToDelete = getCustomer(username);
-		CustomerRepository.delete(customerToDelete);
+		Owner OwnerToDelete = getOwner(username);
+		OwnerRepository.delete(OwnerToDelete);
 		return true;
 	}
 
     @Transactional
-    public Customer createCustomer(String username, String email, String password ) {
+    public Owner createOwner(String username, String email, String password ) {
 		
 
         if (username == null || username.strip() == "") {
@@ -82,22 +80,16 @@ public class CustomerService {
             throw new IllegalArgumentException("Password cannot be empty!");
         }
 
-		Customer customer = new Customer(username, email, password);
-		CustomerRepository.save(customer);
-		return customer;
+		Owner Owner = new Owner(username, email, password);
+		OwnerRepository.save(Owner);
+		return Owner;
 	}
 
 	@Transactional
-	public List<Customer> getAllCustomers() {
-		return toList(CustomerRepository.findAll());
+	public List<Owner> getAllOwners() {
+		return toList(OwnerRepository.findAll());
 	}
 
-	
-
-
-
- 
- 
 
 
 }

@@ -20,7 +20,6 @@ import ca.mcgill.ecse321.sportCenterRegistration.dao.StaffRepository;
 
 
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
-import ca.mcgill.ecse321.sportCenterRegistration.model.instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
