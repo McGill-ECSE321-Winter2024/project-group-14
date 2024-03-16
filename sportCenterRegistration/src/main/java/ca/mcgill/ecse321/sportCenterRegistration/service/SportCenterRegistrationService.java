@@ -102,7 +102,7 @@ public class SportCenterRegistrationService {
 	 * This method updates a session schedual
 	 */
 
-	public Session updateSession(Long id, Time startTime, Time endTime, String location, Date date) {
+	public Session updateSession(int id, Time startTime, Time endTime, String location, Date date) {
 
 		// check if the session exists
 		Session session = SessionRepository.findSessionById(id);
@@ -159,7 +159,7 @@ public class SportCenterRegistrationService {
 	public boolean deleteSession(int id) {
 
 		// check null id
-		if (id = null) { // help me here !!!!!!!!!! LMAO
+		if (id == null) { // help me here !!!!!!!!!! LMAO
 			throw new IllegalArgumentException("Id cannot be empty");
 		}
 
