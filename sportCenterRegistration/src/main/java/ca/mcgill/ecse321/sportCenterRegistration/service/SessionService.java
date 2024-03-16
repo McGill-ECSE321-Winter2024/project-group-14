@@ -113,21 +113,36 @@ public class SessionService {
     /**
      * Section: Session servive
      * Author: Stephen Huang
+     * This method gets a specific session schedule given the corresponding
+     * sportclasstype
+     */
+    @Transactional
+    public Session getSession(SportClass sportClass) {
+
+        // return dailyschedule with the inputed id
+        Session session = SessionRepository.findSessionBySportClass(sportClass);
+        return session;
+    }
+
+    /**
+     * Section: Session servive
+     * Author: Stephen Huang
      * This method deletes a session schedual
      */
     @Transactional
     public boolean deleteSession(int id) {
 
-        // check null id
-        if (id == null) { // help me here !!!!!!!!!! LMAO
-            throw new IllegalArgumentException("Id cannot be empty");
-        }
-
         // check if the daily schedule exists
         Session session = SessionRepository.findSessionById(id);
 
+        // check null
         if (session == null)
             throw new IllegalArgumentException("Session not found");
+
+        // check Id for an invalid "id" value
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id must be positive and non-zero");
+        }
 
         // delete dailyschedule
         SessionRepository.delete(session);
@@ -148,10 +163,11 @@ public class SessionService {
     }
 
     private <T> List<T> toList(Iterable<T> iterable) {
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
 
+    }
 }
