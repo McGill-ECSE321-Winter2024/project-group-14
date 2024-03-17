@@ -217,12 +217,18 @@ public void testCreateOwner() {
     //the below test probably isnt working because the projcet isnt compiling properly
     @Test
     public void deleteOwner() {
-        assertEquals(0, service.getAllOwners().size());
-        String username = "Muhammad";
-        String email = "Memail";
-        String password = "Mpass";
-		service.createOwner(username, email, password);
-        assertEquals(1, service.getAllOwners().size());
+       // String username = "Muhammad";
+       // String email = "Memail";
+       // String password = "Mpass";
+        assertEquals(Owner_USERNAME,  OwnerDao.findOwnerByUsername(Owner_USERNAME).getUsername());
+		service.deleteOwner(Owner_USERNAME);
+		assertNull(OwnerDao.findOwnerByUsername(Owner_USERNAME));
+
+
+
+
+
+
 
 
 
