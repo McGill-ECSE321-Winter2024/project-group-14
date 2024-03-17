@@ -14,7 +14,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import jakarta.transaction.Transactional;
 
 @Service
-public class SportCenterRegistrationService{
+public class RegistrationService{
     @Autowired
     RegistrationRepository registrationRepository;
     @Autowired
