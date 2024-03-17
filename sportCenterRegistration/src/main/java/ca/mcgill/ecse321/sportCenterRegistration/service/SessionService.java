@@ -26,7 +26,7 @@ public class SessionService {
      */
 
     @Transactional
-    public Session createSession(Time startTime, Time endTime, String location, Date date) {
+    public Session createSession(Time startTime, Time endTime, String location, Date date, Instructor instructor, SportClass sportClass) {
 
         // checking all inputs are valid
         String error = "";
@@ -47,11 +47,7 @@ public class SessionService {
         }
 
         // create a session
-        Session session = new Session();
-        session.setDate(date);
-        session.setStartTime(startTime);
-        session.setEndTime(endTime);
-        session.setLocation(location);
+        Session session = new Session(startTime, endTime, location, date, instructor, sportClass);
         Session newSession = SessionRepository.save(session);
         return newSession;
     }
@@ -62,7 +58,7 @@ public class SessionService {
      * This method updates a session schedual
      */
 
-    public Session updateSession(int id, Time startTime, Time endTime, String location, Date date) {
+    public Session updateSession(int id, Time startTime, Time endTime, String location, Date date, Instructor instructor, SportClass sportClass) {
 
         // check if the session exists
         Session session = SessionRepository.findSessionById(id);
@@ -93,8 +89,7 @@ public class SessionService {
         session.setStartTime(startTime);
         session.setEndTime(endTime);
         session.setLocation(location);
-        SessionRepository.save(session);
-        return session;
+        return SessionRepository.save(session);
     }
 
     /**
@@ -117,11 +112,11 @@ public class SessionService {
      * sportclasstype
      */
     @Transactional
-    public Session getSession(SportClass sportClass) {
+    public List<Session> getSession(SportClass sportClass) {
 
         // return dailyschedule with the inputed id
-        Session session = SessionRepository.findSessionBySportClass(sportClass);
-        return session;
+        List<Session> sessions = SessionRepository.findSessionBySportClass(sportClass);
+        return sessions;
     }
 
     /**
@@ -146,7 +141,7 @@ public class SessionService {
 
         // delete dailyschedule
         SessionRepository.delete(session);
-        session.delete();
+//        session.delete();
         return true;
     }
 

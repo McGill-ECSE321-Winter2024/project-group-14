@@ -33,16 +33,10 @@ public class OwnerService {
 			throw new IllegalArgumentException("Name cannot be blank");
 		if (!email.equals("admin@sportcenter.com"))
 			throw new IllegalArgumentException("Invalid email, use system email \"admin@sportcenter.com\"");
+		passwordIsValid(password);
 
-		Owner owner = new Owner();
-		owner.setUsername(username);
-
-		if (passwordIsValid(password)) {
-			owner.setPassword(password);
-		}
-		owner.setEmail(email);
-		OwnerRepository.save(owner);
-		return owner;
+		Owner owner = new Owner(username, email, password);
+		return OwnerRepository.save(owner);
 	}
 
 	/**
