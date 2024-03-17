@@ -52,7 +52,11 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 
 
 @ExtendWith(MockitoExtension.class)
+<<<<<<< Updated upstream:sportCenterRegistration/src/test/java/ca/mcgill/ecse321/sportCenterRegistration/service/TestRegistrationService.java
 public class TestRegistrationService  {
+=======
+class TestSportCenterRegistrationService {
+>>>>>>> Stashed changes:sportCenterRegistration/src/test/java/ca/mcgill/ecse321/sportCenterRegistration/service/TestSportCenterRegistrationService.java
 
     @Mock
     private InstructorRepository instructorRepo;

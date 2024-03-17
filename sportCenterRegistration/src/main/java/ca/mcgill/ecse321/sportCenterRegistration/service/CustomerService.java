@@ -86,7 +86,7 @@ public class CustomerService {
 
 		Customer customer = new Customer(username, email, password);
 		CustomerRepository.save(customer);
-	        accountRepository.save(customer);
+	    accountRepository.save(customer);
 		return customer;
 	}
 
@@ -95,7 +95,7 @@ public class CustomerService {
 		return toList(CustomerRepository.findAll());
 	}
 
-	
+
 
 
 
