@@ -34,13 +34,15 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 @Service
 public class InstructorService {
-    
-    @Autowired
+
+	@Autowired
 	InstructorRepository InstructorRepository;
 	@Autowired
 	AccountRepository accountRepository;
 	@Autowired
 	StaffRepository staffRepository;
+	@Autowired
+	SportClassRepository sportClassRepo;
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
@@ -51,18 +53,18 @@ public class InstructorService {
 	}
 
 
-    @Transactional
+	@Transactional
 	public Instructor getInstructor(String username) {
 		Instructor instructor = InstructorRepository.findInstructorByUsername(username);
-        if (instructor == null) {
-            throw new IllegalArgumentException("instructor name is invalid");
-        }
+		if (instructor == null) {
+			throw new IllegalArgumentException("instructor name is invalid");
+		}
 		return instructor;
 	}
 
-    @Transactional
+	@Transactional
 	public Boolean deleteInstructor(String username) {
-        if (username == null || username.trim().length() == 0) {
+		if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("instructor name cannot be empty!");
 		}
 		Instructor instructorToDelete = getInstructor(username);
@@ -70,24 +72,24 @@ public class InstructorService {
 		return true;
 	}
 
-    @Transactional
-    public Instructor createInstructor(String username, String email, String password ) {
-		
+	@Transactional
+	public Instructor createInstructor(String username, String email, String password ) {
 
-        if (username == null || username.strip() == "") {
-            throw new IllegalArgumentException("Username cannot be empty!");
-        }
-        if (email == null || email.strip() == "") {
-            throw new IllegalArgumentException("Email cannot be empty!");
-        }
-        if (password == null || password.strip() == "") {
-            throw new IllegalArgumentException("Password cannot be empty!");
-        }
+
+		if (username == null || username.strip() == "") {
+			throw new IllegalArgumentException("Username cannot be empty!");
+		}
+		if (email == null || email.strip() == "") {
+			throw new IllegalArgumentException("Email cannot be empty!");
+		}
+		if (password == null || password.strip() == "") {
+			throw new IllegalArgumentException("Password cannot be empty!");
+		}
 
 		Instructor instructor = new Instructor(username, email, password);
 		InstructorRepository.save(instructor);
-	    AccountRepository.save(instructor);
-		StaffRepository.save(instructor);
+		accountRepository.save(instructor);
+		staffRepository.save(instructor);
 		return instructor;
 	}
 
@@ -96,10 +98,16 @@ public class InstructorService {
 		return toList(InstructorRepository.findAll());
 	}
 
-
-
- 
- 
-
+	@Transactional
+	public SportClass createSportClass(String name){
+		if (name==null || name.length()<=0){
+			throw new IllegalArgumentException("Sport Class name should not be empty!");
+		}
+		if (sportClassRepo.findSportClassByName(name)!=null){
+			throw new IllegalArgumentException("Sport Class already exists!");
+		}
+		SportClass sportClass = new SportClass(name);
+		return sportClassRepo.save(sportClass);
+	}
 
 }

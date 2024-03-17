@@ -34,9 +34,11 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 @Service
 public class OwnerService {
-    
-    @Autowired
+
+	@Autowired
 	OwnerRepository OwnerRepository;
+	@Autowired
+	SportClassRepository sportClassRepo;
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
@@ -47,18 +49,18 @@ public class OwnerService {
 	}
 
 
-    @Transactional
+	@Transactional
 	public Owner getOwner(String username) {
 		Owner Owner = OwnerRepository.findOwnerByUsername(username);
-        if (Owner == null) {
-            throw new IllegalArgumentException("Owner name is invalid");
-        }
+		if (Owner == null) {
+			throw new IllegalArgumentException("Owner name is invalid");
+		}
 		return Owner;
 	}
 
-    @Transactional
+	@Transactional
 	public Boolean deleteOwner(String username) {
-        if (username == null || username.trim().length() == 0) {
+		if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Owner name cannot be empty!");
 		}
 		Owner OwnerToDelete = getOwner(username);
@@ -66,19 +68,19 @@ public class OwnerService {
 		return true;
 	}
 
-    @Transactional
-    public Owner createOwner(String username, String email, String password ) {
-		
+	@Transactional
+	public Owner createOwner(String username, String email, String password ) {
 
-        if (username == null || username.strip() == "") {
-            throw new IllegalArgumentException("Username cannot be empty!");
-        }
-        if (email == null || email.strip() == "") {
-            throw new IllegalArgumentException("Email cannot be empty!");
-        }
-        if (password == null || password.strip() == "") {
-            throw new IllegalArgumentException("Password cannot be empty!");
-        }
+
+		if (username == null || username.strip() == "") {
+			throw new IllegalArgumentException("Username cannot be empty!");
+		}
+		if (email == null || email.strip() == "") {
+			throw new IllegalArgumentException("Email cannot be empty!");
+		}
+		if (password == null || password.strip() == "") {
+			throw new IllegalArgumentException("Password cannot be empty!");
+		}
 
 		Owner Owner = new Owner(username, email, password);
 		OwnerRepository.save(Owner);
@@ -91,5 +93,17 @@ public class OwnerService {
 	}
 
 
+	@Transactional
+	public SportClass approveSportClass(String name){
+		if (name==null || name.length()<=0){
+			throw new IllegalArgumentException("Sport Class name should not be empty!");
+		}
+		SportClass sportClass = sportClassRepo.findSportClassByName(name);
+		if (sportClass==null){
+			throw new IllegalArgumentException("Sport Class doesn't exist!");
+		}
+		sportClass.setApproved(true);
+		return sportClassRepo.save(sportClass);
+	}
 
 }
