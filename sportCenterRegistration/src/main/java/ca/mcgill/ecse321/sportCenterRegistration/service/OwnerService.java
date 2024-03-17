@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.sportCenterRegistration.service;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,87 +7,120 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.RegistrationRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.SessionRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.ShiftRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.SportClassRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.StaffRepository;
-
-
-import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Shift;
-import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
-
-
-
-
+import ca.mcgill.ecse321.sportCenterRegistration.dao.*;
+import ca.mcgill.ecse321.sportCenterRegistration.model.*;
 
 @Service
 public class OwnerService {
-    
-    @Autowired
+
+	@Autowired
 	OwnerRepository OwnerRepository;
 
-	private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
+	/**
+	 * Section: Owner servive
+	 * Author: Stephen Huang
+	 * This method creates the owner.
+	 */
+	@Transactional
+	public Owner createOwner(String username, String email, String password) {
+
+		if (OwnerRepository.findOwnerByEmail("admin@sportcenter.com") != null) {
+			throw new IllegalArgumentException("Owner already exists");
 		}
-		return resultList;
+		if (username == null)
+			throw new IllegalArgumentException("Name cannot be null");
+		if (username.isBlank())
+			throw new IllegalArgumentException("Name cannot be blank");
+		if (!email.equals("admin@sportcenter.com"))
+			throw new IllegalArgumentException("Invalid email, use system email \"admin@sportcenter.com\"");
+
+		Owner owner = new Owner();
+		owner.setUsername(username);
+
+		if (passwordIsValid(password)) {
+			owner.setPassword(password);
+		}
+		owner.setEmail(email);
+		OwnerRepository.save(owner);
+		return owner;
 	}
 
+	/**
+	 * Section: Owner servive
+	 * Author: Stephen Huang
+	 * This method updates the password of the owner.
+	 */
+	@Transactional
+	public Owner updateOwnerPassword(String newPassword) {
+		Owner oldOwner = OwnerRepository.findOwnerByEmail("admin@sportcenter.com");
 
-    @Transactional
-	public Owner getOwner(String username) {
-		Owner Owner = OwnerRepository.findOwnerByUsername(username);
-        if (Owner == null) {
-            throw new IllegalArgumentException("Owner name is invalid");
-        }
-		return Owner;
+		if (passwordIsValid(newPassword)) {
+			oldOwner.setPassword(newPassword);
+		}
+
+		oldOwner = OwnerRepository.save(oldOwner);
+
+		return oldOwner;
 	}
 
-    @Transactional
-	public Boolean deleteOwner(String username) {
-        if (username == null || username.trim().length() == 0) {
-			throw new IllegalArgumentException("Owner name cannot be empty!");
+	/**
+	 * Section: Owner servive
+	 * Author: Stephen Huang
+	 * This method updates the name of the owner.
+	 */
+	@Transactional
+	public Owner updateOwnerName(String newName) {
+		Owner oldOwner = OwnerRepository.findOwnerByEmail("admin@sportcenter.com");
+
+		if (newName == null)
+			throw new IllegalArgumentException("Name cannot be null");
+		if (newName.isBlank())
+			throw new IllegalArgumentException("Name cannot be blank");
+
+		oldOwner.setUsername(newName);
+
+		oldOwner = OwnerRepository.save(oldOwner);
+
+		return oldOwner;
+	}
+
+	/**
+	 * Section: Owner servive
+	 * Author: Stephen Huang
+	 * This method gets the owner
+	 */
+	@Transactional
+	public Owner getOwner() {
+		Owner owner = OwnerRepository.findOwnerByEmail("admin@sportcenter.com");
+		return owner;
+	}
+
+	/**
+	 * Section: Owner servive
+	 * Author: Stephen Huang
+	 * This method deletes the owner
+	 */
+	@Transactional
+	public boolean deleteOwner() throws IllegalArgumentException {
+
+		Owner owner = OwnerRepository.findOwnerByEmail("admin@sportcenter.com");
+
+		if (owner == null) {
+			throw new IllegalArgumentException("Owner not found.");
 		}
-		Owner OwnerToDelete = getOwner(username);
-		OwnerRepository.delete(OwnerToDelete);
+
+		OwnerRepository.delete(owner);
 		return true;
 	}
 
-    @Transactional
-    public Owner createOwner(String username, String email, String password ) {
-		
+	private boolean passwordIsValid(String password) {
 
-        if (username == null || username.strip() == "") {
-            throw new IllegalArgumentException("Username cannot be empty!");
-        }
-        if (email == null || email.strip() == "") {
-            throw new IllegalArgumentException("Email cannot be empty!");
-        }
-        if (password == null || password.strip() == "") {
-            throw new IllegalArgumentException("Password cannot be empty!");
-        }
+		if (password == null)
+			throw new IllegalArgumentException("Password cannot be null");
+		if (password.isBlank())
+			throw new IllegalArgumentException("Password cannot be blank");
 
-		Owner Owner = new Owner(username, email, password);
-		OwnerRepository.save(Owner);
-		return Owner;
+		return true;
 	}
-
-	@Transactional
-	public List<Owner> getAllOwners() {
-		return toList(OwnerRepository.findAll());
-	}
-
-
 
 }
