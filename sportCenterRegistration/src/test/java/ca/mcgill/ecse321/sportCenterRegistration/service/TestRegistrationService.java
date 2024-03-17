@@ -28,6 +28,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.SportClassRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import ca.mcgill.ecse321.sportCenterRegistration.service.SportCenterRegistrationService;
 
@@ -49,13 +52,21 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 
 
 @ExtendWith(MockitoExtension.class)
-class CustomerServiceTest {
+public class TestRegistrationService  {
 
-@Mock
-private CustomerRepository CustomerDao;
+    @Mock
+    private InstructorRepository instructorRepo;
+    @Mock
+    private OwnerRepository ownerRepo;
+    @Mock
+    private SportClassRepository sportClassRepo;
 
-@InjectMocks
-private SportCenterRegistrationService service;
+    @InjectMocks
+    private SportClassService sportClassService;
+    @InjectMocks
+    private InstructorService instructorService;
+    @InjectMocks
+    private OwnerService ownerService;
 
 private static final String Customer_USERNAME = "TestCustomerUsername";
 private static final String Customer_EMAIL = "TestCustomerEmail";
