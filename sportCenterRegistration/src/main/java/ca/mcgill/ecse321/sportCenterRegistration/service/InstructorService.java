@@ -86,8 +86,8 @@ public class InstructorService {
 
 		Instructor instructor = new Instructor(username, email, password);
 		InstructorRepository.save(instructor);
-	        accountRepository.save(instructor);
-		staffRepository.save(instructor);
+	    AccountRepository.save(instructor);
+		StaffRepository.save(instructor);
 		return instructor;
 	}
 
