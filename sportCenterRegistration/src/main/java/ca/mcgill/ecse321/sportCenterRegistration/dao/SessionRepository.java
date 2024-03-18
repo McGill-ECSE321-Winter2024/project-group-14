@@ -1,7 +1,10 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
+import java.sql.Time;
+
 import org.springframework.data.repository.CrudRepository;
 
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
 
