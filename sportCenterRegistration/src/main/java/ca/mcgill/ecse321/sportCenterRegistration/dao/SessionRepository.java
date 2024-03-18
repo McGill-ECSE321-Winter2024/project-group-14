@@ -8,7 +8,8 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
 public interface SessionRepository extends CrudRepository<Session, Integer>{
     public Session findSessionById(int id);
 
-    public Session findSessionBySportClass(SportClass sportClass);
+    // public Session findSessionBySportClass(SportClass sportClass);
 
-
+    public Session findSessionByStartTimeAndInstructorAndSportClass(Time sessionStartTime,
+            Instructor instructor, SportClass sportClass);
 }
