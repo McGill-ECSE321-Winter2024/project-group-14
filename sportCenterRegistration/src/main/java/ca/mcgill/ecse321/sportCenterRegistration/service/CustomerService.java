@@ -50,7 +50,18 @@ public class CustomerService {
 		return resultList;
 	}
 
-
+	/*
+	 * 
+	 * @author Muhammad Hammad
+	 * 
+	 * Method returns the customer object with the corresponding username
+	 * @param String username
+	 * @return Customer
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
     @Transactional
 	public Customer getCustomer(String username) {
 		Customer customer = CustomerRepository.findCustomerByUsername(username);
@@ -59,6 +70,18 @@ public class CustomerService {
         }
 		return customer;
 	}
+
+
+
+`	/*
+	@author Muhammad Hammad
+
+	Method deletes customer with a given username adn returns a boolean indicating whether the deletion is sucessful 
+	@param String username
+	@return Boolean
+
+	
+	*/
 
     @Transactional
 	public Boolean deleteCustomer(String username) {
@@ -69,6 +92,21 @@ public class CustomerService {
 		CustomerRepository.delete(customerToDelete);
 		return true;
 	}
+
+	/*
+	 * 
+	 * @author Muhammad Hammad
+	 * 
+	 * Method creates a customer with a given username, email, and password
+	 * @param String username
+	 * @param String email
+	 * @param String password
+	 * @return Customer
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 
     @Transactional
     public Customer createCustomer(String username, String email, String password ) {
@@ -90,6 +128,15 @@ public class CustomerService {
 		return customer;
 	}
 
+	/*
+	 * 
+	 * @author Muhammad Hammad
+	 * Method returns a list of all the customer in the repository
+	 * 
+	 * @return List<Customer>
+	 * 
+	 * 
+	 */
 	@Transactional
 	public List<Customer> getAllCustomers() {
 		return toList(CustomerRepository.findAll());

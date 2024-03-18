@@ -63,9 +63,7 @@ public class OwnerService {
 		if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Owner name cannot be empty!");
 		}
-		OwnerRepository.deleteOwner(getOwner(username));
-        getOwner(username).deleter();
-        
+		OwnerRepository.deleteById(getOwner(username).getId());
 		return true;
 	}
 
