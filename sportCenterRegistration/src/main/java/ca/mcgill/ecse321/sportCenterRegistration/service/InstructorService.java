@@ -52,7 +52,18 @@ public class InstructorService {
 		return resultList;
 	}
 
-
+	/*
+	 * 
+	 * @author Muhammad Hammad
+	 * 
+	 * Method returns the instructor object with the corresponding username
+	 * @param String username
+	 * @return Instructor
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	@Transactional
 	public Instructor getInstructor(String username) {
 		Instructor instructor = InstructorRepository.findInstructorByUsername(username);
@@ -61,7 +72,15 @@ public class InstructorService {
 		}
 		return instructor;
 	}
+ 	/*
+	@author Muhammad Hammad
 
+	Method deletes instructor with a given username and returns a boolean indicating whether the deletion is sucessful 
+	@param String username
+	@return Boolean
+
+	
+	*/
 	@Transactional
 	public Boolean deleteInstructor(String username) {
 		if (username == null || username.trim().length() == 0) {
@@ -71,7 +90,20 @@ public class InstructorService {
 		InstructorRepository.delete(instructorToDelete);
 		return true;
 	}
-
+	/*
+	 * 
+	 * @author Muhammad Hammad
+	 * 
+	 * Method creates a instructor with a given username, email, and password
+	 * @param String username
+	 * @param String email
+	 * @param String password
+	 * @return instructor
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	@Transactional
 	public Instructor createInstructor(String username, String email, String password ) {
 
@@ -92,7 +124,15 @@ public class InstructorService {
 		staffRepository.save(instructor);
 		return instructor;
 	}
-
+	/*
+	 * 
+	 * @author Muhammad Hammad
+	 * Method returns a list of all the instructors in the repository
+	 * 
+	 * @return List<Customer>
+	 * 
+	 * 
+	 */
 	@Transactional
 	public List<Instructor> getAllInstructors() {
 		return toList(InstructorRepository.findAll());

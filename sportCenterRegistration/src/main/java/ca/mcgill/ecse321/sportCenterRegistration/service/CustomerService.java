@@ -71,9 +71,39 @@ public class CustomerService {
 		return customer;
 	}
 
+	/*
+	 * 
+	 * @author Muhammad Hammad
+	 * @param String email
+	 * @return boolean 
+	 * 
+	 * Returns a boolean indiciating whether or not the email is formatted correctly
+	 * 
+	 * 
+	 */
+	private Boolean emailIsValid(String email){
+		int i = email.indexOf("@");
+
+		if (i == -1 || i == 0 || i == email.length() - 1){
+			return false;
+		}
+		if (!(email.chars().filter(ch -> ch == '@').count() == 1)){
+			return false;
+		}
+		return true;
+	}
 
 
-`	/*
+
+	priavte boolean usernameIsUnique(String username){
+		if (CustomerRepository.findCustomerByUsername(username) == null) {
+			return true;
+		}
+		return false;
+	}
+
+
+ 	/*
 	@author Muhammad Hammad
 
 	Method deletes customer with a given username adn returns a boolean indicating whether the deletion is sucessful 
@@ -121,6 +151,13 @@ public class CustomerService {
         if (password == null || password.strip() == "") {
             throw new IllegalArgumentException("Password cannot be empty!");
         }
+		if (!(emailIsValid(email))){
+			throw new IllegalArgumentException("Email is invalid!");
+		}
+		if(!(usernameIsUnique(username))) {
+			throw new IllegalArgumentException("Username is not unique!")
+		}
+		
 
 		Customer customer = new Customer(username, email, password);
 		CustomerRepository.save(customer);
@@ -142,12 +179,9 @@ public class CustomerService {
 		return toList(CustomerRepository.findAll());
 	}
 
-
-
-
-
- 
- 
-
+	@Transactional
+	public Customer customerLogin(String username, String password){
+		
+	}
 
 }
