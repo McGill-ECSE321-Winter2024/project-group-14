@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
@@ -132,6 +133,29 @@ public class CustomerRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         } 
     }
+
+
+    /*
+     * @author Muhammad Hammad
+     * 
+     * Controller method that updates the information of a customer
+     * 
+     */
+
+    @PutMapping(value= {"/customer/update/{oldUsername}/{username}/{email}/{password}", "/customer/update/{oldUsername}/{username}/{email}/{password}/"})
+    public ResponseEntity<?> updateCustomer(@PathVariable("oldUsername") String oldUsername, @PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
+        try {
+            Customer customer = customerService.updateCustomer(oldUsername, username, email, password);
+            return ResponseEntity.ok(convertToDTO(customer));
+        }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } 
+    }
+
+
+
+
 
 
 

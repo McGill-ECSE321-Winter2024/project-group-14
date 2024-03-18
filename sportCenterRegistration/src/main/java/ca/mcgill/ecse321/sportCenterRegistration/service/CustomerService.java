@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.RegistrationRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.SessionRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.ShiftRepository;
@@ -23,7 +23,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.dao.StaffRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Shift;
@@ -54,7 +54,7 @@ public class CustomerService {
 	 * 
 	 * @author Muhammad Hammad
 	 * 
-	 * Method returns the customer object with the corresponding username
+	 * Method returns the Customer object with the corresponding username
 	 * @param String username
 	 * @return Customer
 	 * 
@@ -64,11 +64,11 @@ public class CustomerService {
 	 */
     @Transactional
 	public Customer getCustomer(String username) {
-		Customer customer = CustomerRepository.findCustomerByUsername(username);
-        if (customer == null) {
+		Customer Customer = CustomerRepository.findCustomerByUsername(username);
+        if (Customer == null) {
             throw new IllegalArgumentException("Customer name is invalid");
         }
-		return customer;
+		return Customer;
 	}
 
 	/*
@@ -95,7 +95,7 @@ public class CustomerService {
 
 
 
-	priavte boolean usernameIsUnique(String username){
+	private boolean usernameIsUnique(String username){
 		if (CustomerRepository.findCustomerByUsername(username) == null) {
 			return true;
 		}
@@ -106,7 +106,7 @@ public class CustomerService {
  	/*
 	@author Muhammad Hammad
 
-	Method deletes customer with a given username adn returns a boolean indicating whether the deletion is sucessful 
+	Method deletes Customer with a given username adn returns a boolean indicating whether the deletion is sucessful 
 	@param String username
 	@return Boolean
 
@@ -118,8 +118,8 @@ public class CustomerService {
         if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Customer name cannot be empty!");
 		}
-		Customer customerToDelete = getCustomer(username);
-		CustomerRepository.delete(customerToDelete);
+		Customer CustomerToDelete = getCustomer(username);
+		CustomerRepository.delete(CustomerToDelete);
 		return true;
 	}
 
@@ -127,7 +127,7 @@ public class CustomerService {
 	 * 
 	 * @author Muhammad Hammad
 	 * 
-	 * Method creates a customer with a given username, email, and password
+	 * Method creates a Customer with a given username, email, and password
 	 * @param String username
 	 * @param String email
 	 * @param String password
@@ -155,20 +155,20 @@ public class CustomerService {
 			throw new IllegalArgumentException("Email is invalid!");
 		}
 		if(!(usernameIsUnique(username))) {
-			throw new IllegalArgumentException("Username is not unique!")
+			throw new IllegalArgumentException("Username is not unique!");
 		}
 		
 
-		Customer customer = new Customer(username, email, password);
-		CustomerRepository.save(customer);
-	    accountRepository.save(customer);
-		return customer;
+		Customer Customer = new Customer(username, email, password);
+		CustomerRepository.save(Customer);
+	    accountRepository.save(Customer);
+		return Customer;
 	}
 
 	/*
 	 * 
 	 * @author Muhammad Hammad
-	 * Method returns a list of all the customer in the repository
+	 * Method returns a list of all the Customer in the repository
 	 * 
 	 * @return List<Customer>
 	 * 
@@ -179,9 +179,69 @@ public class CustomerService {
 		return toList(CustomerRepository.findAll());
 	}
 
+    /*
+     * 
+     * @author Muhammad Hammad
+     * @param username
+     * @param password
+     * @return Customer object
+     * 
+     * method that checks to see if the username and password correspond to an Customer object at which point it returns the Customer object
+     * 
+     * 
+     * 
+     * 
+     */
+
 	@Transactional
-	public Customer customerLogin(String username, String password){
+	public Customer CustomerLogin(String username, String password){
+		//chose to only return one type of error message for invalid username and password to maintain security for the application
+		if (CustomerRepository.findCustomerByUsername(username) == null){
+			throw new IllegalArgumentException("Either the username or password is invalid!");
+		}
+		else if (CustomerRepository.findCustomerByUsername(username).getPassword() != password) {
+			throw new IllegalArgumentException("Either the username or password is invalid!");
+		}
+		return CustomerRepository.findCustomerByUsername(username);
+	}
+    /*
+     * @author Muhammad Hammad
+     * 
+     * @param String oldUsername
+     * @param String username
+     * @param String email
+     * @param String password
+     * @return Customer object
+     * 
+     * Method that updates an Customer object corresponding to the old username with the new information
+     * 
+     * 
+     */
+
+	@Transactional
+	public Customer updateCustomer(String oldUsername, String username, String email, String password) {
+		if (username == null || username.strip() == "") {
+            throw new IllegalArgumentException("Username cannot be empty!");
+        }
+        if (email == null || email.strip() == "") {
+            throw new IllegalArgumentException("Email cannot be empty!");
+        }
+        if (password == null || password.strip() == "") {
+            throw new IllegalArgumentException("Password cannot be empty!");
+        }
+		if (!(emailIsValid(email))){
+			throw new IllegalArgumentException("Email is invalid!");
+		}
+		if(!(usernameIsUnique(username))) {
+			throw new IllegalArgumentException("Username is not unique!");
+		}
 		
+		Customer CustomerUpdated = CustomerRepository.findCustomerByUsername(oldUsername);
+		CustomerUpdated.setUsername(username);
+		CustomerUpdated.setEmail(email);
+		CustomerUpdated.setPassword(password);
+		return CustomerUpdated;
+
 	}
 
 }
