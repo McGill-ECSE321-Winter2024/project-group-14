@@ -267,12 +267,12 @@ public class SportCenterSessionService {
 	 * 
 	 */
 
-	private <T> List<T> toList(Iterable<T> iterable) {
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
+//	private <T> List<T> toList(Iterable<T> iterable) {
+//		List<T> resultList = new ArrayList<T>();
+//		for (T t : iterable) {
+//			resultList.add(t);
+//		}
+//		return resultList;
+//	}
 
 }
