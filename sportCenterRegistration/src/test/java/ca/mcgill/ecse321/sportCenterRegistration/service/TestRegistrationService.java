@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.sportCenterRegistration.service; 
+package ca.mcgill.ecse321.sportCenterRegistration.service;
 
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -92,7 +92,7 @@ public class TestRegistrationService  {
 	private static final String Instructor_PASSWORD = "TestInstructorPassword";
 
 	private static final Date Registration_DATE = new Date(1230760800000L);
-	
+
 	private static final Time Session_START = Time.valueOf("13:00:00");
 	private static final Time Session_END = Time.valueOf("14:00:00");
 	private static final String Session_LOCATION = "TestSessionLocation";
@@ -114,7 +114,7 @@ public class TestRegistrationService  {
 	private static final Time NONEXISTING_Session_END = Time.valueOf("16:30:00");
 	private static final String NONEXISTING_Session_LOCATION = "TestSessionLocation";
 	private static final Date NONEXISTING_Session_DATE = new Date(3210490867000L);
-	private static final String NONEXISTING_;
+	private static final String NONEXISTING_SportClass_NAME = "NotAnSportClassName";
 
 @BeforeEach
 public void setMockOutput() {
@@ -137,9 +137,9 @@ public void setMockOutput() {
             return null;
         }
     });
-	
+
 }
-	
+
 	@Test
 	public void testGetExistingRegistration() {
 		assertEquals(Registration_DATE, registrationService.getRegistration(Customer_USERNAME, Session_START, Instructor_USERNAME, SportClass_NAME).getDate());
@@ -149,7 +149,7 @@ public void setMockOutput() {
 
 	@Test
 	public void testGetNonExistingRegistration() {
-		assertNull(registrationService.getRegistration(NONEXISTING_Customer_USERNAME, NONEXISTING_Session_START, NONEXISTING_Instructor_USERNAME, NONEX));
+		assertNull(registrationService.getRegistration(NONEXISTING_Customer_USERNAME, NONEXISTING_Session_START, NONEXISTING_Instructor_USERNAME, NONEXISTING_SportClass_NAME));
 	}
 
 
