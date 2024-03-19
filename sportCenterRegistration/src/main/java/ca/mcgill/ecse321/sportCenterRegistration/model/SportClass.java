@@ -15,6 +15,7 @@ public class SportClass
   @GeneratedValue
   private int id;
   private String name;
+  private boolean approved;
 
 
   @SuppressWarnings("unused")
@@ -22,6 +23,7 @@ public class SportClass
   public SportClass(String aName)
   {
     name = aName;
+    approved = false;
   }
 
 
@@ -41,6 +43,10 @@ public class SportClass
     return wasSet;
   }
 
+  public void setApproved(boolean aApproved){
+    approved = aApproved;
+  }
+
   public int getId()
   {
     return id;
@@ -49,6 +55,11 @@ public class SportClass
   public String getName()
   {
     return name;
+  }
+
+  public boolean getApproved()
+  {
+    return approved;
   }
 
 }
