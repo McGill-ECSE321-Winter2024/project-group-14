@@ -27,10 +27,4 @@ public class SportClassService{
         }
         return sportClass;
     }
-
-//    @Transactional
-//    public Iterable<SportClass> findAllSportClass(){
-//        ;
-//    }
-
 }

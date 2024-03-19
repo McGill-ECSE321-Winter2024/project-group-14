@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,10 +40,15 @@ public class SportClassController{
         return convertToDto(sportClass);
     }
 
-    @PutMapping(value= {"/sport-class/approve/{name}", "/sport-class/approve/{name}/"})
+    @PatchMapping(value= {"/sport-class/approve/{name}", "/sport-class/approve/{name}/"})
     public SportClassDto approveSportClass(@PathVariable("name") String name) throws IllegalArgumentException{
         SportClass sportClass = ownerService.approveSportClass(name);
         return convertToDto(sportClass);
+    }
+
+    @DeleteMapping(value={"/sport-class/{name}", "/sport-class/{name}/"})
+    public void delete(@PathVariable("name") String name) throws IllegalArgumentException{
+        ownerService.deleteSportClass(name);
     }
 
     private SportClassDto convertToDto(SportClass s) throws IllegalArgumentException{

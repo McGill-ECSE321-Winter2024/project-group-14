@@ -217,4 +217,13 @@ public class SportClassServiceTests{
         assertNotNull(error);
         assertEquals("Sport Class doesn't exist!", error);
     }
+
+    @Test
+    public void testDeleteSportClass(){
+        try{
+            ownerService.deleteSportClass(TEST_NAME);
+        } catch (IllegalArgumentException e){
+            fail(e.getMessage());
+        }
+    }
 }
