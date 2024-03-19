@@ -41,6 +41,8 @@ public class OwnerService {
 	OwnerRepository OwnerRepository;
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	SportClassRepository sportClassRepo;
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();

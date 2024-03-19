@@ -1,3 +1,4 @@
+package ca.mcgill.ecse321.sportCenterRegistration.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
