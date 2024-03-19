@@ -16,4 +16,6 @@ public interface SessionRepository extends CrudRepository<Session, Integer>{
 
     public Session findSessionByStartTimeAndInstructorAndSportClass(Time sessionStartTime,
             Instructor instructor, SportClass sportClass);
+
+//    public List<Session> findAllByDate();
 }

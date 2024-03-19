@@ -26,7 +26,7 @@ public class SessionService {
      */
 
     @Transactional
-    public Session createSession(Time startTime, Time endTime, String location, Date date) {
+    public Session createSession(Time startTime, Time endTime, String location, Date date, Instructor instructor, SportClass sportClass) {
 
         // checking all inputs are valid
         String error = "";
@@ -47,11 +47,7 @@ public class SessionService {
         }
 
         // create a session
-        Session session = new Session();
-        session.setDate(date);
-        session.setStartTime(startTime);
-        session.setEndTime(endTime);
-        session.setLocation(location);
+        Session session = new Session(startTime, endTime, location, date, instructor, sportClass);
         Session newSession = SessionRepository.save(session);
         return newSession;
     }
@@ -62,7 +58,7 @@ public class SessionService {
      * This method updates a session schedual
      */
 
-    public Session updateSession(int id, Time startTime, Time endTime, String location, Date date) {
+    public Session updateSession(int id, Time startTime, Time endTime, String location, Date date, Instructor instructor, SportClass sportClass) {
 
         // check if the session exists
         Session session = SessionRepository.findSessionById(id);
@@ -93,8 +89,7 @@ public class SessionService {
         session.setStartTime(startTime);
         session.setEndTime(endTime);
         session.setLocation(location);
-        SessionRepository.save(session);
-        return session;
+        return SessionRepository.save(session);
     }
 
     /**
@@ -113,25 +108,40 @@ public class SessionService {
     /**
      * Section: Session servive
      * Author: Stephen Huang
+     * This method gets a specific session schedule given the corresponding
+     * sportclasstype
+     */
+    @Transactional
+    public List<Session> getSession(SportClass sportClass) {
+
+        // return dailyschedule with the inputed id
+        List<Session> sessions = SessionRepository.findSessionBySportClass(sportClass);
+        return sessions;
+    }
+
+    /**
+     * Section: Session servive
+     * Author: Stephen Huang
      * This method deletes a session schedual
      */
     @Transactional
     public boolean deleteSession(int id) {
 
-        // check null id
-        if (id == null) { // help me here !!!!!!!!!! LMAO
-            throw new IllegalArgumentException("Id cannot be empty");
-        }
-
         // check if the daily schedule exists
         Session session = SessionRepository.findSessionById(id);
 
+        // check null
         if (session == null)
             throw new IllegalArgumentException("Session not found");
 
+        // check Id for an invalid "id" value
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id must be positive and non-zero");
+        }
+
         // delete dailyschedule
         SessionRepository.delete(session);
-        session.delete();
+//        session.delete();
         return true;
     }
 
@@ -153,5 +163,6 @@ public class SessionService {
             resultList.add(t);
         }
         return resultList;
+
     }
 }
