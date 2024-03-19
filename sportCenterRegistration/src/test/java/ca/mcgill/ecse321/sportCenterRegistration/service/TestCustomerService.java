@@ -157,6 +157,24 @@ public void testCreateCustomer() {
 		assertEquals("Password cannot be empty!", error);
 	}
 
+	@Test
+	public void testCreateCustomerInvalidEmail() {
+		String username = "username";
+		String email = "email";
+        String password = "password";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Password cannot be empty!", error);
+	}
+
 
     @Test
 	public void testCreateCustomerEmptyUsername() {
