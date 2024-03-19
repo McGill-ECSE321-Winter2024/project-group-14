@@ -161,6 +161,10 @@ public class RegistrationService{
         if(sessionRepository.findSessionByStartTimeAndInstructorAndSportClass(sessionStarTime, instructorRepository.findInstructorByUsername(instructorUsername), sportClassRepository.findSportClassByName(sportClassName)) == null){
             throw new IllegalArgumentException("Session with the given start time, instructor, and sportclass does not exist.");
         }
+        //check if session date is before registration date
+        if(sessionRepository.findSessionByStartTimeAndInstructorAndSportClass(sessionStarTime, instructorRepository.findInstructorByUsername(instructorUsername), sportClassRepository.findSportClassByName(sportClassName)).getDate().before(aDate)){
+            throw new IllegalArgumentException("Can not register to a session that already ended.");
+        }
         //check if registration already exists
         if(registrationRepository.findRegistrationByAccountAndSession(accountRepository.findAccountByUsername(username), sessionRepository.findSessionByStartTimeAndInstructorAndSportClass(sessionStarTime, instructorRepository.findInstructorByUsername(instructorUsername), sportClassRepository.findSportClassByName(sportClassName))) != null){
             throw new IllegalArgumentException("Registration already exists");
