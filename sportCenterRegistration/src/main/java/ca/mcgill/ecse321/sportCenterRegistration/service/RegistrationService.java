@@ -177,7 +177,3 @@ public class RegistrationService{
 		return toList(registrationRepository.findAll());
 	}
 }
-	public List<Registration> getAllRegistrations() {
-		return toList(registrationRepository.findAll());
-	}
-}
