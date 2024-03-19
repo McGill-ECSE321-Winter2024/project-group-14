@@ -101,7 +101,7 @@ public class InstructorRestController {
     @GetMapping(value= {"/Instructor/all", "/Instructor/all/"})
     public ResponseEntity<?> getAllInstructors() throws IllegalArgumentException {
         try {
-            List<Instructor> Instructors = InstructorService.getAllInstructors());
+            List<Instructor> Instructors = InstructorService.getAllInstructors();
             
             return ResponseEntity.ok(convertListToDto(Instructors));
         }
