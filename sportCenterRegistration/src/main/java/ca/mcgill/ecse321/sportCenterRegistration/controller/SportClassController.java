@@ -51,6 +51,11 @@ public class SportClassController{
         ownerService.deleteSportClass(name);
     }
 
+    @GetMapping(value={"/sport-class/", "/sport-class/"})
+    public List<SportClassDto> getAllSportClass() throws IllegalArgumentException{
+        return sportClassService.getAllSportClass().stream().map(p->convertToDto(p)).collect(Collectors.toList());
+    }
+
     private SportClassDto convertToDto(SportClass s) throws IllegalArgumentException{
         return new SportClassDto(s.getName(), s.getApproved());
     }
