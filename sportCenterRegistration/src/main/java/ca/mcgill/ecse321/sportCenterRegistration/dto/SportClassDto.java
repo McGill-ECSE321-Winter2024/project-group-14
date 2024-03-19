@@ -9,14 +9,6 @@ public class SportClassDto{
         this.approved = approved;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public void setApproved(boolean approved){
-        this.approved = approved;
-    }
-
     public String getName()
     {
         return name;
