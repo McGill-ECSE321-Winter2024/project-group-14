@@ -224,7 +224,7 @@ public class CustomerService {
 
 	@Transactional
 	public Customer updateCustomer(String oldUsername, String username, String email, String password) {
-		//validates the information and then accordinly updates the customer information
+		//validates the information and then accordingly updates the customer information
 		if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
@@ -248,5 +248,6 @@ public class CustomerService {
 		return CustomerUpdated;
 
 	}
+	
 
 }

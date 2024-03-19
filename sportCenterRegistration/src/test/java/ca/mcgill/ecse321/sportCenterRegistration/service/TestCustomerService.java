@@ -89,7 +89,7 @@ public void testCreateCustomer() {
 		assertEquals(0, service.getAllCustomers().size());
 
 		String username = "Muhammad";
-        String email = "Memail";
+        String email = "Memail@gmail.com";
         String password = "Mpass";
 		Customer customer = null;
 		try {
@@ -106,7 +106,7 @@ public void testCreateCustomer() {
     @Test
 	public void testCreateCustomerNullUsername() {
 		String username = null;
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "password";
         Customer customer = null;
         String error = null;
@@ -142,7 +142,7 @@ public void testCreateCustomer() {
     @Test
 	public void testCreateCustomerNullPassword() {
 		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
         String password = null;
         Customer customer = null;
         String error = null;
@@ -172,14 +172,33 @@ public void testCreateCustomer() {
 
 		assertNull(customer);
 		
-		assertEquals("Password cannot be empty!", error);
+		assertEquals("Email is invalid!", error);
+	}
+
+//doing this rn
+	@Test
+	public void testCreateCustomerInvalidUsername() {
+		String username = "username";
+		String email = "email";
+        String password = "password";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Email is invalid!", error);
 	}
 
 
     @Test
 	public void testCreateCustomerEmptyUsername() {
 		String username = "";
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "password";
         Customer customer = null;
         String error = null;
@@ -216,7 +235,7 @@ public void testCreateCustomer() {
     @Test
 	public void testCreateCustomerEmptyPassword() {
 		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "";
         Customer customer = null;
         String error = null;
@@ -237,7 +256,7 @@ public void testCreateCustomer() {
     public void deleteCustomer() {
         assertEquals(0, service.getAllCustomers().size());
         String username = "Muhammad";
-        String email = "Memail";
+        String email = "Memail@gmail.com";
         String password = "Mpass";
 		service.createCustomer(username, email, password);
         assertEquals(1, service.getAllCustomers().size());
