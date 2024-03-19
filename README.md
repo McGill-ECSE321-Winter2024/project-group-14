@@ -7,6 +7,19 @@ Welcome to the Sport Center Registration Application! Our goal is to develop a w
 
 ### Please check our [Wiki](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki) for more details!
 
+## Our Team
+### <br> Hammad Muhammad
+A U1 Software Engineering student with a passion for software engineering. Muhammad has 2 years of experience with Java and Python.
+### <br> Motta Vivek
+A Software Engineering student with a passion for coding, Vivek has many years of experience with Java.
+### <br> Marji David
+A Jordanian U1 software engineering student who is very passionate about coding and he has around 4 years of experience with Java.
+### <br> Yue Ming Xuan <br>
+Hi, I am a second-year software engineering student. I have a decent knowledge of Python, Java, C, and HTML. I am interested in exploring in depth the myth behind machine learning and AI algorithms. I will be able to contribute a lot to the domain model design, the software design and the documentation of the project.
+### <br> Huang Stephen
+U2 Computer engineering student. Has 2 years experience with Java.
+### <br> Luo Loridy
+An exchange student from the University of Hong Kong with experience in Python, Java, JavaScript
 
 ## Meet the team
 
@@ -37,25 +50,27 @@ To run the tests locally, follow these steps:
 
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
 | -- | -- | --  | -- | -- |
-| Hammad Muhammad | -- | -- | --  | -- |
-| Motta Vivek | -- | -- | -- | -- |
-| Marji David | -- | -- | -- | -- |
-| Yue Ming Xuan | -- | -- | -- | -- |
-| Huang Stephen | -- | -- | -- | -- |
-| Luo Loridy | -- | -- | -- | -- |
+| Hammad Muhammad | 35 | -- | --  | -- |
+| Motta Vivek | 35 | -- | -- | -- |
+| Marji David | 30 | -- | -- | -- |
+| Yue Ming Xuan | 35 | -- | -- | -- |
+| Huang Stephen | 40 | -- | -- | -- |
+| Luo Loridy | 40 | -- | -- | -- |
 
+# Deliverable 1
+## Links
 ## Sprint 1 effort table
 
 | Team Member | Contributions  | Effort (Hours) |
 | -- | -- | -- | 
-| Hammad Muhammad | -- | -- |
-| Motta Vivek | -- | -- |
-| Marji David | -- | -- | 
-| Yue Ming Xuan | -- | -- | 
-| Huang Stephen | -- | -- |
-| Luo Loridy | -- | -- |
+| Hammad Muhammad | Functional Requirements, Non-Functional Requirements, Use Case Specifications, Persistence Layer Testing, Domain Model | 35 |
+| Motta Vivek | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Use Case Specifications | 35 |
+| Marji David | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Meeting Minutes, Use Case Specifications | 30 | 
+| Yue Ming Xuan | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications | 35 | 
+| Huang Stephen | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications, Use Case Diagrams | 40 |
+| Luo Loridy | Persistence Layer, Domain Model, Functional Requirements, Non-Functional Requirements, Use Case Specifications | 40 |
 
 ## Sprint 1 Project report
-
+The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-1)
 
 

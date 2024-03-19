@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.RegistrationRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.SessionRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.ShiftRepository;
@@ -20,8 +21,9 @@ import ca.mcgill.ecse321.sportCenterRegistration.dao.StaffRepository;
 
 
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Shift;
@@ -33,17 +35,14 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 
 @Service
-public class InstructorService {
+public class CustomerService {
+    
     @Autowired
-    InstructorRepository InstructorRepository;
-    @Autowired
-    AccountRepository accountRepository;
-    @Autowired
-    StaffRepository staffRepository;
-    @Autowired
-    SportClassRepository sportClassRepo;
+	CustomerRepository CustomerRepository;
+	@Autowired
+	AccountRepository accountRepository;
 
-    private <T> List<T> toList(Iterable<T> iterable){
+	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
 			resultList.add(t);
@@ -55,21 +54,21 @@ public class InstructorService {
 	 * 
 	 * @author Muhammad Hammad
 	 * 
-	 * Method returns the Instructor object with the corresponding username
+	 * Method returns the Customer object with the corresponding username
 	 * @param String username
-	 * @return Instructor
+	 * @return Customer
 	 * 
 	 * 
 	 * 
 	 * 
 	 */
     @Transactional
-	public Instructor getInstructor(String username) {
-		Instructor Instructor = InstructorRepository.findInstructorByUsername(username);
-        if (Instructor == null) {
-            throw new IllegalArgumentException("Instructor name is invalid");
+	public Customer getCustomer(String username) {
+		Customer Customer = CustomerRepository.findCustomerByUsername(username);
+        if (Customer == null) {
+            throw new IllegalArgumentException("Customer name is invalid");
         }
-		return Instructor;
+		return Customer;
 	}
 
 	/*
@@ -94,41 +93,45 @@ public class InstructorService {
 		return true;
 	}
 
+
+
 	private boolean usernameIsUnique(String username){
-		if (InstructorRepository.findInstructorByUsername(username) == null) {
+		if (CustomerRepository.findCustomerByUsername(username) == null) {
 			return true;
 		}
 		return false;
 	}
 
-    /*
+
+ 	/*
 	@author Muhammad Hammad
 
-	Method deletes Instructor with a given username adn returns a boolean indicating whether the deletion is sucessful 
+	Method deletes Customer with a given username adn returns a boolean indicating whether the deletion is sucessful 
 	@param String username
 	@return Boolean
 
 	
 	*/
+
     @Transactional
-	public Boolean deleteInstructor(String username) {
+	public Boolean deleteCustomer(String username) {
         if (username == null || username.trim().length() == 0) {
-			throw new IllegalArgumentException("Instructor name cannot be empty!");
+			throw new IllegalArgumentException("Customer name cannot be empty!");
 		}
-		Instructor InstructorToDelete = getInstructor(username);
-		InstructorRepository.delete(InstructorToDelete);
+		Customer CustomerToDelete = getCustomer(username);
+		CustomerRepository.delete(CustomerToDelete);
 		return true;
 	}
 
-    /*
+	/*
 	 * 
 	 * @author Muhammad Hammad
 	 * 
-	 * Method creates a Instructor with a given username, email, and password
+	 * Method creates a Customer with a given username, email, and password
 	 * @param String username
 	 * @param String email
 	 * @param String password
-	 * @return Instructor
+	 * @return Customer
 	 * 
 	 * 
 	 * 
@@ -136,7 +139,9 @@ public class InstructorService {
 	 */
 
     @Transactional
-    public Instructor createInstructor(String username, String email, String password ) {
+    public Customer createCustomer(String username, String email, String password ) {
+		
+
         if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
@@ -154,35 +159,34 @@ public class InstructorService {
 		}
 		
 
-		Instructor Instructor = new Instructor(username, email, password);
-		InstructorRepository.save(Instructor);
-	    accountRepository.save(Instructor);
-		return Instructor;
-    }
-	
+		Customer Customer = new Customer(username, email, password);
+		CustomerRepository.save(Customer);
+	    accountRepository.save(Customer);
+		return Customer;
+	}
 
-    /*
+	/*
 	 * 
 	 * @author Muhammad Hammad
-	 * Method returns a list of all the Instructor in the repository
+	 * Method returns a list of all the Customer in the repository
 	 * 
-	 * @return List<Instructor>
+	 * @return List<Customer>
 	 * 
 	 * 
 	 */
 	@Transactional
-	public List<Instructor> getAllInstructors() {
-		return toList(InstructorRepository.findAll());
+	public List<Customer> getAllCustomers() {
+		return toList(CustomerRepository.findAll());
 	}
 
-	/*
+    /*
      * 
      * @author Muhammad Hammad
      * @param username
      * @param password
-     * @return Instructor object
+     * @return Customer object
      * 
-     * method that checks to see if the username and password correspond to an Instructor object at which point it returns the Instructor object
+     * method that checks to see if the username and password correspond to an Customer object at which point it returns the Customer object
      * 
      * 
      * 
@@ -190,33 +194,32 @@ public class InstructorService {
      */
 
 	@Transactional
-	public Instructor InstructorLogin(String username, String password){
+	public Customer CustomerLogin(String username, String password){
 		//chose to only return one type of error message for invalid username and password to maintain security for the application
-		if (InstructorRepository.findInstructorByUsername(username) == null){
+		if (CustomerRepository.findCustomerByUsername(username) == null){
 			throw new IllegalArgumentException("Either the username or password is invalid!");
 		}
-		else if (InstructorRepository.findInstructorByUsername(username).getPassword() != password) {
+		else if (CustomerRepository.findCustomerByUsername(username).getPassword() != password) {
 			throw new IllegalArgumentException("Either the username or password is invalid!");
 		}
-		return InstructorRepository.findInstructorByUsername(username);
+		return CustomerRepository.findCustomerByUsername(username);
 	}
-
-	/*
+    /*
      * @author Muhammad Hammad
      * 
      * @param String oldUsername
      * @param String username
      * @param String email
      * @param String password
-     * @return Instructor object
+     * @return Customer object
      * 
-     * Method that updates an Instructor object corresponding to the old username with the new information
+     * Method that updates an Customer object corresponding to the old username with the new information
      * 
      * 
      */
 
 	@Transactional
-	public Instructor updateInstructor(String oldUsername, String username, String email, String password) {
+	public Customer updateCustomer(String oldUsername, String username, String email, String password) {
 		if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
@@ -233,25 +236,12 @@ public class InstructorService {
 			throw new IllegalArgumentException("Username is not unique!");
 		}
 		
-		Instructor InstructorUpdated = InstructorRepository.findInstructorByUsername(oldUsername);
-		InstructorUpdated.setUsername(username);
-		InstructorUpdated.setEmail(email);
-		InstructorUpdated.setPassword(password);
-		return InstructorUpdated;
+		Customer CustomerUpdated = CustomerRepository.findCustomerByUsername(oldUsername);
+		CustomerUpdated.setUsername(username);
+		CustomerUpdated.setEmail(email);
+		CustomerUpdated.setPassword(password);
+		return CustomerUpdated;
 
-	}
-
-
-    @Transactional
-	public SportClass createSportClass(String name){
-		if (name==null || name.length()<=0){
-			throw new IllegalArgumentException("Sport Class name should not be empty!");
-		}
-		if (sportClassRepo.findSportClassByName(name)!=null){
-			throw new IllegalArgumentException("Sport Class already exists!");
-		}
-		SportClass sportClass = new SportClass(name);
-		return sportClassRepo.save(sportClass);
 	}
 
 }

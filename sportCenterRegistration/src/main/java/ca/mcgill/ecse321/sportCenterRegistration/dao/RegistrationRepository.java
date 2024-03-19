@@ -11,4 +11,5 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 public interface RegistrationRepository extends CrudRepository<Registration, Integer>{
     public Registration findRegistrationById(int id);
 
+    public Registration findRegistrationByAccountAndSession(Account account, Session session);
 }
