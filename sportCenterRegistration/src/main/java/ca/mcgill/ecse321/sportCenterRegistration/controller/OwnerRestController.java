@@ -101,7 +101,7 @@ public class OwnerRestController {
     @GetMapping(value= {"/Owner/all", "/Owner/all/"})
     public ResponseEntity<?> getAllOwners() throws IllegalArgumentException {
         try {
-            List<Owner> Owners = OwnerService.getAllOwners());
+            List<Owner> Owners = OwnerService.getAllOwners();
             
             return ResponseEntity.ok(convertListToDto(Owners));
         }

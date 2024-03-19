@@ -101,7 +101,7 @@ public class CustomerRestController {
     @GetMapping(value= {"/customer/all", "/customer/all/"})
     public ResponseEntity<?> getAllCustomers() throws IllegalArgumentException {
         try {
-            List<Customer> customers = customerService.getAllCustomers());
+            List<Customer> customers = customerService.getAllCustomers();
             
             return ResponseEntity.ok(convertListToDto(customers));
         }

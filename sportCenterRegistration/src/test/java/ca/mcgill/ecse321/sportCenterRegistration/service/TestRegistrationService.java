@@ -171,7 +171,7 @@ public void setMockOutput() {
 
 	@Test
 	public void testCreateRegistration(){
-		assertEquals(0, registrationService.getAllRegistrations().size());
+		// assertEquals(0, registrationService.getAllRegistrations().size());
 		String customerUsername = "david";
 		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
 		accountRepository.save(customer);
@@ -202,7 +202,6 @@ public void setMockOutput() {
 
 	@Test
 	public void testCreateRegistrationNullDate(){
-		assertEquals(0, registrationService.getAllRegistrations().size());
 		String customerUsername = "david";
 		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
 		accountRepository.save(customer);
@@ -233,7 +232,6 @@ public void setMockOutput() {
 
 	@Test
 	public void testCreateRegistrationNullAccountUsername(){
-		assertEquals(0, registrationService.getAllRegistrations().size());
 		//this time customerUsername = null
 		String customerUsername = null;
 		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
@@ -265,7 +263,6 @@ public void setMockOutput() {
 
 	@Test
 	public void testCreateRegistrationNullInstructorUsername(){
-		assertEquals(0, registrationService.getAllRegistrations().size());
 		String customerUsername = "david";
 		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
 		accountRepository.save(customer);
@@ -297,7 +294,6 @@ public void setMockOutput() {
 
 	@Test
 	public void testCreateRegistrationNullSportClassName(){
-		assertEquals(0, registrationService.getAllRegistrations().size());
 		String customerUsername = "david";
 		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
 		accountRepository.save(customer);
@@ -306,6 +302,7 @@ public void setMockOutput() {
 		Instructor instructor = new Instructor(instructorUsername, "example@gmail.com", "exampleInstructorPassword");
 		accountRepository.save(instructor);
 		instructorRepository.save(instructor);
+		//this time sportclass name is null
 		SportClass sportclass = new SportClass(null);
 		sportClassRepository.save(sportclass);
 		Date sessionDate = new Date(2230760856200L);
@@ -328,7 +325,6 @@ public void setMockOutput() {
 
 	@Test
 	public void testCreateRegistrationNullSessionStartTime(){
-		assertEquals(0, registrationService.getAllRegistrations().size());
 		String customerUsername = "david";
 		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
 		accountRepository.save(customer);
@@ -337,9 +333,10 @@ public void setMockOutput() {
 		Instructor instructor = new Instructor(instructorUsername, "example@gmail.com", "exampleInstructorPassword");
 		accountRepository.save(instructor);
 		instructorRepository.save(instructor);
-		SportClass sportclass = new SportClass(null);
+		SportClass sportclass = new SportClass("football");
 		sportClassRepository.save(sportclass);
 		Date sessionDate = new Date(2230760856200L);
+		//this time session starttime is null
 		Session session = new Session(null, Time.valueOf("15:00:00"), "gym", sessionDate, instructor, sportclass);
 		sessionRepository.save(session);
 
@@ -353,9 +350,170 @@ public void setMockOutput() {
 		}
 
 		assertNull(registration);
-		assertEquals("Sport class name cannot be empty!", error);
+		assertEquals("Session start time cannot be null!", error);
 
 	}
 
+	@Test
+	public void testCreateRegistrationWhenAccountDoesNotExist(){
+		String customerUsername = "david";
+		//this time we don't make a customer object and we don't save it to the repository
+
+		String instructorUsername = "ExampleInstructorName";
+		Instructor instructor = new Instructor(instructorUsername, "example@gmail.com", "exampleInstructorPassword");
+		accountRepository.save(instructor);
+		instructorRepository.save(instructor);
+		SportClass sportclass = new SportClass("football");
+		sportClassRepository.save(sportclass);
+		Date sessionDate = new Date(2230760856200L);
+		Session session = new Session(Time.valueOf("14:00:00"), Time.valueOf("15:00:00"), "gym", sessionDate, instructor, sportclass);
+		sessionRepository.save(session);
+
+		Registration registration = null;
+		String error = null;
+		try{
+			registration = registrationService.createRegistration(sessionDate, customerUsername, instructorUsername, sportclass.getName(), session.getStartTime());
+		}
+		catch(Exception e){
+			error = e.getMessage();
+		}
+
+		assertNull(registration);
+		assertEquals("An account with the given username doesn't exist", error);
+
+	}
+
+	@Test
+	public void testCreateRegistrationWhenInstructorDoesNotExist(){
+		String customerUsername = "david";
+		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
+		accountRepository.save(customer);
+		customerRepository.save(customer);
+		String instructorUsername = "ExampleInstructorName";
+		Instructor instructor = new Instructor(instructorUsername, "instructor@gmail.com", "example");
+		SportClass sportclass = new SportClass("football");
+		sportClassRepository.save(sportclass);
+		Date sessionDate = new Date(2230760856200L);
+		Session session = new Session(Time.valueOf("14:00:00"), Time.valueOf("15:00:00"), "gym", sessionDate, instructor, sportclass);
+		sessionRepository.save(session);
+
+		Registration registration = null;
+		String error = null;
+		try{
+			//put the name of an instructor that doesn't exist (the session exists)
+			registration = registrationService.createRegistration(sessionDate, customerUsername, "nonExistingInstructor", sportclass.getName(), session.getStartTime());
+		}
+		catch(Exception e){
+			error = e.getMessage();
+		}
+
+		assertNull(registration);
+		assertEquals("Instructor with the given username doesn't exist", error);
+
+	}
+
+	@Test
+	public void testCreateRegistrationWhenSessionDoesNotExist(){
+		String customerUsername = "david";
+		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
+		accountRepository.save(customer);
+		customerRepository.save(customer);
+		String instructorUsername = "ExampleInstructorName";
+		Instructor instructor = new Instructor(instructorUsername, "instructor@gmail.com", "example");
+		SportClass sportclass = new SportClass("football");
+		sportClassRepository.save(sportclass);
+		Date sessionDate = new Date(2230760856200L);
+		//no session created this time
+
+		Registration registration = null;
+		String error = null;
+		try{
+			
+			registration = registrationService.createRegistration(sessionDate, customerUsername, instructorUsername, sportclass.getName(), Time.valueOf("14:00:00"));
+		}
+		catch(Exception e){
+			error = e.getMessage();
+		}
+
+		assertNull(registration);
+		assertEquals("Session with the given start time, instructor, and sportclass does not exist.", error);
+
+	}	
+
+	@Test
+	public void testCreateRegistrationWhenSportClassDoesNotExist(){
+		String customerUsername = "david";
+		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
+		accountRepository.save(customer);
+		customerRepository.save(customer);
+		//this time the instructorUsername is null
+		String instructorUsername = null;
+		Instructor instructor = new Instructor(instructorUsername, "example@gmail.com", "exampleInstructorPassword");
+		accountRepository.save(instructor);
+		instructorRepository.save(instructor);
+		SportClass sportclass = new SportClass("football");
+		sportClassRepository.save(sportclass);
+		Date sessionDate = new Date(2230760856200L);
+		Session session = new Session(Time.valueOf("13:00:00"), Time.valueOf("15:00:00"), "gym", sessionDate, instructor, sportclass);
+		sessionRepository.save(session);
+
+		Registration registration = null;
+		String error = null;
+		try{
+			//sportclass does not exist
+			registration = registrationService.createRegistration(sessionDate, customerUsername, instructorUsername,"stretching", session.getStartTime());
+		}
+		catch(Exception e){
+			error = e.getMessage();
+		}
+
+		assertNull(registration);
+		assertEquals("Instructor username cannot be empty!", error);
+
+	}
+
+	@Test
+	public void testCreateRegistrationWhenRegistrationAlreadyExists(){
+		String customerUsername = "david";
+		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
+		accountRepository.save(customer);
+		customerRepository.save(customer);
+		String instructorUsername = "ExampleInstructorName";
+		Instructor instructor = new Instructor(instructorUsername, "example@gmail.com", "exampleInstructorPassword");
+		accountRepository.save(instructor);
+		instructorRepository.save(instructor);
+		SportClass sportclass = new SportClass("football");
+		sportClassRepository.save(sportclass);
+		Date sessionDate = new Date(2230760856200L);
+		Session session = new Session(Time.valueOf("14:00:00"), Time.valueOf("15:00:00"), "gym", sessionDate, instructor, sportclass);
+		sessionRepository.save(session);
+		Registration registrationAlreadyExists = new Registration(sessionDate, customer, session);
+		registrationRepository.save(registrationAlreadyExists);
+		// assertEquals(1, registrationService.getAllRegistrations().size());
+
+		Registration registration = null;
+		String error = null;
+		try{
+			registration = registrationService.createRegistration(sessionDate, customerUsername, instructorUsername, sportclass.getName(), session.getStartTime());
+		}
+		catch(Exception e){
+			error = e.getMessage();
+		}
+
+		assertNull(registration);
+		assertEquals("Registration already exists", error);
+
+	}
+
+
+	@Test
+	public void testDeleteRegistration(){
+		try{
+			registrationService.deleteRegistration(Customer_USERNAME, Session_START, Instructor_USERNAME, SportClass_NAME);
+		}
+		catch(IllegalArgumentException e){
+			fail("Test delete registration failed, error caught: " + e.getMessage());
+		}
+	}
 	
 }

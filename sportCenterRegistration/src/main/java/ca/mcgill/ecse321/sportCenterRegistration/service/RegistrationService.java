@@ -143,7 +143,7 @@ public class RegistrationService{
         
         //check if user doesn't exist
         if(accountRepository.findAccountByUsername(username) == null){
-            throw new IllegalArgumentException("Austomer with the given username doesn't exist");
+            throw new IllegalArgumentException("An account with the given username doesn't exist");
         }
         //check if instructor doesn't exist
         if(instructorRepository.findInstructorByUsername(instructorUsername) == null){
