@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.sportCenterRegistration.dto;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 
 import java.sql.Date;

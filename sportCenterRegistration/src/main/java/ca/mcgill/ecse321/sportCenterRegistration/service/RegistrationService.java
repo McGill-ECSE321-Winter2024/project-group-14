@@ -64,12 +64,24 @@ public class RegistrationService{
             throw new IllegalArgumentException("Start time can not be null");
         }
 
+        if(accountRepository.findAccountByUsername(accountUsername) == null){
+            throw new IllegalArgumentException("No such user exists");
+        }
+
+        if(instructorRepository.findInstructorByUsername(instructorUsername) == null){
+            throw new IllegalArgumentException("No such instructor exists");
+        }
+
+        if(sportClassRepository.findSportClassByName(sportClassName) == null){
+            throw new IllegalArgumentException("No sport class with this name exists");
+        }
+
         Registration registration = registrationRepository.findRegistrationByAccountAndSession(accountRepository.findAccountByUsername(accountUsername),
          sessionRepository.findSessionByStartTimeAndInstructorAndSportClass(startTime, instructorRepository.findInstructorByUsername(instructorUsername), sportClassRepository.findSportClassByName(sportClassName)));
 
 
         if(registration == null){
-            throw new IllegalArgumentException("Failed to create a registration");
+            throw new IllegalArgumentException("Failed to find the registration");
         }
 
         return registration;

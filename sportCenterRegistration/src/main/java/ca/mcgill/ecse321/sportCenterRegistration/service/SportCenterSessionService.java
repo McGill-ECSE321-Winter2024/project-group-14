@@ -87,7 +87,8 @@ public class SportCenterSessionService {
 		}
 
 		// create a session
-		Session session = new Session();
+		//REMOVE THIS I ONLY PUT NULL TO REMOVE ERROR
+		Session session = new Session(null,null,null,null,null,null);
 		session.setDate(date);
 		session.setStartTime(startTime);
 		session.setEndTime(endTime);
@@ -159,7 +160,8 @@ public class SportCenterSessionService {
 	public boolean deleteSession(int id) {
 
 		// check null id
-		if (id == null) { // help me here !!!!!!!!!! LMAO
+
+		if (id < 0) { // help me here !!!!!!!!!! LMAO
 			throw new IllegalArgumentException("Id cannot be empty");
 		}
 
@@ -171,7 +173,7 @@ public class SportCenterSessionService {
 
 		// delete dailyschedule
 		SessionRepository.delete(session);
-		session.delete();
+		session = null;
 		return true;
 	}
 
@@ -267,12 +269,12 @@ public class SportCenterSessionService {
 	 * 
 	 */
 
-	private <T> List<T> toList(Iterable<T> iterable) {
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
+	// private <T> List<T> toList(Iterable<T> iterable) {
+	// 	List<T> resultList = new ArrayList<T>();
+	// 	for (T t : iterable) {
+	// 		resultList.add(t);
+	// 	}
+	// 	return resultList;
+	// }
 
 }

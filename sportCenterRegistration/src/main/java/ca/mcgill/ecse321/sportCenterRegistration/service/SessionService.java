@@ -47,7 +47,9 @@ public class SessionService {
         }
 
         // create a session
-        Session session = new Session();
+
+        //REMOVE THIS I ONLY PUT NULL TO REMOVE ERROR
+        Session session = new Session(null,null,null,null,null,null);
         session.setDate(date);
         session.setStartTime(startTime);
         session.setEndTime(endTime);
@@ -119,7 +121,7 @@ public class SessionService {
     public boolean deleteSession(int id) {
 
         // check null id
-        if (id == null) { // help me here !!!!!!!!!! LMAO
+        if (id <0) { // help me here !!!!!!!!!! LMAO
             throw new IllegalArgumentException("Id cannot be empty");
         }
 
@@ -131,7 +133,7 @@ public class SessionService {
 
         // delete dailyschedule
         SessionRepository.delete(session);
-        session.delete();
+        session = null;
         return true;
     }
 
@@ -154,4 +156,5 @@ public class SessionService {
 		}
 		return resultList;
 
+    }
 }

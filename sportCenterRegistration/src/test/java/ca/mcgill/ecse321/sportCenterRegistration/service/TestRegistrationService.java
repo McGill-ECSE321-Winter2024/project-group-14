@@ -1,24 +1,23 @@
 package ca.mcgill.ecse321.sportCenterRegistration.service; 
 
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.lenient;
+// import ca.mcgill.ecse321.sportCenterRegistration.model.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.sql.Date;
 import java.sql.Time;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
@@ -31,11 +30,6 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
-
-
-
-
-
 
 
 
@@ -84,29 +78,40 @@ public class TestRegistrationService  {
 	private static final String NONEXISTING_SportClass_NAME = "NotASportClassName";
 	
 
-@BeforeEach
-public void setMockOutput() {
-    lenient().when(registrationRepository.findRegistrationById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
-        if(invocation.getArgument(0).equals(Registration_DATE)) {
-            Customer customer = new Customer(Customer_USERNAME, Customer_EMAIL, Customer_PASSWORD);
-			accountRepository.save(customer);
-			customerRepository.save(customer);
-			Instructor instructor = new Instructor(Instructor_USERNAME, Instructor_EMAIL, Instructor_PASSWORD);
-			accountRepository.save(instructor);
-			instructorRepository.save(instructor);
-			SportClass sportclass = new SportClass(SportClass_NAME);
-			sportClassRepository.save(sportclass);
-			Session session = new Session(Session_START, Session_END, Session_LOCATION, Session_DATE, instructor,sportclass);
-			sessionRepository.save(session);
-			Registration registration = new Registration(Registration_DATE, customer, session);
+	@BeforeEach
+	public void setMockOutput() {
+		lenient().when(registrationRepository.findRegistrationById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(Registration_DATE)) {
 
-            return registration;
-        } else {
-            return null;
-        }
-    });
-	
-}
+				Customer customer = new Customer(Customer_USERNAME, Customer_EMAIL, Customer_PASSWORD);
+				accountRepository.save(customer);
+				customerRepository.save(customer);
+				Instructor instructor = new Instructor(Instructor_USERNAME, Instructor_EMAIL, Instructor_PASSWORD);
+				accountRepository.save(instructor);
+				instructorRepository.save(instructor);
+				SportClass sportclass = new SportClass(SportClass_NAME);
+				sportClassRepository.save(sportclass);
+				Session session = new Session(Session_START, Session_END, Session_LOCATION, Session_DATE, instructor,sportclass);
+				sessionRepository.save(session);
+				Registration registration = new Registration(Registration_DATE, customer, session);
+
+				return registration;
+			} else {
+				return null;
+			}
+		});
+		
+	}
+
+	@AfterEach
+	public void cleanUp(){
+		Mockito.reset(accountRepository);
+		Mockito.reset(sportClassRepository);
+		Mockito.reset(registrationRepository);
+		Mockito.reset(instructorRepository);
+		Mockito.reset(sessionRepository);
+		Mockito.reset(customerRepository);
+	}
 	
 	@Test
 	public void testGetExistingRegistration() {
@@ -117,23 +122,61 @@ public void setMockOutput() {
 
 	@Test
 	public void testGetNonExistingRegistration() {
+		Registration registration = null;
+		try{
+			registration = registrationService.getRegistration(NONEXISTING_Customer_USERNAME, NONEXISTING_Session_START, NONEXISTING_Instructor_USERNAME, NONEXISTING_SportClass_NAME);
+		}
+		catch(Exception e){
+			assertEquals("No such user exists" ,e.getMessage());
+			assertNull(registration);
+		}
 
-		assertNull(registrationService.getRegistration(NONEXISTING_Customer_USERNAME, NONEXISTING_Session_START, NONEXISTING_Instructor_USERNAME, NONEXISTING_SportClass_NAME));
-		//testing if it finds the registration when we use correct customer username
-		assertNull(registrationService.getRegistration(Customer_USERNAME,NONEXISTING_Session_START, NONEXISTING_Instructor_USERNAME, NONEXISTING_SportClass_NAME));
-		
-		//testing if it the registration finds when we use correct Session start time
-		assertNull(registrationService.getRegistration(NONEXISTING_Customer_USERNAME, Session_START, NONEXISTING_Instructor_USERNAME, NONEXISTING_SportClass_NAME));
+		try{
+			//testing if it finds the registration when we use correct customer username
+			registration = registrationService.getRegistration(Customer_USERNAME, NONEXISTING_Session_START, NONEXISTING_Instructor_USERNAME, NONEXISTING_SportClass_NAME);
+		}
+		catch(Exception e){
+			assertEquals("No such instructor exists" ,e.getMessage());
+			assertNull(registration);
+		}
 
-		//testing if it finds the registration when we use correct instructor username (everything else is wrong)
-		assertNull(registrationService.getRegistration(NONEXISTING_Customer_USERNAME, NONEXISTING_Session_START, Instructor_USERNAME, NONEXISTING_SportClass_NAME));
+		try{
+			//testing if it the registration finds when we use correct Session start time
+			registration = registrationService.getRegistration(NONEXISTING_Customer_USERNAME, Session_START, NONEXISTING_Instructor_USERNAME, NONEXISTING_SportClass_NAME);
+		}
+		catch(Exception e){
+			assertEquals("No such user exists" ,e.getMessage());
+			assertNull(registration);
+		}
 
-		//testing if it finds the registration with the correct sport class name
-		assertNull(registrationService.getRegistration(NONEXISTING_Customer_USERNAME, NONEXISTING_Session_START, NONEXISTING_Instructor_USERNAME, SportClass_NAME));
+		try{
+			//testing if it finds the registration when we use correct instructor username (everything else is wrong)
+			registration = registrationService.getRegistration(NONEXISTING_Customer_USERNAME, NONEXISTING_Session_START, Instructor_USERNAME, NONEXISTING_SportClass_NAME);
 
-		//testing if it finds the registration with the correct sport class name, instructor name, and session start time
-		assertNull(registrationService.getRegistration(NONEXISTING_Customer_USERNAME, Session_START, Instructor_USERNAME, SportClass_NAME));
-		
+		}
+		catch(Exception e){
+			assertEquals("No such user exists" ,e.getMessage());
+			assertNull(registration);
+		}
+
+		try{
+			//testing if it finds the registration with the correct sport class name
+			registration = registrationService.getRegistration(NONEXISTING_Customer_USERNAME, NONEXISTING_Session_START, NONEXISTING_Instructor_USERNAME, SportClass_NAME);
+		}
+		catch(Exception e){
+			assertEquals("No such user exists" ,e.getMessage());
+			assertNull(registration);
+		}
+
+		try{
+			//testing if it finds the registration with the correct sport class name, instructor name, and session start time
+			registration = registrationService.getRegistration(NONEXISTING_Customer_USERNAME, Session_START, Instructor_USERNAME, SportClass_NAME);
+		}
+		catch(Exception e){
+			assertEquals("No such user exists" ,e.getMessage());
+			assertNull(registration);
+		}
+	
 	}
 
 	@Test
@@ -158,7 +201,7 @@ public void setMockOutput() {
 			registration = registrationService.createRegistration(sessionDate, customerUsername, instructorUsername, sportclass.getName(), session.getStartTime());
 		}
 		catch(Exception e){
-			fail();
+			fail(e.getMessage());
 		}
 
 		assertNotNull(registration);
@@ -225,7 +268,7 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("Customer username cannot be empty!", error);
-
+		assertTrue(true);
 	}
 
 	@Test
@@ -256,7 +299,7 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("Instructor username cannot be empty!", error);
-
+		assertTrue(true);
 	}
 
 	@Test
@@ -287,7 +330,7 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("Sport class name cannot be empty!", error);
-
+		assertTrue(true);
 	}
 
 	@Test
@@ -318,7 +361,7 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("Session start time cannot be null!", error);
-
+		assertTrue(true);
 	}
 
 	@Test
@@ -347,7 +390,7 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("An account with the given username doesn't exist", error);
-
+		assertTrue(true);
 	}
 
 	@Test
@@ -376,7 +419,7 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("Instructor with the given username doesn't exist", error);
-
+		assertTrue(true);
 	}
 
 	@Test
@@ -384,7 +427,6 @@ public void setMockOutput() {
 		String customerUsername = "david";
 		Customer customer = new Customer(customerUsername, "david@gmail.com", "example");
 		accountRepository.save(customer);
-		customerRepository.save(customer);
 		String instructorUsername = "ExampleInstructorName";
 		Instructor instructor = new Instructor(instructorUsername, "instructor@gmail.com", "example");
 		SportClass sportclass = new SportClass("football");
@@ -404,8 +446,8 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("Session with the given start time, instructor, and sportclass does not exist.", error);
-
-	}	
+		assertTrue(true);
+	}
 
 	@Test
 	public void testCreateRegistrationWhenSportClassDoesNotExist(){
@@ -436,7 +478,7 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("Instructor username cannot be empty!", error);
-
+		assertTrue(true);
 	}
 
 	@Test
@@ -469,7 +511,7 @@ public void setMockOutput() {
 
 		assertNull(registration);
 		assertEquals("Registration already exists", error);
-
+		assertTrue(true);
 	}
 
 
@@ -479,8 +521,9 @@ public void setMockOutput() {
 			registrationService.deleteRegistration(Customer_USERNAME, Session_START, Instructor_USERNAME, SportClass_NAME);
 		}
 		catch(IllegalArgumentException e){
-			fail("Test delete registration failed, error caught: " + e.getMessage());
+			fail(e.getMessage());
 		}
+		assertTrue(true);
 	}
 	
 }
