@@ -253,7 +253,6 @@ public void testCreateCustomer() {
 
     //the below test probably isnt working because the projcet isnt compiling properly
     @Test
-<<<<<<< HEAD
 	public void testDeleteCustomer() {
 		
 		Customer customerDelete = null;
@@ -358,24 +357,13 @@ public void testCreateCustomer() {
 		assertEquals(Customer_PASSWORD, customerList.get(0).getPassword());
 
 	}
-=======
-    public void deleteCustomer() {
-        assertEquals(0, service.getAllCustomers().size());
-        String username = "Muhammad";
-        String email = "Memail@gmail.com";
-        String password = "Mpass";
-		service.createCustomer(username, email, password);
-        assertEquals(1, service.getAllCustomers().size());
->>>>>>> parent of 6450f03 (small cahnges)
 
 
 
-    }
+  }
 
 
     
 
 
 
-
-}
