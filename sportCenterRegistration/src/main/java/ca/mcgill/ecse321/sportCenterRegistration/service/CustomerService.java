@@ -42,7 +42,7 @@ public class CustomerService {
 	@Autowired
 	AccountRepository accountRepository;
 
-	public <T> List<T> toList(Iterable<T> iterable){
+	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
 			resultList.add(t);
@@ -117,15 +117,15 @@ public class CustomerService {
 	*/
 
     @Transactional
-	public Customer deleteCustomer(String username) {
+	public Boolean deleteCustomer(String username) {
         //confirms that the username inputted is valid
 		if (username == null || username.trim().length() == 0) {
-			throw new IllegalArgumentException("Username cannot be empty!");
+			throw new IllegalArgumentException("Customer name cannot be empty!");
 		}
 		
 		Customer CustomerToDelete = getCustomer(username);
 		CustomerRepository.delete(CustomerToDelete);
-		return CustomerToDelete;
+		return true;
 	}
 
 	/*

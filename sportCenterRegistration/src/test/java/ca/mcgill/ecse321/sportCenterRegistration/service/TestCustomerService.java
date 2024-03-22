@@ -19,9 +19,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -180,19 +178,21 @@ public void testCreateCustomer() {
 //doing this rn
 	@Test
 	public void testCreateCustomerInvalidUsername() {
-		String email = "email@gmail.com";
+		String username = "username";
+		String email = "email";
         String password = "password";
+        Customer customer = null;
         String error = null;
-
 		try {
-            service.createCustomer(Customer_USERNAME, email, password);
+            customer = service.createCustomer(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
-		assertEquals("Username is not unique!", error);
-	}
 
+		assertNull(customer);
+		
+		assertEquals("Email is invalid!", error);
+	}
 
 
     @Test
@@ -253,6 +253,7 @@ public void testCreateCustomer() {
 
     //the below test probably isnt working because the projcet isnt compiling properly
     @Test
+<<<<<<< HEAD
 	public void testDeleteCustomer() {
 		
 		Customer customerDelete = null;
@@ -357,11 +358,19 @@ public void testCreateCustomer() {
 		assertEquals(Customer_PASSWORD, customerList.get(0).getPassword());
 
 	}
+=======
+    public void deleteCustomer() {
+        assertEquals(0, service.getAllCustomers().size());
+        String username = "Muhammad";
+        String email = "Memail@gmail.com";
+        String password = "Mpass";
+		service.createCustomer(username, email, password);
+        assertEquals(1, service.getAllCustomers().size());
+>>>>>>> parent of 6450f03 (small cahnges)
 
 
 
-
-    
+    }
 
 
     
