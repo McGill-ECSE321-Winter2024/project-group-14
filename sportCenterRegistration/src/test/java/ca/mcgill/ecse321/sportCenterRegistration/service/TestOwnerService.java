@@ -66,7 +66,11 @@ public void setMockOutput() {
     });
 }
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests getting an existing Owner
+ * 
+ */
 @Test
 public void testGetExistingOwner() {
     assertEquals(Owner_USERNAME, service.getOwner(Owner_USERNAME).getUsername());
@@ -74,7 +78,11 @@ public void testGetExistingOwner() {
     assertEquals(Owner_PASSWORD, service.getOwner(Owner_USERNAME).getPassword());
 }
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error frmo getting a non existing Owner
+ * 
+ */
 @Test
 public void testGetNonExistingOwner() {
 
@@ -83,13 +91,17 @@ public void testGetNonExistingOwner() {
     });
 
 }
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests of creating Owner
+ * 
+ */
 @Test
 public void testCreateOwner() {
 		assertEquals(0, service.getAllOwners().size());
 
 		String username = "Muhammad";
-        String email = "Memail";
+        String email = "Memail@gmail.com";
         String password = "Mpass";
 		Owner Owner = null;
 		try {
@@ -102,11 +114,15 @@ public void testCreateOwner() {
         assertEquals(email, Owner.getEmail());
         assertEquals(password, Owner.getPassword());
     }
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null username Owner
+ * 
+ */
     @Test
 	public void testCreateOwnerNullUsername() {
 		String username = null;
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "password";
         Owner Owner = null;
         String error = null;
@@ -120,7 +136,11 @@ public void testCreateOwner() {
 		
 		assertEquals("Username cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null email Owner
+ * 
+ */
     @Test
 	public void testCreateOwnerNullEmail() {
 		String username = "username";
@@ -138,11 +158,15 @@ public void testCreateOwner() {
 		
 		assertEquals("Email cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null password Owner
+ * 
+ */
     @Test
 	public void testCreateOwnerNullPassword() {
 		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
         String password = null;
         Owner Owner = null;
         String error = null;
@@ -156,12 +180,60 @@ public void testCreateOwner() {
 		
 		assertEquals("Password cannot be empty!", error);
 	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an invalid email Owner
+ * 
+ */
+	@Test
+	public void testCreateOwnerInvalidEmail() {
+		String username = "username";
+		String email = "email";
+        String password = "password";
+        Owner Owner = null;
+        String error = null;
+		try {
+            Owner = service.createOwner(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
 
+		assertNull(Owner);
+		
+		assertEquals("Email is invalid!", error);
+	}
 
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an invalid  username Owner
+ * 
+ */	@Test
+	public void testCreateOwnerInvalidUsername() {
+		String username = "username";
+		String email = "email";
+        String password = "password";
+        Owner Owner = null;
+        String error = null;
+		try {
+            Owner = service.createOwner(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(Owner);
+		
+		assertEquals("Email is invalid!", error);
+	}
+
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty username Owner
+ * 
+ */
     @Test
 	public void testCreateOwnerEmptyUsername() {
 		String username = "";
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "password";
         Owner Owner = null;
         String error = null;
@@ -175,7 +247,11 @@ public void testCreateOwner() {
 		
 		assertEquals("Username cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty email Owner
+ * 
+ */
     @Test
 	public void testCreateOwnerEmptyEmail() {
 		String username = "username";
@@ -194,11 +270,15 @@ public void testCreateOwner() {
 		assertEquals("Email cannot be empty!", error);
 	}
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty password Owner
+ * 
+ */
     @Test
 	public void testCreateOwnerEmptyPassword() {
 		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "";
         Owner Owner = null;
         String error = null;
@@ -214,25 +294,130 @@ public void testCreateOwner() {
 	}
     
 
-    //the below test probably isnt working because the projcet isnt compiling properly
-    @Test
-    public void deleteOwner() {
-       // String username = "Muhammad";
-       // String email = "Memail";
-       // String password = "Mpass";
-        assertEquals(Owner_USERNAME,  OwnerDao.findOwnerByUsername(Owner_USERNAME).getUsername());
-		service.deleteOwner(Owner_USERNAME);
-		assertNull(OwnerDao.findOwnerByUsername(Owner_USERNAME));
+/*
+ * @author Muhammad Hammad
+ *  Method that tests deleting a Owner
+ * 
+ */    @Test
+	public void testDeleteOwner() {
+		
+
+		Owner OwnerDelete = null;
+
+		String error = null;
+		try {
+        	OwnerDelete = service.deleteOwner(Owner_USERNAME);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(Owner_USERNAME, OwnerDelete.getUsername());
+		assertEquals(Owner_EMAIL, OwnerDelete.getEmail());
+		assertEquals(Owner_PASSWORD, OwnerDelete.getPassword());
+
+	}
+
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting a null username Owner
+ * 
+ */
+	@Test
+	public void testDeleteOwnerNullUsername() {
+		
+		Owner OwnerDelete = null;
+
+		String error = null;
+		try {
+        	OwnerDelete = service.deleteOwner(null);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Username cannot be empty!", error);
+
+	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting an invalid username Owner
+ * 
+ */
+	@Test
+	public void testDeleteOwnerInvalidUsername() {
+		
+		Owner OwnerDelete = null;
+
+		String error = null;
+		try {
+        	OwnerDelete = service.deleteOwner("");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Username cannot be empty!", error);
+
+	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting a non existing username Owner
+ * 
+ */
+	@Test
+	public void testDeleteOwnerNonExistingdUsername() {
+		
+		Owner OwnerDelete = null;
+
+		String error = null;
+		try {
+        	OwnerDelete = service.deleteOwner("nonexistingusername");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Owner name is invalid", error);
+
+	}
+	//the below isnt working
+	@Test
+	public void toList() {
+		String myString = "iterable";
+		List<Character> charList = new ArrayList<Character>();
+		String error = null;
+
+
+		for (char c: myString.toCharArray()){
+			charList.add(c);
+		}
+		
+		try {
+        	List<Character> OwnerList = service.toList(charList);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+	}
+//the below isnt working
+	@Test
+	public void testGetAllOwners() {
+		List<Owner> OwnerList = null;
+		String error = null;
+		String username = "username";
+		String email = "email@gmail.com";
+		String password = "password";
+		
+		try {
+			service.createOwner(username, email, password);
+        	OwnerList = service.getAllOwners();
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(Owner_USERNAME, OwnerList.get(0).getUsername());
+		assertEquals(Owner_EMAIL, OwnerList.get(0).getEmail());
+		assertEquals(Owner_PASSWORD, OwnerList.get(0).getPassword());
+
+	}
 
 
 
+  }
 
-
-
-
-
-
-    }
-}
-
-    

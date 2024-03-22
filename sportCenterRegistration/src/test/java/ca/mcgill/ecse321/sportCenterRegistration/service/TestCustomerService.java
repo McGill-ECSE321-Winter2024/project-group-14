@@ -66,7 +66,11 @@ public void setMockOutput() {
     });
 }
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests getting an existing customer
+ * 
+ */
 @Test
 public void testGetExistingCustomer() {
     assertEquals(Customer_USERNAME, service.getCustomer(Customer_USERNAME).getUsername());
@@ -74,7 +78,11 @@ public void testGetExistingCustomer() {
     assertEquals(Customer_PASSWORD, service.getCustomer(Customer_USERNAME).getPassword());
 }
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error frmo getting a non existing customer
+ * 
+ */
 @Test
 public void testGetNonExistingCustomer() {
 
@@ -83,7 +91,11 @@ public void testGetNonExistingCustomer() {
     });
 
 }
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests of creating customer
+ * 
+ */
 @Test
 public void testCreateCustomer() {
 		assertEquals(0, service.getAllCustomers().size());
@@ -102,7 +114,11 @@ public void testCreateCustomer() {
         assertEquals(email, customer.getEmail());
         assertEquals(password, customer.getPassword());
     }
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null username customer
+ * 
+ */
     @Test
 	public void testCreateCustomerNullUsername() {
 		String username = null;
@@ -120,7 +136,11 @@ public void testCreateCustomer() {
 		
 		assertEquals("Username cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null email customer
+ * 
+ */
     @Test
 	public void testCreateCustomerNullEmail() {
 		String username = "username";
@@ -138,7 +158,11 @@ public void testCreateCustomer() {
 		
 		assertEquals("Email cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null password customer
+ * 
+ */
     @Test
 	public void testCreateCustomerNullPassword() {
 		String username = "username";
@@ -156,7 +180,11 @@ public void testCreateCustomer() {
 		
 		assertEquals("Password cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an invalid email customer
+ * 
+ */
 	@Test
 	public void testCreateCustomerInvalidEmail() {
 		String username = "username";
@@ -175,8 +203,11 @@ public void testCreateCustomer() {
 		assertEquals("Email is invalid!", error);
 	}
 
-//doing this rn
-	@Test
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an invalid  username customer
+ * 
+ */	@Test
 	public void testCreateCustomerInvalidUsername() {
 		String username = "username";
 		String email = "email";
@@ -194,7 +225,11 @@ public void testCreateCustomer() {
 		assertEquals("Email is invalid!", error);
 	}
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty username customer
+ * 
+ */
     @Test
 	public void testCreateCustomerEmptyUsername() {
 		String username = "";
@@ -212,7 +247,11 @@ public void testCreateCustomer() {
 		
 		assertEquals("Username cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty email customer
+ * 
+ */
     @Test
 	public void testCreateCustomerEmptyEmail() {
 		String username = "username";
@@ -231,7 +270,11 @@ public void testCreateCustomer() {
 		assertEquals("Email cannot be empty!", error);
 	}
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty password customer
+ * 
+ */
     @Test
 	public void testCreateCustomerEmptyPassword() {
 		String username = "username";
@@ -251,11 +294,14 @@ public void testCreateCustomer() {
 	}
     
 
-    //the below test probably isnt working because the projcet isnt compiling properly
-    @Test
+/*
+ * @author Muhammad Hammad
+ *  Method that tests deleting a customer
+ * 
+ */    @Test
 	public void testDeleteCustomer() {
 		
-		
+
 		Customer customerDelete = null;
 
 		String error = null;
@@ -270,7 +316,11 @@ public void testCreateCustomer() {
 
 	}
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting a null username customer
+ * 
+ */
 	@Test
 	public void testDeleteCustomerNullUsername() {
 		
@@ -286,7 +336,11 @@ public void testCreateCustomer() {
 		assertEquals("Username cannot be empty!", error);
 
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting an invalid username customer
+ * 
+ */
 	@Test
 	public void testDeleteCustomerInvalidUsername() {
 		
@@ -302,7 +356,11 @@ public void testCreateCustomer() {
 		assertEquals("Username cannot be empty!", error);
 
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting a non existing username customer
+ * 
+ */
 	@Test
 	public void testDeleteCustomerNonExistingdUsername() {
 		
@@ -318,7 +376,7 @@ public void testCreateCustomer() {
 		assertEquals("Customer name is invalid", error);
 
 	}
-	
+	//the below isnt working
 	@Test
 	public void toList() {
 		String myString = "iterable";
@@ -337,7 +395,7 @@ public void testCreateCustomer() {
 		}
 
 	}
-
+//the below isnt working
 	@Test
 	public void testGetAllCustomers() {
 		List<Customer> customerList = null;

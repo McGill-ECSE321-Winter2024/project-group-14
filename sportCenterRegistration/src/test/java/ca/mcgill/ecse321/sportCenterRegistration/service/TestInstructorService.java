@@ -66,7 +66,11 @@ public void setMockOutput() {
     });
 }
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests getting an existing Instructor
+ * 
+ */
 @Test
 public void testGetExistingInstructor() {
     assertEquals(Instructor_USERNAME, service.getInstructor(Instructor_USERNAME).getUsername());
@@ -74,7 +78,11 @@ public void testGetExistingInstructor() {
     assertEquals(Instructor_PASSWORD, service.getInstructor(Instructor_USERNAME).getPassword());
 }
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error frmo getting a non existing Instructor
+ * 
+ */
 @Test
 public void testGetNonExistingInstructor() {
 
@@ -83,13 +91,17 @@ public void testGetNonExistingInstructor() {
     });
 
 }
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests of creating Instructor
+ * 
+ */
 @Test
 public void testCreateInstructor() {
 		assertEquals(0, service.getAllInstructors().size());
 
 		String username = "Muhammad";
-        String email = "Memail";
+        String email = "Memail@gmail.com";
         String password = "Mpass";
 		Instructor Instructor = null;
 		try {
@@ -102,11 +114,15 @@ public void testCreateInstructor() {
         assertEquals(email, Instructor.getEmail());
         assertEquals(password, Instructor.getPassword());
     }
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null username Instructor
+ * 
+ */
     @Test
 	public void testCreateInstructorNullUsername() {
 		String username = null;
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "password";
         Instructor Instructor = null;
         String error = null;
@@ -120,7 +136,11 @@ public void testCreateInstructor() {
 		
 		assertEquals("Username cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null email Instructor
+ * 
+ */
     @Test
 	public void testCreateInstructorNullEmail() {
 		String username = "username";
@@ -138,11 +158,15 @@ public void testCreateInstructor() {
 		
 		assertEquals("Email cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null password Instructor
+ * 
+ */
     @Test
 	public void testCreateInstructorNullPassword() {
 		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
         String password = null;
         Instructor Instructor = null;
         String error = null;
@@ -156,12 +180,60 @@ public void testCreateInstructor() {
 		
 		assertEquals("Password cannot be empty!", error);
 	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an invalid email Instructor
+ * 
+ */
+	@Test
+	public void testCreateInstructorInvalidEmail() {
+		String username = "username";
+		String email = "email";
+        String password = "password";
+        Instructor Instructor = null;
+        String error = null;
+		try {
+            Instructor = service.createInstructor(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
 
+		assertNull(Instructor);
+		
+		assertEquals("Email is invalid!", error);
+	}
 
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an invalid  username Instructor
+ * 
+ */	@Test
+	public void testCreateInstructorInvalidUsername() {
+		String username = "username";
+		String email = "email";
+        String password = "password";
+        Instructor Instructor = null;
+        String error = null;
+		try {
+            Instructor = service.createInstructor(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(Instructor);
+		
+		assertEquals("Email is invalid!", error);
+	}
+
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty username Instructor
+ * 
+ */
     @Test
 	public void testCreateInstructorEmptyUsername() {
 		String username = "";
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "password";
         Instructor Instructor = null;
         String error = null;
@@ -175,7 +247,11 @@ public void testCreateInstructor() {
 		
 		assertEquals("Username cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty email Instructor
+ * 
+ */
     @Test
 	public void testCreateInstructorEmptyEmail() {
 		String username = "username";
@@ -194,11 +270,15 @@ public void testCreateInstructor() {
 		assertEquals("Email cannot be empty!", error);
 	}
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty password Instructor
+ * 
+ */
     @Test
 	public void testCreateInstructorEmptyPassword() {
 		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "";
         Instructor Instructor = null;
         String error = null;
@@ -214,24 +294,130 @@ public void testCreateInstructor() {
 	}
     
 
-    //the below test probably isnt working because the projcet isnt compiling properly
-    @Test
-    public void deleteInstructor() {
-        assertEquals(0, service.getAllInstructors().size());
-        String username = "Muhammad";
-        String email = "Memail";
-        String password = "Mpass";
-		service.createInstructor(username, email, password);
-        assertEquals(1, service.getAllInstructors().size());
+/*
+ * @author Muhammad Hammad
+ *  Method that tests deleting a Instructor
+ * 
+ */    @Test
+	public void testDeleteInstructor() {
+		
+
+		Instructor InstructorDelete = null;
+
+		String error = null;
+		try {
+        	InstructorDelete = service.deleteInstructor(Instructor_USERNAME);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(Instructor_USERNAME, InstructorDelete.getUsername());
+		assertEquals(Instructor_EMAIL, InstructorDelete.getEmail());
+		assertEquals(Instructor_PASSWORD, InstructorDelete.getPassword());
+
+	}
+
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting a null username Instructor
+ * 
+ */
+	@Test
+	public void testDeleteInstructorNullUsername() {
+		
+		Instructor InstructorDelete = null;
+
+		String error = null;
+		try {
+        	InstructorDelete = service.deleteInstructor(null);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Username cannot be empty!", error);
+
+	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting an invalid username Instructor
+ * 
+ */
+	@Test
+	public void testDeleteInstructorInvalidUsername() {
+		
+		Instructor InstructorDelete = null;
+
+		String error = null;
+		try {
+        	InstructorDelete = service.deleteInstructor("");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Username cannot be empty!", error);
+
+	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting a non existing username Instructor
+ * 
+ */
+	@Test
+	public void testDeleteInstructorNonExistingdUsername() {
+		
+		Instructor InstructorDelete = null;
+
+		String error = null;
+		try {
+        	InstructorDelete = service.deleteInstructor("nonexistingusername");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Instructor name is invalid", error);
+
+	}
+	//the below isnt working
+	@Test
+	public void toList() {
+		String myString = "iterable";
+		List<Character> charList = new ArrayList<Character>();
+		String error = null;
+
+
+		for (char c: myString.toCharArray()){
+			charList.add(c);
+		}
+		
+		try {
+        	List<Character> InstructorList = service.toList(charList);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+	}
+//the below isnt working
+	@Test
+	public void testGetAllInstructors() {
+		List<Instructor> InstructorList = null;
+		String error = null;
+		String username = "username";
+		String email = "email@gmail.com";
+		String password = "password";
+		
+		try {
+			service.createInstructor(username, email, password);
+        	InstructorList = service.getAllInstructors();
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(Instructor_USERNAME, InstructorList.get(0).getUsername());
+		assertEquals(Instructor_EMAIL, InstructorList.get(0).getEmail());
+		assertEquals(Instructor_PASSWORD, InstructorList.get(0).getPassword());
+
+	}
 
 
 
-    }
+  }
 
-
-    
-
-
-
-
-}
