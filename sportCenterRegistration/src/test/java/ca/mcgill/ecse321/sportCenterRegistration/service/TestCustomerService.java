@@ -317,6 +317,7 @@ public void testCreateCustomer() {
 		assertEquals("Customer name is invalid", error);
 
 	}
+	
 	@Test
 	public void toList() {
 		String myString = "iterable";
