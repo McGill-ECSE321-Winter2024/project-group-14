@@ -255,6 +255,7 @@ public void testCreateCustomer() {
     @Test
 	public void testDeleteCustomer() {
 		
+		
 		Customer customerDelete = null;
 
 		String error = null;
