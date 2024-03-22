@@ -19,7 +19,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -178,21 +180,19 @@ public void testCreateCustomer() {
 //doing this rn
 	@Test
 	public void testCreateCustomerInvalidUsername() {
-		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
         String password = "password";
-        Customer customer = null;
         String error = null;
+
 		try {
-            customer = service.createCustomer(username, email, password);
+            service.createCustomer(Customer_USERNAME, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-
-		assertNull(customer);
 		
-		assertEquals("Email is invalid!", error);
+		assertEquals("Username is not unique!", error);
 	}
+
 
 
     @Test
@@ -253,17 +253,114 @@ public void testCreateCustomer() {
 
     //the below test probably isnt working because the projcet isnt compiling properly
     @Test
-    public void deleteCustomer() {
-        assertEquals(0, service.getAllCustomers().size());
-        String username = "Muhammad";
-        String email = "Memail@gmail.com";
-        String password = "Mpass";
-		service.createCustomer(username, email, password);
-        assertEquals(1, service.getAllCustomers().size());
+	public void testDeleteCustomer() {
+		
+		Customer customerDelete = null;
+
+		String error = null;
+		try {
+        	customerDelete = service.deleteCustomer(Customer_USERNAME);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(Customer_USERNAME, customerDelete.getUsername());
+		assertEquals(Customer_EMAIL, customerDelete.getEmail());
+		assertEquals(Customer_PASSWORD, customerDelete.getPassword());
+
+	}
+
+
+	@Test
+	public void testDeleteCustomerNullUsername() {
+		
+		Customer customerDelete = null;
+
+		String error = null;
+		try {
+        	customerDelete = service.deleteCustomer(null);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Username cannot be empty!", error);
+
+	}
+
+	@Test
+	public void testDeleteCustomerInvalidUsername() {
+		
+		Customer customerDelete = null;
+
+		String error = null;
+		try {
+        	customerDelete = service.deleteCustomer("");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Username cannot be empty!", error);
+
+	}
+
+	@Test
+	public void testDeleteCustomerNonExistingdUsername() {
+		
+		Customer customerDelete = null;
+
+		String error = null;
+		try {
+        	customerDelete = service.deleteCustomer("nonexistingusername");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Customer name is invalid", error);
+
+	}
+	@Test
+	public void toList() {
+		String myString = "iterable";
+		List<Character> charList = new ArrayList<Character>();
+		String error = null;
+
+
+		for (char c: myString.toCharArray()){
+			charList.add(c);
+		}
+		
+		try {
+        	List<Character> customerList = service.toList(charList);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+	}
+
+	@Test
+	public void testGetAllCustomers() {
+		List<Customer> customerList = null;
+		String error = null;
+		String username = "username";
+		String email = "email@gmail.com";
+		String password = "password";
+		
+		try {
+			service.createCustomer(username, email, password);
+        	customerList = service.getAllCustomers();
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(Customer_USERNAME, customerList.get(0).getUsername());
+		assertEquals(Customer_EMAIL, customerList.get(0).getEmail());
+		assertEquals(Customer_PASSWORD, customerList.get(0).getPassword());
+
+	}
 
 
 
-    }
+
+    
 
 
     
