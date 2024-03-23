@@ -66,7 +66,11 @@ public void setMockOutput() {
     });
 }
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests getting an existing customer
+ * 
+ */
 @Test
 public void testGetExistingCustomer() {
     assertEquals(Customer_USERNAME, service.getCustomer(Customer_USERNAME).getUsername());
@@ -74,7 +78,11 @@ public void testGetExistingCustomer() {
     assertEquals(Customer_PASSWORD, service.getCustomer(Customer_USERNAME).getPassword());
 }
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error frmo getting a non existing customer
+ * 
+ */
 @Test
 public void testGetNonExistingCustomer() {
 
@@ -83,13 +91,17 @@ public void testGetNonExistingCustomer() {
     });
 
 }
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests of creating customer
+ * 
+ */
 @Test
 public void testCreateCustomer() {
 		assertEquals(0, service.getAllCustomers().size());
 
 		String username = "Muhammad";
-        String email = "Memail";
+        String email = "Memail@gmail.com";
         String password = "Mpass";
 		Customer customer = null;
 		try {
@@ -102,11 +114,15 @@ public void testCreateCustomer() {
         assertEquals(email, customer.getEmail());
         assertEquals(password, customer.getPassword());
     }
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null username customer
+ * 
+ */
     @Test
 	public void testCreateCustomerNullUsername() {
 		String username = null;
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "password";
         Customer customer = null;
         String error = null;
@@ -120,7 +136,11 @@ public void testCreateCustomer() {
 		
 		assertEquals("Username cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null email customer
+ * 
+ */
     @Test
 	public void testCreateCustomerNullEmail() {
 		String username = "username";
@@ -138,11 +158,15 @@ public void testCreateCustomer() {
 		
 		assertEquals("Email cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating a null password customer
+ * 
+ */
     @Test
 	public void testCreateCustomerNullPassword() {
 		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
         String password = null;
         Customer customer = null;
         String error = null;
@@ -156,12 +180,60 @@ public void testCreateCustomer() {
 		
 		assertEquals("Password cannot be empty!", error);
 	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an invalid email customer
+ * 
+ */
+	@Test
+	public void testCreateCustomerInvalidEmail() {
+		String username = "username";
+		String email = "email";
+        String password = "password";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
 
+		assertNull(customer);
+		
+		assertEquals("Email is invalid!", error);
+	}
 
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an invalid  username customer
+ * 
+ */	@Test
+	public void testCreateCustomerInvalidUsername() {
+		String username = "username";
+		String email = "email";
+        String password = "password";
+        Customer customer = null;
+        String error = null;
+		try {
+            customer = service.createCustomer(username, email, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(customer);
+		
+		assertEquals("Email is invalid!", error);
+	}
+
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty username customer
+ * 
+ */
     @Test
 	public void testCreateCustomerEmptyUsername() {
 		String username = "";
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "password";
         Customer customer = null;
         String error = null;
@@ -175,7 +247,11 @@ public void testCreateCustomer() {
 		
 		assertEquals("Username cannot be empty!", error);
 	}
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty email customer
+ * 
+ */
     @Test
 	public void testCreateCustomerEmptyEmail() {
 		String username = "username";
@@ -194,11 +270,15 @@ public void testCreateCustomer() {
 		assertEquals("Email cannot be empty!", error);
 	}
 
-
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in creating an empty password customer
+ * 
+ */
     @Test
 	public void testCreateCustomerEmptyPassword() {
 		String username = "username";
-		String email = "email";
+		String email = "email@gmail.com";
 		String password = "";
         Customer customer = null;
         String error = null;
@@ -214,24 +294,135 @@ public void testCreateCustomer() {
 	}
     
 
-    //the below test probably isnt working because the projcet isnt compiling properly
-    @Test
-    public void deleteCustomer() {
-        assertEquals(0, service.getAllCustomers().size());
-        String username = "Muhammad";
-        String email = "Memail";
-        String password = "Mpass";
-		service.createCustomer(username, email, password);
-        assertEquals(1, service.getAllCustomers().size());
+/*
+ * @author Muhammad Hammad
+ *  Method that tests deleting a customer
+ * 
+ */    @Test
+	public void testDeleteCustomer() {
+		
+
+		Customer customerDelete = null;
+
+		String error = null;
+		try {
+        	customerDelete = service.deleteCustomer(Customer_USERNAME);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(Customer_USERNAME, customerDelete.getUsername());
+		assertEquals(Customer_EMAIL, customerDelete.getEmail());
+		assertEquals(Customer_PASSWORD, customerDelete.getPassword());
+
+	}
+
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting a null username customer
+ * 
+ */
+	@Test
+	public void testDeleteCustomerNullUsername() {
+		
+		Customer customerDelete = null;
+
+		String error = null;
+		try {
+        	customerDelete = service.deleteCustomer(null);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Username cannot be empty!", error);
+
+	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting an invalid username customer
+ * 
+ */
+	@Test
+	public void testDeleteCustomerInvalidUsername() {
+		
+		Customer customerDelete = null;
+
+		String error = null;
+		try {
+        	customerDelete = service.deleteCustomer("");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Username cannot be empty!", error);
+
+	}
+/*
+ * @author Muhammad Hammad
+ *  Method that tests if there is an error in deleting a non existing username customer
+ * 
+ */
+	@Test
+	public void testDeleteCustomerNonExistingdUsername() {
+		
+		Customer customerDelete = null;
+
+		String error = null;
+		try {
+        	customerDelete = service.deleteCustomer("nonexistingusername");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Customer name is invalid", error);
+
+	}
+	//the below isnt working
+	@Test
+	public void toList() {
+		String myString = "iterable";
+		List<Character> charList = new ArrayList<Character>();
+		String error = null;
+
+
+		for (char c: myString.toCharArray()){
+			charList.add(c);
+		}
+		
+		try {
+        	List<Character> customerList = service.toList(charList);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+	}
+//the below isnt working
+	@Test
+	public void testGetAllCustomers() {
+		List<Customer> customerList = null;
+		String error = null;
+		String username = "username";
+		String email = "email@gmail.com";
+		String password = "password";
+		
+		try {
+			service.createCustomer(username, email, password);
+        	customerList = service.getAllCustomers();
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(Customer_USERNAME, customerList.get(0).getUsername());
+		assertEquals(Customer_EMAIL, customerList.get(0).getEmail());
+		assertEquals(Customer_PASSWORD, customerList.get(0).getPassword());
+
+	}
 
 
 
-    }
+  }
 
 
     
 
 
 
-
-}
