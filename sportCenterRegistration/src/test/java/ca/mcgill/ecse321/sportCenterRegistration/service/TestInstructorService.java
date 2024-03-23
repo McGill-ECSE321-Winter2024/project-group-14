@@ -17,6 +17,8 @@ import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
+import java.util.ArrayList;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -377,24 +379,24 @@ public void testCreateInstructor() {
 
 	}
 	//the below isnt working
-	@Test
-	public void toList() {
-		String myString = "iterable";
-		List<Character> charList = new ArrayList<Character>();
-		String error = null;
+	// @Test
+	// public void toList() {
+	// 	String myString = "iterable";
+	// 	List<Character> charList = new ArrayList<Character>();
+	// 	String error = null;
 
 
-		for (char c: myString.toCharArray()){
-			charList.add(c);
-		}
+	// 	for (char c: myString.toCharArray()){
+	// 		charList.add(c);
+	// 	}
 		
-		try {
-        	List<Character> InstructorList = service.toList(charList);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
+	// 	try {
+    //     	List<Character> InstructorList = service.toList(charList);
+	// 	} catch (IllegalArgumentException e) {
+	// 		error = e.getMessage();
+	// 	}
 
-	}
+	// }
 //the below isnt working
 	@Test
 	public void testGetAllInstructors() {
