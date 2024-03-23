@@ -117,7 +117,7 @@ public class CustomerService {
 	*/
 
     @Transactional
-	public Boolean deleteCustomer(String username) {
+	public Customer deleteCustomer(String username) {
         //confirms that the username inputted is valid
 		if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Customer name cannot be empty!");
@@ -125,7 +125,7 @@ public class CustomerService {
 		
 		Customer CustomerToDelete = getCustomer(username);
 		CustomerRepository.delete(CustomerToDelete);
-		return true;
+		return CustomerToDelete;
 	}
 
 	/*

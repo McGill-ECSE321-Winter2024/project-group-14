@@ -126,12 +126,13 @@ public class OwnerRestController {
     @DeleteMapping(value= {"/Owner/{username}", "/Owner/{username}/"})
     public ResponseEntity<?> deleteOwner(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
-            Boolean deleteSucess = OwnerService.deleteOwner(username);
-            return ResponseEntity.ok(deleteSucess);
+            Owner ownerDelete = OwnerService.deleteOwner(username);
+            return ResponseEntity.ok(convertToDTO(ownerDelete));
         }
         catch(IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
+         
     }
 
 

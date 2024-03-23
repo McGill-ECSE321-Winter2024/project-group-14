@@ -116,13 +116,13 @@ public class InstructorService {
 	*/
 
     @Transactional
-	public Boolean deleteInstructor(String username) {
+	public Instructor deleteInstructor(String username) {
         if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Instructor name cannot be empty!");
 		}
 		Instructor InstructorToDelete = getInstructor(username);
 		InstructorRepository.delete(InstructorToDelete);
-		return true;
+		return InstructorToDelete;
 	}
 
 	/*

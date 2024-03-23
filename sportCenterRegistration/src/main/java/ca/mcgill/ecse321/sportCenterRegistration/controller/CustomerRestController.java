@@ -126,8 +126,8 @@ public class CustomerRestController {
     @DeleteMapping(value= {"/customer/{username}", "/customer/{username}/"})
     public ResponseEntity<?> deleteCustomer(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
-            Boolean deleteSucess = customerService.deleteCustomer(username);
-            return ResponseEntity.ok(deleteSucess);
+            Customer deleteCustomer = customerService.deleteCustomer(username);
+            return ResponseEntity.ok(convertToDTO(deleteCustomer));
         }
         catch(IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());

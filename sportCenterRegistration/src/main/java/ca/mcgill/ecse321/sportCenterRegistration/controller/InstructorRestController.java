@@ -126,8 +126,8 @@ public class InstructorRestController {
     @DeleteMapping(value= {"/Instructor/{username}", "/Instructor/{username}/"})
     public ResponseEntity<?> deleteInstructor(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
-            Boolean deleteSucess = InstructorService.deleteInstructor(username);
-            return ResponseEntity.ok(deleteSucess);
+            Instructor instructorDelete = InstructorService.deleteInstructor(username);
+            return ResponseEntity.ok(convertToDTO(instructorDelete));
         }
         catch(IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());

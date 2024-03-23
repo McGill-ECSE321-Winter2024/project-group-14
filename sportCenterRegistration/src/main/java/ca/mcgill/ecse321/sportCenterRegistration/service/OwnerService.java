@@ -116,13 +116,13 @@ public class OwnerService {
 	*/
 
     @Transactional
-	public Boolean deleteOwner(String username) {
+	public Owner deleteOwner(String username) {
         if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Owner name cannot be empty!");
 		}
 		Owner OwnerToDelete = getOwner(username);
 		OwnerRepository.delete(OwnerToDelete);
-		return true;
+		return OwnerToDelete;
 	}
 
 	/*
