@@ -44,8 +44,14 @@ public class SessionService {
         }
         if (endTime != null && startTime != null && endTime.before(startTime)) {
             throw new IllegalArgumentException("Session end time cannot be before Session start time! ");
+        } 
+        if (instructor == null) {
+            throw new IllegalArgumentException("Session instructor cannot be empty!");
+        } 
+        if (sportClass == null) {
+            throw new IllegalArgumentException("Session sport class cannot be empty!");
         }
-
+        
         // create a session
         Session session = new Session(startTime, endTime, location, date, instructor, sportClass);
         Session newSession = SessionRepository.save(session);
@@ -82,6 +88,10 @@ public class SessionService {
         }
         if (endTime != null && startTime != null && endTime.before(startTime)) {
             throw new IllegalArgumentException("Session end time cannot be before Session start time! ");
+        } if (instructor == null) {
+            throw new IllegalArgumentException("Session instructor cannot be empty!");
+        } if (sportClass == null) {
+            throw new IllegalArgumentException("Session sport class cannot be empty!");
         }
 
         // update session
@@ -113,7 +123,6 @@ public class SessionService {
      */
     @Transactional
     public List<Session> getSession(SportClass sportClass) {
-
         // return dailyschedule with the inputed id
         List<Session> sessions = SessionRepository.findSessionBySportClass(sportClass);
         return sessions;

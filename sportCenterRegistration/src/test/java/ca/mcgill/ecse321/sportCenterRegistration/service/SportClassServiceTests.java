@@ -19,6 +19,8 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,6 +72,14 @@ public class SportClassServiceTests{
         );
         lenient().when(sportClassRepo.save(any(SportClass.class))).thenAnswer(
                 (InvocationOnMock invocation) -> invocation.getArgument(0)
+        );
+        lenient().when(sportClassRepo.findAll()).thenAnswer(
+                (InvocationOnMock invocation) ->{
+                    List<SportClass> list = new ArrayList<>();
+                    list.add(new SportClass("cardio"));
+                    list.add(new SportClass("stretching"));
+                    return list;
+                }
         );
     }
 
@@ -225,5 +235,17 @@ public class SportClassServiceTests{
         } catch (IllegalArgumentException e){
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    public void testGetAllSportClass(){
+        List<SportClass> list = new ArrayList<>();
+        try{
+            list = sportClassService.getAllSportClass();
+        } catch (IllegalArgumentException e){
+            fail(e.getMessage());
+        }
+
+        assertEquals(2, list.size());
     }
 }

@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.sportCenterRegistration.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,10 @@ public class SportClassService{
             throw new IllegalArgumentException("Sport Class doesn't exist!");
         }
         return sportClass;
+    }
+
+    @Transactional
+    public List<SportClass> getAllSportClass(){
+        return sportClassRepo.findAll();
     }
 }
