@@ -259,4 +259,15 @@ public class OwnerService {
 		return sportClassRepo.save(sportClass);
 	}
 
+	@Transactional
+    public void deleteSportClass(String name){
+        if (name==null || name.length()<=0){
+            throw new IllegalArgumentException("Sport Class name should not be empty!");
+        }
+        SportClass sportClass = sportClassRepo.findSportClassByName(name);
+        if (sportClass==null){
+            throw new IllegalArgumentException("Sport Class doesn't exist!");
+        }
+        sportClassRepo.delete(sportClass);
+    }
 }

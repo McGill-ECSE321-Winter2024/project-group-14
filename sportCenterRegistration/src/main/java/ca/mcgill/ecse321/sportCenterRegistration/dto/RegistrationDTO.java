@@ -6,6 +6,9 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 
+import ca.mcgill.ecse321.sportCenterRegistration.dto.SessionDTO;
+import ca.mcgill.ecse321.sportCenterRegistration.dto.AccountDTO;
+
 import java.sql.Date;
 
 import java.sql.Time;
@@ -62,8 +65,9 @@ public class RegistrationDTO{
     }
 
     public void setSession(Session session){
-        this.session = new SessionDTO((Time) session.getStartTime().clone(), (Time) session.getEndTime().clone(), session.getLocation(),
-         (Date)session.getDate().clone(), session.getInstructor(), session.getSportClass());
+        this.session = new SessionDTO(
+            (Date)session.getDate().clone(), (Time) session.getStartTime().clone(), (Time) session.getEndTime().clone(), session.getId(), session.getLocation(), session.getInstructor(), session.getSportClass()
+        );
 
     }
 }
