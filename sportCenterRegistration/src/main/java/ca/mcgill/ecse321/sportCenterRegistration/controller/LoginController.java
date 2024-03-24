@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dto.*;
@@ -44,27 +45,26 @@ public class LoginController {
 		return null;
 	}
 
-    public static CustomerDto convertToCustomerDto(Customer customer) {
+    public static CustomerDTO convertToCustomerDto(Customer customer) {
 		if (customer == null) {
 			throw new IllegalArgumentException("There is no such Customer!");
 		}
-		CustomerDto customerDto = new CustomerDto(customer.getemail(), customer.getpassword(), customer.getusername());
+		CustomerDTO customerDto = new CustomerDTO(customer.getId(), customer.getUsername(), customer.getEmail(), customer.getPassword());
 		return customerDto;
 	}
 
-    private InstrutorDto convertToInstrutorDto(Instrutor instrutor) {
+    private InstructorDTO convertToInstructorDto(Instructor instrutor) {
 		if (instrutor == null) {
 			throw new IllegalArgumentException("There is no such Instrutor!");
 		}
-		InstrutorDto instrutorDto = new InstrutorDto(instrutor.getemail(), instrutor.getpassword(), instrutor.getusername(),
-        instrutor.getSession());
-		return instrutorDto;
+		InstructorDTO InstructorDTO = new InstructorDTO(instrutor.getId(),instrutor.getUsername(), instrutor.getEmail(), instrutor.getPassword());
+		return InstructorDTO;
 	}
 
-	public static OwnerDto convertToOwnerDTO(Owner owner) {
+	public static OwnerDTO convertToOwnerDTO(Owner owner) {
 		if (owner == null)
 			return null;
-		return new OwnerDto(owner.getemail(), owner.getpassword(), owner.getusername());
+		return new OwnerDTO(owner.getId(),owner.getUsername(), owner.getEmail(), owner.getPassword());
 	}
     
 }
