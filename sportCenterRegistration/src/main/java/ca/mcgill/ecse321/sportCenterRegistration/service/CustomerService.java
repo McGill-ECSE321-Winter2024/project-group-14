@@ -95,7 +95,13 @@ public class CustomerService {
 		return true;
 	}
 
-
+/*
+ * @author Muhammad Hammad
+ * 
+ * Helper method that helps determine if a username is unique
+ * 
+ * 
+ */
 
 	private boolean usernameIsUnique(String username){
 		// if there already exists a username then null would not be returned
@@ -166,6 +172,7 @@ public class CustomerService {
 		//creates and saves to the repository
 		Customer Customer = new Customer(username, email, password);
 		CustomerRepository.save(Customer);
+		
 		return Customer;
 	}
 
@@ -198,7 +205,7 @@ public class CustomerService {
      */
 
 	@Transactional
-	public Customer CustomerLogin(String username, String password){
+	public Customer customerLogin(String username, String password){
 		//chose to only return one type of error message for invalid username and password to maintain security for the application
 		if (CustomerRepository.findCustomerByUsername(username) == null){
 			throw new IllegalArgumentException("Either the username or password is invalid!");

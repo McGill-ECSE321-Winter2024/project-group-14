@@ -163,7 +163,6 @@ public class OwnerService {
 
 		Owner Owner = new Owner(username, email, password);
 		OwnerRepository.save(Owner);
-	    accountRepository.save(Owner);
 		return Owner;
 	}
 

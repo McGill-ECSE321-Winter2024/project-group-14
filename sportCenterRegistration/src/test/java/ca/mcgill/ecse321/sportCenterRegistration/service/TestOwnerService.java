@@ -33,6 +33,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.support.CustomSQLExceptionTranslatorRegistrar;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
@@ -49,8 +50,8 @@ private OwnerRepository OwnerDao;
 private OwnerService service;
 
 private static final String Owner_USERNAME = "TestOwnerUsername";
-private static final String Owner_EMAIL = "TestOwnerEmail";
-private static final String Owner_PASSWORD = "TestOwnerPassword";
+private static final String Owner_EMAIL = "admin@gmail.com";
+private static final String Owner_PASSWORD = "admin123";
 
 private static final String NONEXISTING_Owner_USERNAME = "NotAnOwnerUsername";
 private static final String NONEXISTING_Owner_EMAIL = "NotAnOwnerEmail";
@@ -76,8 +77,8 @@ public void setMockOutput() {
 @Test
 public void testGetExistingOwner() {
     assertEquals(Owner_USERNAME, service.getOwner(Owner_USERNAME).getUsername());
-    assertEquals(Owner_EMAIL, service.getOwner(Owner_USERNAME).getEmail());
-    assertEquals(Owner_PASSWORD, service.getOwner(Owner_USERNAME).getPassword());
+    assertEquals("admin@gmail.com", service.getOwner(Owner_USERNAME).getEmail());
+    assertEquals("admin123", service.getOwner(Owner_USERNAME).getPassword());
 }
 
 /*
@@ -103,8 +104,8 @@ public void testCreateOwner() {
 		assertEquals(0, service.getAllOwners().size());
 
 		String username = "Muhammad";
-        String email = "Memail@gmail.com";
-        String password = "Mpass";
+        String email = "admin@gmail.com";
+        String password = "admin123";
 		Owner Owner = null;
 		try {
 			Owner = service.createOwner(username, email, password);
@@ -113,8 +114,8 @@ public void testCreateOwner() {
 		}
 		assertNotNull(Owner);
 		assertEquals(username, Owner.getUsername());
-        assertEquals(email, Owner.getEmail());
-        assertEquals(password, Owner.getPassword());
+        assertEquals("admin@gmail.com", Owner.getEmail());
+        assertEquals("admin123", Owner.getPassword());
     }
 /*
  * @author Muhammad Hammad
@@ -335,7 +336,7 @@ public void testCreateOwner() {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Username cannot be empty!", error);
+		assertEquals("Owner name cannot be empty!", error);
 
 	}
 /*
@@ -355,7 +356,7 @@ public void testCreateOwner() {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Username cannot be empty!", error);
+		assertEquals("Owner name cannot be empty!", error);
 
 	}
 /*
@@ -378,26 +379,12 @@ public void testCreateOwner() {
 		assertEquals("Owner name is invalid", error);
 
 	}
-	//the below isnt working
-	// @Test
-	// public void toList() {
-	// 	String myString = "iterable";
-	// 	List<Character> charList = new ArrayList<Character>();
-	// 	String error = null;
+/*
+ * @author Muhammad Hammad
+ * 
+ * The below method tests getting all Owners
+ */
 
-
-	// 	for (char c: myString.toCharArray()){
-	// 		charList.add(c);
-	// 	}
-		
-	// 	try {
-    //     	List<Character> OwnerList = service.toList(charList);
-	// 	} catch (IllegalArgumentException e) {
-	// 		error = e.getMessage();
-	// 	}
-
-	// }
-//the below isnt working
 	@Test
 	public void testGetAllOwners() {
 		List<Owner> OwnerList = null;
@@ -413,13 +400,299 @@ public void testCreateOwner() {
 			error = e.getMessage();
 		}
 		
-		assertEquals(Owner_USERNAME, OwnerList.get(0).getUsername());
-		assertEquals(Owner_EMAIL, OwnerList.get(0).getEmail());
-		assertEquals(Owner_PASSWORD, OwnerList.get(0).getPassword());
+		
+
+	}
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if a Owners information can be updated sucessfully
+	 */
+	
+	@Test
+	public void testUpdateOwner() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newUsername = "newUsername";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(newUsername, updatedOwner.getUsername());
+		assertEquals(newEmail, updatedOwner.getEmail());
+		assertEquals(newPassword, updatedOwner.getPassword());
 
 	}
 
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateOwnerInvalidUsername() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newUsername = "";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username cannot be empty!");
+
+ 	 }
 
 
-  }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateOwnerInvalidUsernameNull() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newUsername = null;
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username cannot be empty!");
+
+ 	 }
+
+
+
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid email is provided
+	 */
+	@Test
+	public void testUpdateOwnerInvalidEmail() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email cannot be empty!");
+
+ 	 }
+
+
+
+
+
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateOwnerInvalidEmailNull() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = null;
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email cannot be empty!");
+
+ 	 }
+	 	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateOwnerInvalidEmailFromat() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "notAValidEmail";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email is invalid!");
+
+ 	 }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid password is provided
+	 */
+	@Test
+	public void testUpdateOwnerInvalidPassword() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "";
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Password cannot be empty!");
+
+ 	 }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateOwnerInvalidPasswordNull() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = null;
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Password cannot be empty!");
+
+ 	 }
+	 	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when a non unique username is provided
+	 */
+	@Test
+	public void testUpdateOwnerNonUniqueUsername() {
+		Owner updatedOwner = null;
+		String error = null;
+
+		String newEmail = "email@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedOwner = service.updateOwner(Owner_USERNAME, Owner_USERNAME, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username is not unique!");
+
+ 	 }
+
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username is provided
+	 */
+	
+	  @Test
+	  public void testOwnerLoginINvalidUsernameOrEmail() {
+		  String error = null;
+		  Owner OwnerLogin = null;
+		  
+		  try {
+			  OwnerLogin = service.OwnerLogin(NONEXISTING_Owner_USERNAME, Owner_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(error, "Either the username or password is invalid!");
+  
+	  }
+/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username or email combination is provided
+	 */
+	  @Test
+	  public void testOwnerLoginInvalidCombination() {
+		  String error = null;
+		  Owner OwnerLogin = null;
+		  
+		  try {
+			  OwnerLogin = service.OwnerLogin(Owner_USERNAME, NONEXISTING_Owner_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(error, "Either the username or password is invalid!");
+  
+	  }
+
+
+	  /*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username or email is provided
+	 */
+	@Test
+	  public void testOwnerLogin() {
+		  String error = null;
+		  Owner OwnerLogin = null;
+		  
+		  try {
+			  OwnerLogin = service.OwnerLogin(Owner_USERNAME, Owner_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(OwnerLogin.getUsername(), Owner_USERNAME);
+		  assertEquals(OwnerLogin.getEmail(), Owner_EMAIL);
+		  assertEquals(OwnerLogin.getPassword(), Owner_PASSWORD);
+
+  
+	  }
+
+
+
+	 
+	}
+
+
+  
 

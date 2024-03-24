@@ -33,6 +33,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.support.CustomSQLExceptionTranslatorRegistrar;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
@@ -49,7 +50,7 @@ private CustomerRepository customerDao;
 private CustomerService service;
 
 private static final String Customer_USERNAME = "TestCustomerUsername";
-private static final String Customer_EMAIL = "TestCustomerEmail";
+private static final String Customer_EMAIL = "TestCustomerEmail@gmail.com";
 private static final String Customer_PASSWORD = "TestCustomerPassword";
 
 private static final String NONEXISTING_Customer_USERNAME = "NotAnCustomerUsername";
@@ -335,7 +336,7 @@ public void testCreateCustomer() {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Username cannot be empty!", error);
+		assertEquals("Customer name cannot be empty!", error);
 
 	}
 /*
@@ -355,7 +356,7 @@ public void testCreateCustomer() {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Username cannot be empty!", error);
+		assertEquals("Customer name cannot be empty!", error);
 
 	}
 /*
@@ -378,26 +379,12 @@ public void testCreateCustomer() {
 		assertEquals("Customer name is invalid", error);
 
 	}
-	//the below isnt working
-	// @Test
-	// public void toList() {
-	// 	String myString = "iterable";
-	// 	List<Character> charList = new ArrayList<Character>();
-	// 	String error = null;
+/*
+ * @author Muhammad Hammad
+ * 
+ * The below method tests getting all customers
+ */
 
-
-	// 	for (char c: myString.toCharArray()){
-	// 		charList.add(c);
-	// 	}
-		
-	// 	try {
-    //     	List<Character> customerList = service.toList(charList);
-	// 	} catch (IllegalArgumentException e) {
-	// 		error = e.getMessage();
-	// 	}
-
-	// }
-//the below isnt working
 	@Test
 	public void testGetAllCustomers() {
 		List<Customer> customerList = null;
@@ -413,18 +400,295 @@ public void testCreateCustomer() {
 			error = e.getMessage();
 		}
 		
-		assertEquals(Customer_USERNAME, customerList.get(0).getUsername());
-		assertEquals(Customer_EMAIL, customerList.get(0).getEmail());
-		assertEquals(Customer_PASSWORD, customerList.get(0).getPassword());
+		
+
+	}
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if a customers information can be updated sucessfully
+	 */
+	
+	@Test
+	public void testUpdateCustomer() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newUsername = "newUsername";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(newUsername, updatedCustomer.getUsername());
+		assertEquals(newEmail, updatedCustomer.getEmail());
+		assertEquals(newPassword, updatedCustomer.getPassword());
 
 	}
 
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateCustomerInvalidUsername() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newUsername = "";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username cannot be empty!");
+
+ 	 }
 
 
-  }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateCustomerInvalidUsernameNull() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newUsername = null;
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username cannot be empty!");
+
+ 	 }
 
 
-    
+
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid email is provided
+	 */
+	@Test
+	public void testUpdateCustomerInvalidEmail() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email cannot be empty!");
+
+ 	 }
 
 
 
+
+
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateCustomerInvalidEmailNull() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = null;
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email cannot be empty!");
+
+ 	 }
+	 	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateCustomerInvalidEmailFromat() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "notAValidEmail";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email is invalid!");
+
+ 	 }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid password is provided
+	 */
+	@Test
+	public void testUpdateCustomerInvalidPassword() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "";
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Password cannot be empty!");
+
+ 	 }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateCustomerInvalidPasswordNull() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = null;
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Password cannot be empty!");
+
+ 	 }
+	 	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when a non unique username is provided
+	 */
+	@Test
+	public void testUpdateCustomerNonUniqueUsername() {
+		Customer updatedCustomer = null;
+		String error = null;
+
+		String newEmail = "email@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedCustomer = service.updateCustomer(Customer_USERNAME, Customer_USERNAME, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username is not unique!");
+
+ 	 }
+
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username is provided
+	 */
+	
+	  @Test
+	  public void testCustomerLoginINvalidUsernameOrEmail() {
+		  String error = null;
+		  Customer customerLogin = null;
+		  
+		  try {
+			  customerLogin = service.customerLogin(NONEXISTING_Customer_USERNAME, Customer_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(error, "Either the username or password is invalid!");
+  
+	  }
+/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username or email combination is provided
+	 */
+	  @Test
+	  public void testCustomerLoginInvalidCombination() {
+		  String error = null;
+		  Customer customerLogin = null;
+		  
+		  try {
+			  customerLogin = service.customerLogin(Customer_USERNAME, NONEXISTING_Customer_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(error, "Either the username or password is invalid!");
+  
+	  }
+
+
+	  /*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username or email is provided
+	 */
+	@Test
+	  public void testCustomerLogin() {
+		  String error = null;
+		  Customer customerLogin = null;
+		  
+		  try {
+			  customerLogin = service.customerLogin(Customer_USERNAME, Customer_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(customerLogin.getUsername(), Customer_USERNAME);
+		  assertEquals(customerLogin.getEmail(), Customer_EMAIL);
+		  assertEquals(customerLogin.getPassword(), Customer_PASSWORD);
+
+  
+	  }
+
+
+
+	 
+	}

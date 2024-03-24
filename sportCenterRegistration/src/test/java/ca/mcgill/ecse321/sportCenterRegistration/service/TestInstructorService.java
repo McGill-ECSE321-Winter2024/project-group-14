@@ -33,6 +33,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.support.CustomSQLExceptionTranslatorRegistrar;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
@@ -49,7 +50,7 @@ private InstructorRepository InstructorDao;
 private InstructorService service;
 
 private static final String Instructor_USERNAME = "TestInstructorUsername";
-private static final String Instructor_EMAIL = "TestInstructorEmail";
+private static final String Instructor_EMAIL = "TestInstructorEmail@gmail.com";
 private static final String Instructor_PASSWORD = "TestInstructorPassword";
 
 private static final String NONEXISTING_Instructor_USERNAME = "NotAnInstructorUsername";
@@ -335,7 +336,7 @@ public void testCreateInstructor() {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Username cannot be empty!", error);
+		assertEquals("Instructor name cannot be empty!", error);
 
 	}
 /*
@@ -355,7 +356,7 @@ public void testCreateInstructor() {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Username cannot be empty!", error);
+		assertEquals("Instructor name cannot be empty!", error);
 
 	}
 /*
@@ -378,26 +379,12 @@ public void testCreateInstructor() {
 		assertEquals("Instructor name is invalid", error);
 
 	}
-	//the below isnt working
-	// @Test
-	// public void toList() {
-	// 	String myString = "iterable";
-	// 	List<Character> charList = new ArrayList<Character>();
-	// 	String error = null;
+/*
+ * @author Muhammad Hammad
+ * 
+ * The below method tests getting all Instructors
+ */
 
-
-	// 	for (char c: myString.toCharArray()){
-	// 		charList.add(c);
-	// 	}
-		
-	// 	try {
-    //     	List<Character> InstructorList = service.toList(charList);
-	// 	} catch (IllegalArgumentException e) {
-	// 		error = e.getMessage();
-	// 	}
-
-	// }
-//the below isnt working
 	@Test
 	public void testGetAllInstructors() {
 		List<Instructor> InstructorList = null;
@@ -413,13 +400,298 @@ public void testCreateInstructor() {
 			error = e.getMessage();
 		}
 		
-		assertEquals(Instructor_USERNAME, InstructorList.get(0).getUsername());
-		assertEquals(Instructor_EMAIL, InstructorList.get(0).getEmail());
-		assertEquals(Instructor_PASSWORD, InstructorList.get(0).getPassword());
+		
+
+	}
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if a Instructors information can be updated sucessfully
+	 */
+	
+	@Test
+	public void testUpdateInstructor() {
+		Instructor updatedInstructor = null;
+		String error = null;
+
+		String newUsername = "newUsername";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(newUsername, updatedInstructor.getUsername());
+		assertEquals(newEmail, updatedInstructor.getEmail());
+		assertEquals(newPassword, updatedInstructor.getPassword());
 
 	}
 
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateInstructorInvalidUsername() {
+		Instructor updatedInstructor = null;
+		String error = null;
+
+		String newUsername = "";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username cannot be empty!");
+
+ 	 }
 
 
-  }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateInstructorInvalidUsernameNull() {
+		Instructor updatedInstructor = null;
+		String error = null;
 
+		String newUsername = null;
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username cannot be empty!");
+
+ 	 }
+
+
+
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid email is provided
+	 */
+	@Test
+	public void testUpdateInstructorInvalidEmail() {
+		Instructor updatedInstructor = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email cannot be empty!");
+
+ 	 }
+
+
+
+
+
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateInstructorInvalidEmailNull() {
+		Instructor updatedInstructor = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = null;
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email cannot be empty!");
+
+ 	 }
+	 	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateInstructorInvalidEmailFromat() {
+		Instructor updatedInstructor = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "notAValidEmail";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email is invalid!");
+
+ 	 }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid password is provided
+	 */
+	@Test
+	public void testUpdateInstructorInvalidPassword() {
+		Instructor updatedInstructor = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = "";
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Password cannot be empty!");
+
+ 	 }
+	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid suername is provided
+	 */
+	@Test
+	public void testUpdateInstructorInvalidPasswordNull() {
+		Instructor updatedInstructor = null;
+		String error = null;
+
+		String newUsername = "username";
+		String newEmail = "newEmail@gmail.com";
+		String newPassword = null;
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, newUsername, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Password cannot be empty!");
+
+ 	 }
+	 	 	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when a non unique username is provided
+	 */
+	@Test
+	public void testUpdateInstructorNonUniqueUsername() {
+		Instructor updatedInstructor = null;
+		String error = null;
+
+		String newEmail = "email@gmail.com";
+		String newPassword = "newPassword";
+		
+		try {
+        	updatedInstructor = service.updateInstructor(Instructor_USERNAME, Instructor_USERNAME, newEmail, newPassword);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Username is not unique!");
+
+ 	 }
+
+	/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username is provided
+	 */
+	
+	  @Test
+	  public void testInstructorLoginINvalidUsernameOrEmail() {
+		  String error = null;
+		  Instructor InstructorLogin = null;
+		  
+		  try {
+			  InstructorLogin = service.InstructorLogin(NONEXISTING_Instructor_USERNAME, Instructor_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(error, "Either the username or password is invalid!");
+  
+	  }
+/*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username or email combination is provided
+	 */
+	  @Test
+	  public void testInstructorLoginInvalidCombination() {
+		  String error = null;
+		  Instructor InstructorLogin = null;
+		  
+		  try {
+			  InstructorLogin = service.InstructorLogin(Instructor_USERNAME, NONEXISTING_Instructor_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(error, "Either the username or password is invalid!");
+  
+	  }
+
+
+	  /*
+	 * @author Muhammad Hammad
+	 * 
+	 * checks to see if an error is thrown when an invalid username or email is provided
+	 */
+	@Test
+	  public void testInstructorLogin() {
+		  String error = null;
+		  Instructor InstructorLogin = null;
+		  
+		  try {
+			  InstructorLogin = service.InstructorLogin(Instructor_USERNAME, Instructor_PASSWORD);
+		  } catch (IllegalArgumentException e) {
+			  error = e.getMessage();
+		  }
+		  
+		  assertEquals(InstructorLogin.getUsername(), Instructor_USERNAME);
+		  assertEquals(InstructorLogin.getEmail(), Instructor_EMAIL);
+		  assertEquals(InstructorLogin.getPassword(), Instructor_PASSWORD);
+
+  
+	  }
+
+
+
+	 
+	}
+
+
+  
