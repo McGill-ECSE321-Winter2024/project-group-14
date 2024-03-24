@@ -40,9 +40,9 @@ public class AccountRepositoryTest {
     // Test creating and reading account As a owner
     public void testCreateAndReadAccount1() {
         // create account
-        String username = "Stephen";
-        String email = "stephen@gmail.com";
-        String password = "stephen123";
+        String username = "Admin";
+        String email = "admin@gmail.com";
+        String password = "admin123";
         Owner stephenOwner = new Owner(username, email, password);
 
         // Save in the database
@@ -72,7 +72,7 @@ public class AccountRepositoryTest {
     public void testCreateAndReadAccount2() {
         // create account
         String username = "Stephen";
-        String email = "stephen@gmail.com";
+        String email = "admin@sportcenter.com";
         String password = "stephen123";
         Instructor stephenInstructor = new Instructor(username, email, password);
 
