@@ -1,6 +1,7 @@
 package main.java.ca.mcgill.ecse321.sportCenterRegistration.controller;
 
 import java.sql.Time;
+import java.sql.Date;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +28,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.service.*;
 public class SessionController {
     
     @Autowired
-    private SportClassService SessionService;
+    private SessionService SessionService;
     @Autowired
     private InstructorService instructorService;
     @Autowired
@@ -38,7 +40,7 @@ public class SessionController {
      * This method gets all session
      */
     @GetMapping(value = { "/view_session" })
-	public List<SessionDto> getAllStores() {
+	public List<SessionDTO> getAllStores() {
 		return SessionService.getAllSession().stream().map(session -> convertToDTO(session))
 				.collect(Collectors.toList());
 	}
@@ -48,12 +50,12 @@ public class SessionController {
      * This method  gets a specific session schedule given the corresponding id
      */
     @GetMapping(value = "/view_session/{id}")
-    public SessionDto viewStore(@PathVariable("id") String id) {
+    public SessionDTO viewStore(@PathVariable("id") String id) {
     // Correctly parsing the id from String to int
     int sessionId = Integer.parseInt(id);
 
     // Assuming SessionService.getSession expects an int and returns a Session object
-    // that needs to be converted to SessionDto
+    // that needs to be converted to SessionDTO
     return convertToDTO(SessionService.getSession(sessionId));
 }
 
@@ -62,12 +64,13 @@ public class SessionController {
      * This method creates a daily schedule
      */
     @PostMapping(value = { "/create_session" })
-	public ResponseEntity<?> createSession(@RequestParam("date") Date date,
-                                           @RequestParam("location") String location,
+	public ResponseEntity<?> createSession(
+										   @RequestParam("startTime") String startTime,
+			                               @RequestParam("endTime") String endTime,
+										   @RequestParam("location") String location,
+										   @RequestParam("date") Date date,
                                            @RequestParam("instructor") Instructor instructor,
-                                           @RequestParam("sportclass") SportClass sportclass,
-	                                       @RequestParam("startTime") String startTime,
-			                               @RequestParam("endTime") String endTime) {
+                                           @RequestParam("sportclass") SportClass sportclass) {
 
 		Session session = null;
 
@@ -75,8 +78,7 @@ public class SessionController {
 		endTime = endTime+":00";
 
     try {
-			session = sessionService.createSession(date, location, instructor,
-					Time.valueOf(startTime), Time.valueOf(endTime));
+			session = SessionService.createSession(Time.valueOf(startTime), Time.valueOf(endTime), location, date, instructor, sportclass);
 		} catch (IllegalArgumentException exception) {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -86,15 +88,14 @@ public class SessionController {
 }
 
 @PutMapping(value = { "/update_session" })
-	public ResponseEntity<?> updateSession(@RequestParam("SessionId") Int Id,
+	public ResponseEntity<?> updateSession(@RequestParam("SessionId") int Id,
 			@RequestParam("date") Date date, @RequestParam("startTime") String startTime,
 			@RequestParam("endTime") String endTime) {
 
 		Session session = null;
 
 		try {
-			session = sessionService.updateSession(Integer.parseInt(Id), date,
-					Time.valueOf(startTime), Time.valueOf(endTime));
+			session = SessionService.updateSession(Id,Time.valueOf(startTime), Time.valueOf(endTime), SessionService.getSession(Id).getLocation(), date, SessionService.getSession(Id).getInstructor(), SessionService.getSession(Id).getSportClass());
 
 		} catch (IllegalArgumentException exception) {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -105,16 +106,16 @@ public class SessionController {
     @DeleteMapping(value = { "/delete_session" })
     public boolean deleteSession(@RequestParam("Id") String Id) {
 
-		return instructorService.deleteSession(Integer.parseInt(Id));
+		return SessionService.deleteSession(Integer.parseInt(Id));
 
 	}
 
-    public static SessionDto convertToDTO(Session session) {
+    public static SessionDTO convertToDTO(Session session) {
 		if (session == null)
 			throw new IllegalArgumentException("Session not found.");
 
-		SessionDto sessionDto = new SessionDto(session.getDate(),
-        session.getStartTime(), session.getEndTime(), session.getId(), session.getInstructor(), session.getSportClass());
+		SessionDTO sessionDto = new SessionDTO(session.getDate(),
+        session.getStartTime(), session.getEndTime(), session.getId(), session.getLocation(), session.getInstructor(), session.getSportClass());
 		return sessionDto;
 
 }
