@@ -66,7 +66,7 @@ public class LoginServiceTests{
     @BeforeEach
     public void setMockOutput() {
         // Mock the customerRepository
-        lenient().when(accountRepo.findCustomerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(customerRepository.findCustomerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(TEST_EMAIL)) {
                 Customer customer = new Customer(TEST_NAME, TEST_EMAIL, TEST_PASSWORD);
                 return customer;
