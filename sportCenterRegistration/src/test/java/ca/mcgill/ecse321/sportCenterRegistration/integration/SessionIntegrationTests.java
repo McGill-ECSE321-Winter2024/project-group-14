@@ -59,7 +59,7 @@ public class SessionIntegrationTests {
 
     @Test
     @Order(1)
-    public void testCreateValidPerson() {
+    public void testCreateValidSession() {
         // Set up
         SessionDTO request = new SessionDTO(VALID_SESSION_DATE, VALID_SESSION_START_TIME, VALID_SESSION_END_TIME,
                 VALID_ID, VALID_SESSION_LOCATION, (Instructor) VALID_INSTRUCTOR, VALID_SPORT_CLASS);
@@ -81,7 +81,7 @@ public class SessionIntegrationTests {
 
     @Test
     @Order(2)
-    public void testReadPersonByValidId() {
+    public void testReadSessionByValidId() {
         // Set up
         String url = "/view_session/{id}" + VALID_ID;
 
@@ -99,7 +99,7 @@ public class SessionIntegrationTests {
 
     @Test
     @Order(3)
-    public void testCreateInvalidPerson() {
+    public void testCreateInvalidSession() {
         // Set up
         SessionDTO request = new SessionDTO(VALID_SESSION_DATE, VALID_SESSION_START_TIME, VALID_SESSION_END_TIME,
                 VALID_ID, null,
@@ -120,7 +120,7 @@ public class SessionIntegrationTests {
 
     @Test
     @Order(4)
-    public void testReadPersonByInvalidId() {
+    public void testReadSessionByInvalidId() {
         // Set up
         String url = "/view_session/{id}" + (this.VALID_ID + 1);
 
