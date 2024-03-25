@@ -12,6 +12,20 @@ public class ShiftDto {
     private Time endTime;
     private Integer id;
     private Staff staff;
+
+    private List<String> errors;
+
+    public ShiftDto(String error) {
+        this.errors = List.of(error);
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
     
     public ShiftDto(){
     }
