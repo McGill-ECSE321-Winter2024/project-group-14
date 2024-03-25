@@ -1,7 +1,7 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dto;
 
 import java.sql.Time;
-
+import java.util.List;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 import java.sql.Date;
