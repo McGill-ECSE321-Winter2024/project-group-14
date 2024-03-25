@@ -68,7 +68,7 @@ public class CustomerRestController {
      * 
      */
 
-    @PostMapping(value= {"/customer/create/{username}/{email}/{password}", "/customer/create/{username}/{email}/{password}/"})
+    @PostMapping(value= {"/customer/{username}/{email}/{password}", "/customer/{username}/{email}/{password}/"})
     public ResponseEntity<?> createCustomer(@PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Customer customer = customerService.createCustomer(username, email, password);
@@ -123,7 +123,7 @@ public class CustomerRestController {
 
 
 
-    @DeleteMapping(value= {"/customer/delete/{username}", "/customer/delete/{username}/"})
+    @DeleteMapping(value= {"/customer/{username}", "/customer/{username}/"})
     public ResponseEntity<?> deleteCustomer(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Customer deleteCustomer = customerService.deleteCustomer(username);
