@@ -73,20 +73,4 @@ To run the tests locally, follow these steps:
 ## Sprint 1 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-1)
 
-# Deliverable 2
-## Links
-## Sprint 2 effort table
-
-| Team Member | Contributions  | Effort (Hours) |
-| -- | -- | -- | 
-| Hammad Muhammad |  | |
-| Motta Vivek |  |  |
-| Marji David | | | 
-| Yue Ming Xuan |  | | 
-| Huang Stephen |  |  |
-| Luo Loridy |  |  |
-
-## Sprint 2 Project report
-The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-2)
-
 

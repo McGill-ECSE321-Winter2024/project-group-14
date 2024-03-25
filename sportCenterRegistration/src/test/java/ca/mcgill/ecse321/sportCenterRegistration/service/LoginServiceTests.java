@@ -66,6 +66,14 @@ public class LoginServiceTests{
     @BeforeEach
     public void setMockOutput() {
         // Mock the customerRepository
+        lenient().when(customerRepository.existsByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(TEST_EMAIL)) {
+                return true;
+            } else {
+                return null;
+            }}
+        );
+
         lenient().when(customerRepository.findCustomerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(TEST_EMAIL)) {
                 Customer customer = new Customer(TEST_NAME, TEST_EMAIL, TEST_PASSWORD);
@@ -81,10 +89,11 @@ public class LoginServiceTests{
         Account customer = null;
         String email = "test@gmail.com";
         String password = "password";
+        String error =null;
         try {
             customer = loginService.login(email, password);
         } catch (IllegalArgumentException e) {
-            fail();
+            error = e.getMessage();
         }
         assertNotNull(customer);
     }

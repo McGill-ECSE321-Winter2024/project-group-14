@@ -82,7 +82,7 @@ public class CustomerService {
 	 * 
 	 * 
 	 */
-	public Boolean emailIsValid(String email){
+	private Boolean emailIsValid(String email){
 		int i = email.indexOf("@");
 		//confirms that there is an @ sign in the string and that the @sign is not at the beginning or end of the string
 		if (i == -1 || i == 0 || i == email.length() - 1){
@@ -103,7 +103,7 @@ public class CustomerService {
  * 
  */
 
-	public boolean usernameIsUnique(String username){
+	private boolean usernameIsUnique(String username){
 		// if there already exists a username then null would not be returned
 		if (CustomerRepository.findCustomerByUsername(username) == null) {
 			return true;

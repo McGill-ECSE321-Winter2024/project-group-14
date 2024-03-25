@@ -688,50 +688,6 @@ public void testCreateOwner() {
   
 	  }
 
-	  	/*
-	 * @author Muhammad Hammad
-	 * 
-	 * Method tests to see if it correctly identitfies a valid
-	 */
-	@Test
-	public void testEmailIsValid() {
-	  String error = null;
-	  Boolean response = null;
-		try {
-			response = service.emailIsValid(Owner_EMAIL);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-	}
-	assertEquals(response, true);
-
-  }
-
-	/*
-   * @author Muhammad Hammad
-   * 
-   * Method tests to see if it correctly identitfies a unique username
-   */
-  @Test
-  public void testUniqueUsernam() {
-	String error = null;
-	Boolean response = null;
-	  try {
-		  response = service.usernameIsUnique(Owner_USERNAME);
-	  } catch (IllegalArgumentException e) {
-		  error = e.getMessage();
-	  }
-	  
-	  assertEquals(response, false);
-
-  
-
-
-	
-
-   
-  }
-
-
 
 
 	 

@@ -18,6 +18,7 @@ public class LoginService {
     @Autowired
     OwnerRepository ownerRepository;
 
+
     /**
      * Section: Login service
      * Author: Stephen Huang
@@ -25,13 +26,16 @@ public class LoginService {
      */
     @Transactional
     public Account login(String email, String password) {
-
+        System.out.println(customerRepository.existsByEmail(email));
         // Check if the user exists in the system, and throw an error if it does not.
         if (!customerRepository.existsByEmail(email) &&
                 !ownerRepository.existsByEmail(email) &&
                 !instructorRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Invalid email");
         }
+
+        System.out.println(email);
+        System.out.println(password);
 
         // Determine what type of user is logging in.
         Customer customer = customerRepository.findCustomerByEmail(email);

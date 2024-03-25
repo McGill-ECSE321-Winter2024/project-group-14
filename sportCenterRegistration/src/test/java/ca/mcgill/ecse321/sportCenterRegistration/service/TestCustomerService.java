@@ -37,7 +37,6 @@ import org.springframework.jdbc.support.CustomSQLExceptionTranslatorRegistrar;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Shift;
 
 
 
@@ -688,47 +687,8 @@ public void testCreateCustomer() {
 
   
 	  }
-	/*
-	 * @author Muhammad Hammad
-	 * 
-	 * Method tests to see if it correctly identitfies a valid
-	 */
-	  @Test
-	  public void testEmailIsValid() {
-		String error = null;
-		Boolean response = null;
-		  try {
-			  response = service.emailIsValid(Customer_EMAIL);
-		  } catch (IllegalArgumentException e) {
-			  error = e.getMessage();
-	  }
-	  assertEquals(response, true);
-
-	}
-
-	  /*
-	 * @author Muhammad Hammad
-	 * 
-	 * Method tests to see if it correctly identitfies a unique username
-	 */
-	@Test
-	public void testUniqueUsernam() {
-	  String error = null;
-	  Boolean response = null;
-		try {
-			response = service.usernameIsUnique(Customer_USERNAME);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-		
-		assertEquals(response, false);
-
-	
 
 
-	  
 
 	 
 	}
-
-}

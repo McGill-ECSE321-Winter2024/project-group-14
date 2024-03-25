@@ -83,7 +83,7 @@ public class OwnerService {
 	 * 
 	 * 
 	 */
-	public Boolean emailIsValid(String email){
+	private Boolean emailIsValid(String email){
 		int i = email.indexOf("@");
 
 		if (i == -1 || i == 0 || i == email.length() - 1){
@@ -97,7 +97,7 @@ public class OwnerService {
 
 
 
-	public boolean usernameIsUnique(String username){
+	private boolean usernameIsUnique(String username){
 		if (OwnerRepository.findOwnerByUsername(username) == null) {
 			return true;
 		}
