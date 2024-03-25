@@ -68,7 +68,7 @@ public class RegistrationRestController {
      * 
      */
 
-    @PostMapping(value = { "/registration/{account}/{session}/{date}", "/registration/{account}/{session}/{date}/" })
+    @PostMapping(value = { "/Registration/{account}/{session}/{date}", "/Registration/{account}/{session}/{date}/" })
     public ResponseEntity<?> createRegistration(@PathVariable("date") Date date,
             @PathVariable("account") Account account,
             @PathVariable("session") Session session) throws IllegalArgumentException {
