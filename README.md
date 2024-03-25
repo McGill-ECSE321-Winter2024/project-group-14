@@ -50,12 +50,12 @@ To run the tests locally, follow these steps:
 
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
 | -- | -- | --  | -- | -- |
-| Hammad Muhammad | 35 | 45 | --  | -- |
+| Hammad Muhammad | 35 | 60| --  | -- |
 | Motta Vivek | 35 | 30 | -- | -- |
-| Marji David | 30 | 45 | -- | -- |
-| Yue Ming Xuan | 35 | 40 | -- | -- |
-| Huang Stephen | 40 | 45 | -- | -- |
-| Luo Loridy | 40 | 50 | -- | -- |
+| Marji David | 30 | 60 | -- | -- |
+| Yue Ming Xuan | 35 | 60 | -- | -- |
+| Huang Stephen | 40 | 60 | -- | -- |
+| Luo Loridy | 40 | 70 | -- | -- |
 
 # Deliverable 1
 ## Links
