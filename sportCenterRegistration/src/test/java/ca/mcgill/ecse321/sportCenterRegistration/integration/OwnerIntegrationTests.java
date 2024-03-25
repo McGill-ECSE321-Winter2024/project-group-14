@@ -155,12 +155,12 @@ public class OwnerIntegrationTests {
         String url = "/Owner/all";
 
         // Actd
-        ResponseEntity<OwnerDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        List<OwnerDTO> Owners = response.getBody();
+        List<OwnerDTO> Owners = (List<OwnerDTO>) response.getBody();
         assertNotNull(Owners);
         assertEquals(1, Owners.size());
     }
@@ -172,14 +172,14 @@ public class OwnerIntegrationTests {
         String url = "/Owner/delete" + this.VALID_USERNAME;
 
         // Act
-        ResponseEntity<OwnerDTO> response = client.deleteForEntity(url, OwnerDTO.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         OwnerDTO Owner = response.getBody();
         assertNotNull(Owner);
-        assertEquals(VALID_USERNAME, Owner.getName());
+        assertEquals(VALID_USERNAME, Owner.getOwnerUsername());
         assertEquals(VALID_EMAIL, Owner.getOwnerEmail());
         assertEquals(VALID_PASSWORD, Owner.getOwnerPassword());
     }
@@ -209,7 +209,7 @@ public class OwnerIntegrationTests {
     @Order(5)
     public void testUpdateOwnerUsername() {
         // Set up
-        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
 
         // Act
         ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);
@@ -228,7 +228,7 @@ public class OwnerIntegrationTests {
     @Order(6)
     public void testUpdateOwnerEmail() {
         // Set up
-        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + THIS.VALID_PASSWORD;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + this.VALID_PASSWORD;
 
         // Act
         ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);
@@ -247,7 +247,7 @@ public class OwnerIntegrationTests {
     @Order(7)
     public void testUpdateOwnerPassword() {
         // Set up
-        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD2;
 
         // Act
         ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);

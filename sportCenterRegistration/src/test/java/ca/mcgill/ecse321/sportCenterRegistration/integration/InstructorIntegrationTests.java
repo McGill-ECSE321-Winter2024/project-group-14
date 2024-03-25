@@ -153,16 +153,15 @@ public class InstructorIntegrationTests {
         String url = "/Instructor/all";
 
         // Actd
-        ResponseEntity<InstructorDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        List<InstructorDTO> Instructors = response.getBody();
+        List<InstructorDTO> Instructors = (List<InstructorDTO>) response.getBody();
         assertNotNull(Instructors);
         assertEquals(1, Instructors.size());
     }
-
     @Test
     @Order(4)
     public void testDeleteInstructorValidUsername() {
@@ -170,14 +169,14 @@ public class InstructorIntegrationTests {
         String url = "/Instructor/delete" + this.VALID_USERNAME;
 
         // Act
-        ResponseEntity<InstructorDTO> response = client.deleteForEntity(url, InstructorDTO.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         InstructorDTO Instructor = response.getBody();
         assertNotNull(Instructor);
-        assertEquals(VALID_USERNAME, Instructor.getName());
+        assertEquals(VALID_USERNAME, Instructor.getInstructorUsername());
         assertEquals(VALID_EMAIL, Instructor.getInstructorEmail());
         assertEquals(VALID_PASSWORD, Instructor.getInstructorPassword());
     }
@@ -207,7 +206,7 @@ public class InstructorIntegrationTests {
     @Order(5)
     public void testUpdateInstructorUsername() {
         // Set up
-        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
 
         // Act
         ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);
@@ -226,7 +225,7 @@ public class InstructorIntegrationTests {
     @Order(6)
     public void testUpdateInstructorEmail() {
         // Set up
-        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + THIS.VALID_PASSWORD;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + this.VALID_PASSWORD;
 
         // Act
         ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);
@@ -245,7 +244,7 @@ public class InstructorIntegrationTests {
     @Order(7)
     public void testUpdateInstructorPassword() {
         // Set up
-        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD2;
 
         // Act
         ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);

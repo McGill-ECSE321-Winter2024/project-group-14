@@ -157,12 +157,12 @@ public class CustomerIntegrationTests {
         String url = "/Customer/all";
 
         // Actd
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        List<CustomerDTO> Customers = response.getBody();
+        List<CustomerDTO> Customers = (List<CustomerDTO>) response.getBody();
         assertNotNull(Customers);
         assertEquals(1, Customers.size());
     }
@@ -174,14 +174,14 @@ public class CustomerIntegrationTests {
         String url = "/Customer/delete" + this.VALID_USERNAME;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.deleteForEntity(url, CustomerDTO.class);
+        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         CustomerDTO Customer = response.getBody();
         assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getName());
+        assertEquals(VALID_USERNAME, Customer.getCustomerUsername());
         assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
         assertEquals(VALID_PASSWORD, Customer.getCustomerPassword());
     }
@@ -211,7 +211,7 @@ public class CustomerIntegrationTests {
     @Order(5)
     public void testUpdateCustomerUsername() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD;
+        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
 
         // Act
         ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
@@ -230,7 +230,7 @@ public class CustomerIntegrationTests {
     @Order(6)
     public void testUpdateCustomerEmail() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + THIS.VALID_PASSWORD;
+        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + this.VALID_PASSWORD;
 
         // Act
         ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
@@ -249,7 +249,7 @@ public class CustomerIntegrationTests {
     @Order(7)
     public void testUpdateCustomerPassword() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD2;
 
         // Act
         ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
