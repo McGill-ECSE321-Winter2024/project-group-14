@@ -83,7 +83,7 @@ public class InstructorService {
 	 * 
 	 * 
 	 */
-	private Boolean emailIsValid(String email){
+	public Boolean emailIsValid(String email){
 		int i = email.indexOf("@");
 
 		if (i == -1 || i == 0 || i == email.length() - 1){
@@ -97,7 +97,7 @@ public class InstructorService {
 
 
 
-	private boolean usernameIsUnique(String username){
+	public boolean usernameIsUnique(String username){
 		if (InstructorRepository.findInstructorByUsername(username) == null) {
 			return true;
 		}

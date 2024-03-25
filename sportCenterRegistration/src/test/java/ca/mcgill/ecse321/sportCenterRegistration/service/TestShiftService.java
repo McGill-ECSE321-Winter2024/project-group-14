@@ -1,4 +1,4 @@
-package ca.mcgill;
+package ca.mcgill.ecse321.sportCenterRegistration.service;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
