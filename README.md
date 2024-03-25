@@ -50,12 +50,12 @@ To run the tests locally, follow these steps:
 
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
 | -- | -- | --  | -- | -- |
-| Hammad Muhammad | 35 | -- | --  | -- |
-| Motta Vivek | 35 | -- | -- | -- |
-| Marji David | 30 | -- | -- | -- |
-| Yue Ming Xuan | 35 | -- | -- | -- |
-| Huang Stephen | 40 | -- | -- | -- |
-| Luo Loridy | 40 | -- | -- | -- |
+| Hammad Muhammad | 35 | 40 | --  | -- |
+| Motta Vivek | 35 | 30 | -- | -- |
+| Marji David | 30 | 40 | -- | -- |
+| Yue Ming Xuan | 35 | 35 | -- | -- |
+| Huang Stephen | 40 | 40 | -- | -- |
+| Luo Loridy | 40 | 40 | -- | -- |
 
 # Deliverable 1
 ## Links
@@ -72,5 +72,21 @@ To run the tests locally, follow these steps:
 
 ## Sprint 1 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-1)
+
+# Deliverable 2
+## Links
+## Sprint 2 effort table
+
+| Team Member | Contributions  | Effort (Hours) |
+| -- | -- | -- | 
+| Hammad Muhammad |  | 40 |
+| Motta Vivek |  | 30 |
+| Marji David |  | 40 | 
+| Yue Ming Xuan |  | 35 | 
+| Huang Stephen | | 40 |
+| Luo Loridy |  | 40 |
+
+## Sprint 2 Project report
+The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-2)
 
 
