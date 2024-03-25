@@ -12,6 +12,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.dto.AccountDTO;
 import java.sql.Date;
 
 import java.sql.Time;
+import java.util.List;
 
 public class RegistrationDTO{
     //we don't know if the registration will be by a customer, owner, or instructor.
