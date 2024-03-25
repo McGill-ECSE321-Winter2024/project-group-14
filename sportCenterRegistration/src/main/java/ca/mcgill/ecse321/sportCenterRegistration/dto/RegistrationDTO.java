@@ -20,6 +20,21 @@ public class RegistrationDTO{
     private Date registrationDate;
     private SessionDTO session;
 
+    @SuppressWarnings("unused")
+    private List<String> errors;
+
+    public RegistrationDTO(String error) {
+        this.errors = List.of(error);
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
+    
     public RegistrationDTO(){
 
     }
