@@ -1,13 +1,9 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,15 +11,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
 
 @SpringBootTest
-public class RegistrationRepositoryTest{
+public class RegistrationRepositoryTest {
     @Autowired
     private RegistrationRepository registrationRepo;
     @Autowired
@@ -48,7 +44,7 @@ public class RegistrationRepositoryTest{
     }
 
     @Test
-    public void testCreateAndReadRegistration(){
+    public void testCreateAndReadRegistration() {
         // create a sport class
         String name = "cardio";
         SportClass sportClass = new SportClass(name);
@@ -64,7 +60,7 @@ public class RegistrationRepositoryTest{
         Time endTime = Time.valueOf("11:00:00");
         String location = "trottbuilding";
         Date date = Date.valueOf("2024-02-13");
-        Session session = new Session(startTime,endTime,location,date, instructor, sportClass);
+        Session session = new Session(startTime, endTime, location, date, instructor, sportClass);
 
         // create a customer
         String customerUsername = "customer";
@@ -74,7 +70,9 @@ public class RegistrationRepositoryTest{
 
         // create a registration
         Date registrationDate = Date.valueOf("2024-02-10");
-        Registration registration = new Registration(registrationDate, customer, session); // Registration(Date aDate, Account aAccount, Session aSession)
+        Registration registration = new Registration(registrationDate, customer, session); // Registration(Date aDate,
+                                                                                           // Account aAccount, Session
+                                                                                           // aSession)
 
         // saving into database
         sportClass = sportClassRepo.save(sportClass);

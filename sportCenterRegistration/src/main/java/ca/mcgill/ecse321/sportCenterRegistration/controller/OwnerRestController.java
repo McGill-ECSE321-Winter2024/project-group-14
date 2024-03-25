@@ -18,13 +18,11 @@ import ca.mcgill.ecse321.sportCenterRegistration.dto.OwnerDTO;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.service.OwnerService;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class OwnerRestController {
     @Autowired
     public OwnerService OwnerService;
-
 
     /*
      * 
@@ -33,7 +31,7 @@ public class OwnerRestController {
      * method that converts a Owner object to a Owner dto
      * 
      */
-    private OwnerDTO convertToDTO(Owner Owner){
+    private OwnerDTO convertToDTO(Owner Owner) {
         if (Owner == null) {
             throw new IllegalArgumentException("There is no such Owner!");
         }
@@ -48,16 +46,13 @@ public class OwnerRestController {
      * method that converts a list of Owners into a list of Owner dtos
      * 
      */
-    private List<OwnerDTO> convertListToDto(List<Owner> listOwner){
+    private List<OwnerDTO> convertListToDto(List<Owner> listOwner) {
         List<OwnerDTO> listOwnerDTO = new ArrayList<OwnerDTO>(listOwner.size());
-        for (Owner Owner: listOwner) {
+        for (Owner Owner : listOwner) {
             listOwnerDTO.add(convertToDTO(Owner));
         }
         return listOwnerDTO;
     }
-
-
-
 
     /*
      * 
@@ -68,15 +63,15 @@ public class OwnerRestController {
      * 
      */
 
-    @PostMapping(value= {"/Owner/{username}/{email}/{password}", "/Owner/{username}/{email}/{password}/"})
-    public ResponseEntity<?> createOwner(@PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
+    @PostMapping(value = { "/Owner/{username}/{email}/{password}", "/Owner/{username}/{email}/{password}/" })
+    public ResponseEntity<?> createOwner(@PathVariable("username") String username, @PathVariable("email") String email,
+            @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Owner Owner = OwnerService.createOwner(username, email, password);
             return ResponseEntity.ok(convertToDTO(Owner));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
     }
     /*
      * 
@@ -87,29 +82,26 @@ public class OwnerRestController {
      * 
      */
 
-    @GetMapping(value= {"/Owner/{username}", "/Owner/{username}/"})
+    @GetMapping(value = { "/Owner/{username}", "/Owner/{username}/" })
     public ResponseEntity<?> getOwner(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Owner Owner = OwnerService.getOwner(username);
             return ResponseEntity.ok(convertToDTO(Owner));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
     }
 
-    @GetMapping(value= {"/Owner/all", "/Owner/all/"})
+    @GetMapping(value = { "/Owner/all", "/Owner/all/" })
     public ResponseEntity<?> getAllOwners() throws IllegalArgumentException {
         try {
             List<Owner> Owners = OwnerService.getAllOwners();
-            
-            return ResponseEntity.ok(convertListToDto(Owners));
-        }
-        catch(IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } 
-    }
 
+            return ResponseEntity.ok(convertListToDto(Owners));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     /*
      * 
@@ -121,20 +113,16 @@ public class OwnerRestController {
      * 
      */
 
-
-
-    @DeleteMapping(value= {"/Owner/{username}", "/Owner/{username}/"})
+    @DeleteMapping(value = { "/Owner/{username}", "/Owner/{username}/" })
     public ResponseEntity<?> deleteOwner(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Owner ownerDelete = OwnerService.deleteOwner(username);
             return ResponseEntity.ok(convertToDTO(ownerDelete));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-         
-    }
 
+    }
 
     /*
      * @author Muhammad Hammad
@@ -143,25 +131,17 @@ public class OwnerRestController {
      * 
      */
 
-    @PutMapping(value= {"/Owner/update/{oldUsername}/{username}/{email}/{password}", "/Owner/update/{oldUsername}/{username}/{email}/{password}/"})
-    public ResponseEntity<?> updateOwner(@PathVariable("oldUsername") String oldUsername, @PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
+    @PutMapping(value = { "/Owner/update/{oldUsername}/{username}/{email}/{password}",
+            "/Owner/update/{oldUsername}/{username}/{email}/{password}/" })
+    public ResponseEntity<?> updateOwner(@PathVariable("oldUsername") String oldUsername,
+            @PathVariable("username") String username, @PathVariable("email") String email,
+            @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Owner Owner = OwnerService.updateOwner(oldUsername, username, email, password);
             return ResponseEntity.ok(convertToDTO(Owner));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
     }
-
-
-
-
-
-
-
-    
-
-
 
 }

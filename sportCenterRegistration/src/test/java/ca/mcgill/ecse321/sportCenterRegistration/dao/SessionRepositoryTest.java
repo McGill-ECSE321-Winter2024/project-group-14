@@ -1,8 +1,6 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -15,12 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 
 @SpringBootTest
-public class SessionRepositoryTest{
+public class SessionRepositoryTest {
     @Autowired
     private SessionRepository repo;
     @Autowired
@@ -35,8 +33,9 @@ public class SessionRepositoryTest{
         sportClassRepo.deleteAll();
         instructorRepo.deleteAll();
     }
+
     @Test
-    public void testCreateAndReadSession(){
+    public void testCreateAndReadSession() {
         // before creating session, create a instructor and a sport class
         String name = "cardio";
         SportClass sportClass = new SportClass(name);
@@ -46,7 +45,7 @@ public class SessionRepositoryTest{
         String password = "instructor";
         Instructor instructor = new Instructor(username, email, password);
 
-        //create Session
+        // create Session
         List<Session> sessions = new ArrayList<>();
 
         Time startTime = Time.valueOf("08:00:00");
@@ -54,8 +53,9 @@ public class SessionRepositoryTest{
         String location = "trottbuilding";
         Date date = Date.valueOf("2024-02-13");
 
-        // Session(Time aStartTime, Time aEndTime, String aLocation, Date aDate, Instructor aInstructor, SportClass aSportClass)
-        Session trottSession = new Session(startTime,endTime,location,date, instructor, sportClass); //error here
+        // Session(Time aStartTime, Time aEndTime, String aLocation, Date aDate,
+        // Instructor aInstructor, SportClass aSportClass)
+        Session trottSession = new Session(startTime, endTime, location, date, instructor, sportClass); // error here
 
         // Save instructor
         instructor = instructorRepo.save(instructor);

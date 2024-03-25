@@ -1,8 +1,6 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 
 @SpringBootTest
-public class InstructorRepositoryTest{
+public class InstructorRepositoryTest {
     @Autowired
     private InstructorRepository repo;
 
@@ -24,7 +22,7 @@ public class InstructorRepositoryTest{
     }
 
     @Test
-    public void testCreateAndReadInstructor(){
+    public void testCreateAndReadInstructor() {
         // Create Instructor
         String username = "instructor1";
         String email = "instructor1@gmail.com";
@@ -36,7 +34,7 @@ public class InstructorRepositoryTest{
         int instructorId = instructor.getId();
 
         // Read from database
-//        Instructor result = repo.findInstructorById(instructorId);
+        // Instructor result = repo.findInstructorById(instructorId);
         Instructor result = repo.findInstructorByUsername(username);
 
         // check objects

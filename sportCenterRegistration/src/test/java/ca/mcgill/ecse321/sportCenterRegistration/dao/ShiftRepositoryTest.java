@@ -1,13 +1,11 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.sql.Time;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,11 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Shift;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+
 @SpringBootTest
-public class ShiftRepositoryTest{
+public class ShiftRepositoryTest {
     @Autowired
     private ShiftRepository repoShift;
     @Autowired
@@ -47,8 +46,6 @@ public class ShiftRepositoryTest{
         Date date = Date.valueOf("2024-02-16");
         Shift shift = new Shift(startTime, endTime, date, instructor);
 
-
-
         // Save shift in the database
         instructor = repoStaff.save(instructor);
         shift = repoShift.save(shift);
@@ -71,12 +68,10 @@ public class ShiftRepositoryTest{
         assertEquals(resultStaff.getId(), result.getStaff().getId());
     }
 
-
-
     // Extra tests
     @Test
     // Test create and read shift for the same day
-    public void testCreateAndReadShift2(){
+    public void testCreateAndReadShift2() {
         // Create Instructor
         String username = "instructor1";
         String email = "instructor1@gmail.com";
@@ -101,7 +96,7 @@ public class ShiftRepositoryTest{
         shifts.add(new Shift(startTime2, endTime2, date2, instructor));
 
         // Save in the database
-        for (Shift shift: shifts){
+        for (Shift shift : shifts) {
             shift = repoShift.save(shift);
         }
         List<Shift> result = repoShift.findShiftByStaffAndDate(instructor, date1);
@@ -112,7 +107,7 @@ public class ShiftRepositoryTest{
 
     @Test
     // test create and read shifts from different days
-    public void testCreateAndReadShift3(){
+    public void testCreateAndReadShift3() {
         // Create Instructor
         String username = "instructor1";
         String email = "instructor1@gmail.com";
@@ -142,7 +137,7 @@ public class ShiftRepositoryTest{
         shifts.add(new Shift(startTime3, endTime3, date3, instructor));
 
         // Save in the database
-        for (Shift shift: shifts){
+        for (Shift shift : shifts) {
             shift = repoShift.save(shift);
         }
         Date d1 = Date.valueOf("2024-02-16");
