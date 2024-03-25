@@ -23,14 +23,15 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dto.OwnerDTO;
+
 
 /*
  * @author Muhammad Hammad
  * 
- * Integration test for Customer
+ * Integration test for Owner
  * 
  * Note: The tests where we determine if the correct error was received could not be done because error.getErrors() was not working
  * I left them in thought because I believe the logic of the code works besides that but I commented them out to prevent compliation
@@ -38,19 +39,18 @@ import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
  * 
  */
 
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class CustomerIntegrationTests {
+public class OwnerIntegrationTests {
     @Autowired
     private TestRestTemplate client;
 
 
 	@Autowired
-	private CustomerRepository CustomerRepository;
+	private OwnerRepository OwnerRepository;
     @BeforeEach
 	@AfterEach
 	public void clearDatabase() {
-        CustomerRepository.deleteAll();
+        OwnerRepository.deleteAll();
 	}
 
     private final String VALID_USERNAME = "Hammad";
@@ -69,55 +69,53 @@ public class CustomerIntegrationTests {
 
     private int validId;
 
-    
-
 
     @Test
     @Order(1)
-    public void testCreateCustomer() {
+    public void testCreateOwner() {
         // Set up
        
-        String url = "/Customer/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
+        String url = "/Owner/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.postForEntity(url, null , CustomerDTO.class);
+        ResponseEntity<OwnerDTO> response = client.postForEntity(url, null , OwnerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        CustomerDTO createdCustomer = response.getBody();
-        assertNotNull(createdCustomer);
-        assertEquals(VALID_USERNAME, createdCustomer.getCustomerUsername());
-        assertEquals(VALID_EMAIL, createdCustomer.getCustomerEmail());
+        OwnerDTO createdOwner = response.getBody();
+        assertNotNull(createdOwner);
+        assertEquals(VALID_USERNAME, createdOwner.getOwnerUsername());
+        assertEquals(VALID_EMAIL, createdOwner.getOwnerEmail());
 
 
     }
 
     @Test
     @Order(2)
-    public void testReadCustomerByValidUsername() {
+    public void testReadOwnerByValidUsername() {
         // Set up
-        String url = "/Customer/" + this.VALID_USERNAME;
+        String url = "/Owner/" + this.VALID_USERNAME;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getCustomerUsername());
-        assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
+        OwnerDTO Owner = response.getBody();
+        assertNotNull(Owner);
+        assertEquals(VALID_USERNAME, Owner.getOwnerUsername());
+        assertEquals(VALID_EMAIL, Owner.getOwnerEmail());
         
 
     }
 /* 
     @Test
     @Order(3)
-    public void testCreateInvalidCustomer() {
+    public void testCreateInvalidOwner() {
         // Set up
-        String url = "/Customer/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
+        String url = "/Owner/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
 
         // Act
         ResponseEntity<Error> response = client.postForEntity(url, null, Error.class);
@@ -134,9 +132,9 @@ public class CustomerIntegrationTests {
 
     @Test
     @Order(4)
-    public void testReadCustomerByInvalidUsername() {
+    public void testReadOwnerByInvalidUsername() {
         // Set up
-        String url = "/Customer/" + this.INVALID_USERNAME;
+        String url = "/Owner/" + this.INVALID_USERNAME;
 
         // Act
         ResponseEntity<Error> response = client.getForEntity(url, Error.class);
@@ -147,54 +145,54 @@ public class CustomerIntegrationTests {
         Error body = response.getBody();
         assertNotNull(body);
         assertEquals(1, body.getErrors().size());
-        assertEquals("Customer name is invalid", body.getErrors().get(0));
+        assertEquals("Owner name is invalid", body.getErrors().get(0));
     }*/
 
     @Test
     @Order(3)
-    public void testReadAllCustomer(){
+    public void testReadAllOwner(){
         // Set up
-        String url = "/Customer/all";
+        String url = "/Owner/all";
 
         // Actd
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, Error.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        List<CustomerDTO> Customers = response.getBody();
-        assertNotNull(Customers);
-        assertEquals(1, Customers.size());
+        List<OwnerDTO> Owners = response.getBody();
+        assertNotNull(Owners);
+        assertEquals(1, Owners.size());
     }
 
     @Test
     @Order(4)
-    public void testDeleteCustomerValidUsername() {
+    public void testDeleteOwnerValidUsername() {
         // Set up
-        String url = "/Customer/delete" + this.VALID_USERNAME;
+        String url = "/Owner/delete" + this.VALID_USERNAME;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.deleteForEntity(url, CustomerDTO.class);
+        ResponseEntity<OwnerDTO> response = client.deleteForEntity(url, OwnerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getName());
-        assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
-        assertEquals(VALID_PASSWORD, Customer.getCustomerPassword());
+        OwnerDTO Owner = response.getBody();
+        assertNotNull(Owner);
+        assertEquals(VALID_USERNAME, Owner.getName());
+        assertEquals(VALID_EMAIL, Owner.getOwnerEmail());
+        assertEquals(VALID_PASSWORD, Owner.getOwnerPassword());
     }
 
     /* 
     @Test
     @Order(7)
-    public void testDeleteCustomerByInvalidUsername() {
+    public void testDeleteOwnerByInvalidUsername() {
         // Set up
-        String url = "/Customer/delete" + this.INVALID_USERNAME;
+        String url = "/Owner/delete" + this.INVALID_USERNAME;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.deleteForEntity(url, Error.class);
+        ResponseEntity<OwnerDTO> response = client.deleteForEntity(url, Error.class);
 
         // Assert
         assertNotNull(response);
@@ -202,73 +200,73 @@ public class CustomerIntegrationTests {
         Error body = response.getBody();
         assertNotNull(body);
         assertEquals(1, body.getErrors().size());
-        assertEquals("Customer name cannot be empty!", body.getErrors().get(0));
+        assertEquals("Owner name cannot be empty!", body.getErrors().get(0));
     }
     
    
 */
     @Test
     @Order(5)
-    public void testUpdateCustomerUsername() {
+    public void testUpdateOwnerUsername() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME2, Customer.getCustomerUsername());
-        assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
-        assertEquals(VALID_PASSWORD, Customer.getCustomerPassword());
+        OwnerDTO Owner = response.getBody();
+        assertNotNull(Owner);
+        assertEquals(VALID_USERNAME2, Owner.getOwnerUsername());
+        assertEquals(VALID_EMAIL, Owner.getOwnerEmail());
+        assertEquals(VALID_PASSWORD, Owner.getOwnerPassword());
     }
 
     @Test
     @Order(6)
-    public void testUpdateCustomerEmail() {
+    public void testUpdateOwnerEmail() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + THIS.VALID_PASSWORD;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + THIS.VALID_PASSWORD;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getCustomerUsername());
-        assertEquals(VALID_EMAIL2, Customer.getCustomerEmail());
-        assertEquals(VALID_PASSWORD, Customer.getCustomerPassword());
+        OwnerDTO Owner = response.getBody();
+        assertNotNull(Owner);
+        assertEquals(VALID_USERNAME, Owner.getOwnerUsername());
+        assertEquals(VALID_EMAIL2, Owner.getOwnerEmail());
+        assertEquals(VALID_PASSWORD, Owner.getOwnerPassword());
     }
 
     @Test
     @Order(7)
-    public void testUpdateCustomerPassword() {
+    public void testUpdateOwnerPassword() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, OwnerDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getCustomerUsername());
-        assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
-        assertEquals(VALID_PASSWORD2, Customer.getCustomerPassword());
+        OwnerDTO Owner = response.getBody();
+        assertNotNull(Owner);
+        assertEquals(VALID_USERNAME, Owner.getOwnerUsername());
+        assertEquals(VALID_EMAIL, Owner.getOwnerEmail());
+        assertEquals(VALID_PASSWORD2, Owner.getOwnerPassword());
     }
 /* 
     @Test
     @Order(12)
-    public void testUpdateCustomerByInvalidUsername() {
+    public void testUpdateOwnerByInvalidUsername() {
         // Set up
-        String url = "/Customer/update/" + this.INVALID_USERNAME + "/" + this.INVALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Owner/update/" + this.INVALID_USERNAME + "/" + this.INVALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
 
         // Act
         ResponseEntity<Error> response = client.getForEntity(url, Error.class);
@@ -284,9 +282,9 @@ public class CustomerIntegrationTests {
 */
     /*@Test
     @Order(12)
-    public void testUpdateCustomerByInvalidEmail() {
+    public void testUpdateOwnerByInvalidEmail() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.INVALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.INVALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
 
         // Act
         ResponseEntity<Error> response = client.getForEntity(url, Error.class);
@@ -302,12 +300,12 @@ public class CustomerIntegrationTests {
 
     @Test
     @Order(12)
-    public void testUpdateCustomerByInvalidPassword() {
+    public void testUpdateOwnerByInvalidPassword() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.INVALID_PASSWORD2;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.INVALID_PASSWORD2;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, Error.class);
 
         // Assert
         assertNotNull(response);
@@ -320,12 +318,12 @@ public class CustomerIntegrationTests {
 
     @Test
     @Order(12)
-    public void testUpdateCustomerByNonUniqueUsername() {
+    public void testUpdateOwnerByNonUniqueUsername() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.INVALID_PASSWORD2;
+        String url = "/Owner/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.INVALID_PASSWORD2;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<OwnerDTO> response = client.getForEntity(url, Error.class);
 
         // Assert
         assertNotNull(response);

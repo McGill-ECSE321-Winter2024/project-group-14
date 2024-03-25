@@ -23,14 +23,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
-
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dto.InstructorDTO;
 /*
  * @author Muhammad Hammad
  * 
- * Integration test for Customer
+ * Integration test for Instructor
  * 
  * Note: The tests where we determine if the correct error was received could not be done because error.getErrors() was not working
  * I left them in thought because I believe the logic of the code works besides that but I commented them out to prevent compliation
@@ -38,19 +37,18 @@ import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
  * 
  */
 
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class CustomerIntegrationTests {
+public class InstructorIntegrationTests {
     @Autowired
     private TestRestTemplate client;
 
 
 	@Autowired
-	private CustomerRepository CustomerRepository;
+	private InstructorRepository InstructorRepository;
     @BeforeEach
 	@AfterEach
 	public void clearDatabase() {
-        CustomerRepository.deleteAll();
+        InstructorRepository.deleteAll();
 	}
 
     private final String VALID_USERNAME = "Hammad";
@@ -69,55 +67,53 @@ public class CustomerIntegrationTests {
 
     private int validId;
 
-    
-
 
     @Test
     @Order(1)
-    public void testCreateCustomer() {
+    public void testCreateInstructor() {
         // Set up
        
-        String url = "/Customer/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
+        String url = "/Instructor/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.postForEntity(url, null , CustomerDTO.class);
+        ResponseEntity<InstructorDTO> response = client.postForEntity(url, null , InstructorDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        CustomerDTO createdCustomer = response.getBody();
-        assertNotNull(createdCustomer);
-        assertEquals(VALID_USERNAME, createdCustomer.getCustomerUsername());
-        assertEquals(VALID_EMAIL, createdCustomer.getCustomerEmail());
+        InstructorDTO createdInstructor = response.getBody();
+        assertNotNull(createdInstructor);
+        assertEquals(VALID_USERNAME, createdInstructor.getInstructorUsername());
+        assertEquals(VALID_EMAIL, createdInstructor.getInstructorEmail());
 
 
     }
 
     @Test
     @Order(2)
-    public void testReadCustomerByValidUsername() {
+    public void testReadInstructorByValidUsername() {
         // Set up
-        String url = "/Customer/" + this.VALID_USERNAME;
+        String url = "/Instructor/" + this.VALID_USERNAME;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getCustomerUsername());
-        assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
+        InstructorDTO Instructor = response.getBody();
+        assertNotNull(Instructor);
+        assertEquals(VALID_USERNAME, Instructor.getInstructorUsername());
+        assertEquals(VALID_EMAIL, Instructor.getInstructorEmail());
         
 
     }
 /* 
     @Test
     @Order(3)
-    public void testCreateInvalidCustomer() {
+    public void testCreateInvalidInstructor() {
         // Set up
-        String url = "/Customer/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
+        String url = "/Instructor/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + this.VALID_PASSWORD;
 
         // Act
         ResponseEntity<Error> response = client.postForEntity(url, null, Error.class);
@@ -134,9 +130,9 @@ public class CustomerIntegrationTests {
 
     @Test
     @Order(4)
-    public void testReadCustomerByInvalidUsername() {
+    public void testReadInstructorByInvalidUsername() {
         // Set up
-        String url = "/Customer/" + this.INVALID_USERNAME;
+        String url = "/Instructor/" + this.INVALID_USERNAME;
 
         // Act
         ResponseEntity<Error> response = client.getForEntity(url, Error.class);
@@ -147,54 +143,54 @@ public class CustomerIntegrationTests {
         Error body = response.getBody();
         assertNotNull(body);
         assertEquals(1, body.getErrors().size());
-        assertEquals("Customer name is invalid", body.getErrors().get(0));
+        assertEquals("Instructor name is invalid", body.getErrors().get(0));
     }*/
 
     @Test
     @Order(3)
-    public void testReadAllCustomer(){
+    public void testReadAllInstructor(){
         // Set up
-        String url = "/Customer/all";
+        String url = "/Instructor/all";
 
         // Actd
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, Error.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        List<CustomerDTO> Customers = response.getBody();
-        assertNotNull(Customers);
-        assertEquals(1, Customers.size());
+        List<InstructorDTO> Instructors = response.getBody();
+        assertNotNull(Instructors);
+        assertEquals(1, Instructors.size());
     }
 
     @Test
     @Order(4)
-    public void testDeleteCustomerValidUsername() {
+    public void testDeleteInstructorValidUsername() {
         // Set up
-        String url = "/Customer/delete" + this.VALID_USERNAME;
+        String url = "/Instructor/delete" + this.VALID_USERNAME;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.deleteForEntity(url, CustomerDTO.class);
+        ResponseEntity<InstructorDTO> response = client.deleteForEntity(url, InstructorDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getName());
-        assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
-        assertEquals(VALID_PASSWORD, Customer.getCustomerPassword());
+        InstructorDTO Instructor = response.getBody();
+        assertNotNull(Instructor);
+        assertEquals(VALID_USERNAME, Instructor.getName());
+        assertEquals(VALID_EMAIL, Instructor.getInstructorEmail());
+        assertEquals(VALID_PASSWORD, Instructor.getInstructorPassword());
     }
 
     /* 
     @Test
     @Order(7)
-    public void testDeleteCustomerByInvalidUsername() {
+    public void testDeleteInstructorByInvalidUsername() {
         // Set up
-        String url = "/Customer/delete" + this.INVALID_USERNAME;
+        String url = "/Instructor/delete" + this.INVALID_USERNAME;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.deleteForEntity(url, Error.class);
+        ResponseEntity<InstructorDTO> response = client.deleteForEntity(url, Error.class);
 
         // Assert
         assertNotNull(response);
@@ -202,73 +198,73 @@ public class CustomerIntegrationTests {
         Error body = response.getBody();
         assertNotNull(body);
         assertEquals(1, body.getErrors().size());
-        assertEquals("Customer name cannot be empty!", body.getErrors().get(0));
+        assertEquals("Instructor name cannot be empty!", body.getErrors().get(0));
     }
     
    
 */
     @Test
     @Order(5)
-    public void testUpdateCustomerUsername() {
+    public void testUpdateInstructorUsername() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME2, Customer.getCustomerUsername());
-        assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
-        assertEquals(VALID_PASSWORD, Customer.getCustomerPassword());
+        InstructorDTO Instructor = response.getBody();
+        assertNotNull(Instructor);
+        assertEquals(VALID_USERNAME2, Instructor.getInstructorUsername());
+        assertEquals(VALID_EMAIL, Instructor.getInstructorEmail());
+        assertEquals(VALID_PASSWORD, Instructor.getInstructorPassword());
     }
 
     @Test
     @Order(6)
-    public void testUpdateCustomerEmail() {
+    public void testUpdateInstructorEmail() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + THIS.VALID_PASSWORD;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL2 + "/" + THIS.VALID_PASSWORD;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getCustomerUsername());
-        assertEquals(VALID_EMAIL2, Customer.getCustomerEmail());
-        assertEquals(VALID_PASSWORD, Customer.getCustomerPassword());
+        InstructorDTO Instructor = response.getBody();
+        assertNotNull(Instructor);
+        assertEquals(VALID_USERNAME, Instructor.getInstructorUsername());
+        assertEquals(VALID_EMAIL2, Instructor.getInstructorEmail());
+        assertEquals(VALID_PASSWORD, Instructor.getInstructorPassword());
     }
 
     @Test
     @Order(7)
-    public void testUpdateCustomerPassword() {
+    public void testUpdateInstructorPassword() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, CustomerDTO.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, InstructorDTO.class);
 
         // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CustomerDTO Customer = response.getBody();
-        assertNotNull(Customer);
-        assertEquals(VALID_USERNAME, Customer.getCustomerUsername());
-        assertEquals(VALID_EMAIL, Customer.getCustomerEmail());
-        assertEquals(VALID_PASSWORD2, Customer.getCustomerPassword());
+        InstructorDTO Instructor = response.getBody();
+        assertNotNull(Instructor);
+        assertEquals(VALID_USERNAME, Instructor.getInstructorUsername());
+        assertEquals(VALID_EMAIL, Instructor.getInstructorEmail());
+        assertEquals(VALID_PASSWORD2, Instructor.getInstructorPassword());
     }
 /* 
     @Test
     @Order(12)
-    public void testUpdateCustomerByInvalidUsername() {
+    public void testUpdateInstructorByInvalidUsername() {
         // Set up
-        String url = "/Customer/update/" + this.INVALID_USERNAME + "/" + this.INVALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Instructor/update/" + this.INVALID_USERNAME + "/" + this.INVALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
 
         // Act
         ResponseEntity<Error> response = client.getForEntity(url, Error.class);
@@ -284,9 +280,9 @@ public class CustomerIntegrationTests {
 */
     /*@Test
     @Order(12)
-    public void testUpdateCustomerByInvalidEmail() {
+    public void testUpdateInstructorByInvalidEmail() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.INVALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.INVALID_EMAIL + "/" + THIS.VALID_PASSWORD2;
 
         // Act
         ResponseEntity<Error> response = client.getForEntity(url, Error.class);
@@ -302,12 +298,12 @@ public class CustomerIntegrationTests {
 
     @Test
     @Order(12)
-    public void testUpdateCustomerByInvalidPassword() {
+    public void testUpdateInstructorByInvalidPassword() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.INVALID_PASSWORD2;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME2 + "/" + this.VALID_EMAIL + "/" + THIS.INVALID_PASSWORD2;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, Error.class);
 
         // Assert
         assertNotNull(response);
@@ -320,12 +316,12 @@ public class CustomerIntegrationTests {
 
     @Test
     @Order(12)
-    public void testUpdateCustomerByNonUniqueUsername() {
+    public void testUpdateInstructorByNonUniqueUsername() {
         // Set up
-        String url = "/Customer/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.INVALID_PASSWORD2;
+        String url = "/Instructor/update/" + this.VALID_USERNAME + "/" + this.VALID_USERNAME + "/" + this.VALID_EMAIL + "/" + THIS.INVALID_PASSWORD2;
 
         // Act
-        ResponseEntity<CustomerDTO> response = client.getForEntity(url, Error.class);
+        ResponseEntity<InstructorDTO> response = client.getForEntity(url, Error.class);
 
         // Assert
         assertNotNull(response);
