@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
 
 @SpringBootTest
-public class SportClassRespositoryTest {
+public class SportClassRespositoryTest{
     @Autowired
     private SportClassRepository repo;
 
@@ -22,7 +24,7 @@ public class SportClassRespositoryTest {
     }
 
     @Test
-    public void testCreateAndReadSportClass() {
+    public void testCreateAndReadSportClass(){
         // Create Customer
         String name = "cardio";
         SportClass sportClass = new SportClass(name);
@@ -36,7 +38,7 @@ public class SportClassRespositoryTest {
 
         // check objects
         assertNotNull(result);
-        // check attributes
+        //check attributes
         assertEquals(sportClassId, result.getId());
         assertEquals(name, result.getName());
 

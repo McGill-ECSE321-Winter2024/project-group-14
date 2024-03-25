@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,7 @@ public class StaffRepositoryTest {
         assertNotNull(resultStaff);
 
         // check attributes
-        assertEquals(stephenId, resultStaff.getId());
+        assertEquals(stephenId , resultStaff.getId());
         assertEquals(username, resultStaff.getUsername());
         assertEquals(email, resultStaff.getEmail());
         assertEquals(password, resultStaff.getPassword());

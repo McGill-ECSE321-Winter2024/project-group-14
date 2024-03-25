@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 
 @SpringBootTest
-public class CustomerRepositoryTest {
+public class CustomerRepositoryTest{
     @Autowired
     private CustomerRepository repo;
 
@@ -22,7 +24,7 @@ public class CustomerRepositoryTest {
     }
 
     @Test
-    public void testCreateAndReadCustomer() {
+    public void testCreateAndReadCustomer(){
         // Create Customer
         String username = "customer1";
         String email = "customer1@gmail.com";
@@ -34,7 +36,7 @@ public class CustomerRepositoryTest {
         int customerId = customer.getId();
 
         // Read from database
-        // find the customer by their username
+//find the customer by their username 
         Customer result = repo.findCustomerByUsername(username);
 
         // check objects

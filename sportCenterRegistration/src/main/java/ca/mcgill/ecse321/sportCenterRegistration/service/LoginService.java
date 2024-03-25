@@ -4,13 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.*;
+import ca.mcgill.ecse321.sportCenterRegistration.model.*;
 
 @Service
 public class LoginService {

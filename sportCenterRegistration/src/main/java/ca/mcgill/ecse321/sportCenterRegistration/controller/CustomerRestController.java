@@ -18,11 +18,13 @@ import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import ca.mcgill.ecse321.sportCenterRegistration.service.CustomerService;
 
+
 @CrossOrigin(origins = "*")
 @RestController
 public class CustomerRestController {
     @Autowired
     public CustomerService customerService;
+
 
     /*
      * 
@@ -31,12 +33,11 @@ public class CustomerRestController {
      * method that converts a customer object to a customer dto
      * 
      */
-    private CustomerDTO convertToDTO(Customer customer) {
+    private CustomerDTO convertToDTO(Customer customer){
         if (customer == null) {
             throw new IllegalArgumentException("There is no such customer!");
         }
-        CustomerDTO customerDTO = new CustomerDTO(customer.getId(), customer.getUsername(), customer.getEmail(),
-                customer.getPassword());
+        CustomerDTO customerDTO = new CustomerDTO(customer.getId(), customer.getUsername(), customer.getEmail(), customer.getPassword());
         return customerDTO;
     }
 
@@ -47,13 +48,16 @@ public class CustomerRestController {
      * method that converts a list of customers into a list of customer dtos
      * 
      */
-    private List<CustomerDTO> convertListToDto(List<Customer> listCustomer) {
+    private List<CustomerDTO> convertListToDto(List<Customer> listCustomer){
         List<CustomerDTO> listCustomerDTO = new ArrayList<CustomerDTO>(listCustomer.size());
-        for (Customer customer : listCustomer) {
+        for (Customer customer: listCustomer) {
             listCustomerDTO.add(convertToDTO(customer));
         }
         return listCustomerDTO;
     }
+
+
+
 
     /*
      * 
@@ -64,16 +68,15 @@ public class CustomerRestController {
      * 
      */
 
-    @PostMapping(value = { "/customer/{username}/{email}/{password}", "/customer/{username}/{email}/{password}/" })
-    public ResponseEntity<?> createCustomer(@PathVariable("username") String username,
-            @PathVariable("email") String email, @PathVariable("password") String password)
-            throws IllegalArgumentException {
+    @PostMapping(value= {"/customer/{username}/{email}/{password}", "/customer/{username}/{email}/{password}/"})
+    public ResponseEntity<?> createCustomer(@PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Customer customer = customerService.createCustomer(username, email, password);
             return ResponseEntity.ok(convertToDTO(customer));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } 
     }
     /*
      * 
@@ -84,26 +87,29 @@ public class CustomerRestController {
      * 
      */
 
-    @GetMapping(value = { "/customer/{username}", "/customer/{username}/" })
+    @GetMapping(value= {"/customer/{username}", "/customer/{username}/"})
     public ResponseEntity<?> getCustomer(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Customer customer = customerService.getCustomer(username);
             return ResponseEntity.ok(convertToDTO(customer));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } 
     }
 
-    @GetMapping(value = { "/customer/all", "/customer/all/" })
+    @GetMapping(value= {"/customer/all", "/customer/all/"})
     public ResponseEntity<?> getAllCustomers() throws IllegalArgumentException {
         try {
             List<Customer> customers = customerService.getAllCustomers();
-
+            
             return ResponseEntity.ok(convertListToDto(customers));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } 
     }
+
 
     /*
      * 
@@ -115,15 +121,19 @@ public class CustomerRestController {
      * 
      */
 
-    @DeleteMapping(value = { "/customer/{username}", "/customer/{username}/" })
+
+
+    @DeleteMapping(value= {"/customer/{username}", "/customer/{username}/"})
     public ResponseEntity<?> deleteCustomer(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Customer deleteCustomer = customerService.deleteCustomer(username);
             return ResponseEntity.ok(convertToDTO(deleteCustomer));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } 
     }
+
 
     /*
      * @author Muhammad Hammad
@@ -132,17 +142,25 @@ public class CustomerRestController {
      * 
      */
 
-    @PutMapping(value = { "/customer/update/{oldUsername}/{username}/{email}/{password}",
-            "/customer/update/{oldUsername}/{username}/{email}/{password}/" })
-    public ResponseEntity<?> updateCustomer(@PathVariable("oldUsername") String oldUsername,
-            @PathVariable("username") String username, @PathVariable("email") String email,
-            @PathVariable("password") String password) throws IllegalArgumentException {
+    @PutMapping(value= {"/customer/update/{oldUsername}/{username}/{email}/{password}", "/customer/update/{oldUsername}/{username}/{email}/{password}/"})
+    public ResponseEntity<?> updateCustomer(@PathVariable("oldUsername") String oldUsername, @PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Customer customer = customerService.updateCustomer(oldUsername, username, email, password);
             return ResponseEntity.ok(convertToDTO(customer));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } 
     }
+
+
+
+
+
+
+
+    
+
+
 
 }

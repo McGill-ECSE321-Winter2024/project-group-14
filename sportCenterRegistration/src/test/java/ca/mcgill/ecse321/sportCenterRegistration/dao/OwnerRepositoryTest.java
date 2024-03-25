@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 
 @SpringBootTest
-public class OwnerRepositoryTest {
+public class OwnerRepositoryTest{
     @Autowired
     private OwnerRepository repo;
 
@@ -22,7 +24,7 @@ public class OwnerRepositoryTest {
     }
 
     @Test
-    public void testCreateAndReadOwner() {
+    public void testCreateAndReadOwner(){
         // Create Owner
         String username = "Admin";
         String email = "admin@gmail.com";
@@ -34,7 +36,7 @@ public class OwnerRepositoryTest {
         int adminId = admin.getId();
 
         // Read from database
-        // Owner result = repo.findOwnerById(adminId);
+//        Owner result = repo.findOwnerById(adminId);
         Owner result = repo.findOwnerByUsername(username);
 
         // check objects

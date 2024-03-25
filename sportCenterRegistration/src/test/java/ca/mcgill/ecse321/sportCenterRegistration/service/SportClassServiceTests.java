@@ -1,26 +1,48 @@
 package ca.mcgill.ecse321.sportCenterRegistration.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.Answer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.SportClassRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
 
+
 @SpringBootTest
-public class SportClassServiceTests {
+public class SportClassServiceTests{
     @Mock
     private InstructorRepository instructorRepo;
     @Mock
@@ -36,36 +58,39 @@ public class SportClassServiceTests {
     private OwnerService ownerService;
 
     private static final String TEST_NAME = "cardio";
-
     @BeforeEach
     public void setMockOutput() {
         lenient().when(sportClassRepo.findSportClassByName(anyString())).thenAnswer(
                 (InvocationOnMock invocation) -> {
-                    if (invocation.getArgument(0).equals(TEST_NAME)) {
+                    if (invocation.getArgument(0).equals(TEST_NAME)){
                         SportClass sportClass = new SportClass(TEST_NAME);
                         return sportClass;
-                    } else {
+                    } else{
                         return null;
                     }
-                });
+                }
+        );
         lenient().when(sportClassRepo.save(any(SportClass.class))).thenAnswer(
-                (InvocationOnMock invocation) -> invocation.getArgument(0));
+                (InvocationOnMock invocation) -> invocation.getArgument(0)
+        );
         lenient().when(sportClassRepo.findAll()).thenAnswer(
-                (InvocationOnMock invocation) -> {
+                (InvocationOnMock invocation) ->{
                     List<SportClass> list = new ArrayList<>();
                     list.add(new SportClass("cardio"));
                     list.add(new SportClass("stretching"));
                     return list;
-                });
+                }
+        );
     }
 
+
     @Test
-    public void testGetSportClass() {
+    public void testGetSportClass(){
         assertEquals(TEST_NAME, sportClassService.getSportClass(TEST_NAME).getName());
     }
 
     @Test
-    public void testGetEmptySportClass() {
+    public void testGetEmptySportClass(){
         String name = null;
 
         String error = null;
@@ -81,7 +106,7 @@ public class SportClassServiceTests {
     }
 
     @Test
-    public void testGetNonExistSportClass() {
+    public void testGetNonExistSportClass(){
         String name = "stretching";
 
         String error = null;
@@ -97,17 +122,17 @@ public class SportClassServiceTests {
     }
 
     /*
-     * test create new sport class
+        test create new sport class
      */
     @SuppressWarnings("null")
     @Test
-    public void testCreateSportClass() {
+    public void testCreateSportClass(){
         String name = "test";
         SportClass createdSportClass = null;
 
-        try {
+        try{
             createdSportClass = instructorService.createSportClass(name);
-        } catch (IllegalArgumentException e) {
+        } catch(IllegalArgumentException e){
             fail();
         }
 
@@ -117,10 +142,10 @@ public class SportClassServiceTests {
     }
 
     /*
-     * test create repeat sport class
+        test create repeat sport class
      */
     @Test
-    public void testCreateSportClassRepeat() {
+    public void testCreateSportClassRepeat(){
         String error = null;
         SportClass createdSportClass = null;
         try {
@@ -134,8 +159,9 @@ public class SportClassServiceTests {
         assertEquals("Sport Class already exists!", error);
     }
 
+
     @Test
-    public void testCreateEmptySportClass() {
+    public void testCreateEmptySportClass(){
         String name = null;
 
         String error = null;
@@ -151,14 +177,15 @@ public class SportClassServiceTests {
         assertEquals("Sport Class name should not be empty!", error);
     }
 
+
     @Test
-    public void testApproveSportClass() {
+    public void testApproveSportClass(){
         // owner approves
         SportClass approvedSportClass = null;
         String error = null;
         try {
             approvedSportClass = ownerService.approveSportClass(TEST_NAME);
-        } catch (IllegalArgumentException e) {
+        } catch(IllegalArgumentException e){
             error = e.getMessage();
         }
 
@@ -168,14 +195,14 @@ public class SportClassServiceTests {
     }
 
     @Test
-    public void testApproveEmptySportClass() {
+    public void testApproveEmptySportClass(){
         // owner approves
         String name = null;
         SportClass approvedSportClass = null;
         String error = null;
         try {
             approvedSportClass = ownerService.approveSportClass(name);
-        } catch (IllegalArgumentException e) {
+        } catch(IllegalArgumentException e){
             error = e.getMessage();
         }
 
@@ -185,14 +212,14 @@ public class SportClassServiceTests {
     }
 
     @Test
-    public void testApproveNonExistSportClass() {
+    public void testApproveNonExistSportClass(){
         // owner approves
         String name = "stretching";
         SportClass approvedSportClass = null;
         String error = null;
         try {
             approvedSportClass = ownerService.approveSportClass(name);
-        } catch (IllegalArgumentException e) {
+        } catch(IllegalArgumentException e){
             error = e.getMessage();
         }
 
@@ -202,20 +229,20 @@ public class SportClassServiceTests {
     }
 
     @Test
-    public void testDeleteSportClass() {
-        try {
+    public void testDeleteSportClass(){
+        try{
             ownerService.deleteSportClass(TEST_NAME);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e){
             fail(e.getMessage());
         }
     }
 
     @Test
-    public void testGetAllSportClass() {
+    public void testGetAllSportClass(){
         List<SportClass> list = new ArrayList<>();
-        try {
+        try{
             list = sportClassService.getAllSportClass();
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e){
             fail(e.getMessage());
         }
 

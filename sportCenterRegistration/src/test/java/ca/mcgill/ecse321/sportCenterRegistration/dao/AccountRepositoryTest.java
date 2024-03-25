@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 
 @SpringBootTest
 public class AccountRepositoryTest {
@@ -24,6 +25,7 @@ public class AccountRepositoryTest {
     private CustomerRepository customerRepo;
     @Autowired
     private InstructorRepository instructorRepo;
+
 
     @BeforeEach
     @AfterEach
@@ -55,7 +57,7 @@ public class AccountRepositoryTest {
         assertNotNull(resultAccount);
 
         // check attributes
-        assertEquals(stephenId, resultAccount.getId());
+        assertEquals(stephenId , resultAccount.getId());
         assertEquals(username, resultAccount.getUsername());
         assertEquals(email, resultAccount.getEmail());
         assertEquals(password, resultAccount.getPassword());
@@ -65,7 +67,6 @@ public class AccountRepositoryTest {
         assertNotNull(resultOwner);
         assertEquals(resultAccount.getId(), resultOwner.getId());
     }
-
     @Test
     // Test creating and reading account As a instructor
     public void testCreateAndReadAccount2() {
@@ -87,7 +88,7 @@ public class AccountRepositoryTest {
         assertNotNull(resultAccount);
 
         // check attributes
-        assertEquals(stephenId, resultAccount.getId());
+        assertEquals(stephenId , resultAccount.getId());
         assertEquals(username, resultAccount.getUsername());
         assertEquals(email, resultAccount.getEmail());
         assertEquals(password, resultAccount.getPassword());
@@ -98,7 +99,6 @@ public class AccountRepositoryTest {
         assertEquals(resultAccount.getId(), resultInstructor.getId());
 
     }
-
     @Test
     // Test creating and reading account As a customer
     public void testCreateAndReadAccount3() {
@@ -120,7 +120,7 @@ public class AccountRepositoryTest {
         assertNotNull(resultAccount);
 
         // check attributes
-        assertEquals(stephenId, resultAccount.getId());
+        assertEquals(stephenId , resultAccount.getId());
         assertEquals(username, resultAccount.getUsername());
         assertEquals(email, resultAccount.getEmail());
         assertEquals(password, resultAccount.getPassword());
