@@ -79,12 +79,12 @@ The project report for this deliverable can be found [here](https://github.com/M
 
 | Team Member | Contributions  | Effort (Hours) |
 | -- | -- | -- | 
-| Hammad Muhammad |  | 45 |
-| Motta Vivek |  | 30 |
-| Marji David |  | 45 | 
-| Yue Ming Xuan |  | 40 | 
-| Huang Stephen | | 45 |
-| Luo Loridy |  | 50 |
+| Hammad Muhammad | Wrote service logic, Wrote the service tests, wrote the controller methods, wrote the integration tests | 60 |
+| Motta Vivek | Wrote the SAQ report and sprint 2 report | 30 |
+| Marji David | Wrote service logic, Wrote the service tests, wrote the controller methods, wrote the integration tests | 60 | 
+| Yue Ming Xuan | Wrote service logic, Wrote the service tests, wrote the controller methods | 60 | 
+| Huang Stephen | Wrote service logic, Wrote the service tests, wrote the controller methods | 60 |
+| Luo Loridy | Wrote service logic, Wrote the service tests, wrote the controller methods, wrote the integration tests  | 70 |
 
 ## Sprint 2 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-2)
