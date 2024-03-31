@@ -79,12 +79,23 @@ public class SessionTests{
 
         lenient().when(sessionRepo.findSessionBySportClass(any(SportClass.class))).thenAnswer(
                 (InvocationOnMock invocation) -> {
-                    if (invocation.getArgument(0).equals("cardio")){
+                    SportClass sp = (SportClass) invocation.getArgument(0);
+                    if (sp.getName().equals("cardio")){
                         List<Session> sessions = new ArrayList<>();
                         sessions.add(session1);
                         sessions.add(session2);
                         return sessions;
                     } else {
+                        return null;
+                    }
+                }
+        );
+
+        lenient().when(sportClassRepo.findSportClassByName(anyString())).thenAnswer(
+                (InvocationOnMock invocation) ->{
+                    if (invocation.getArgument(0).equals("cardio")){
+                        return new SportClass("cardio");
+                    } else{
                         return null;
                     }
                 }
