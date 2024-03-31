@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.sportCenterRegistration.service;
 
+import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -31,7 +32,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 public class OwnerServiceTests {
 
 @Mock
-private OwnerRepository OwnerDao;
+private OwnerRepository ownerDao;
 
 @InjectMocks
 private OwnerService service;
@@ -46,7 +47,7 @@ private static final String NONEXISTING_Owner_PASSWORD = "NotAnOwnerPassword";
 
 @BeforeEach
 public void setMockOutput() {
-    lenient().when(OwnerDao.findOwnerByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+    lenient().when(ownerDao.findOwnerByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
         if(invocation.getArgument(0).equals(Owner_USERNAME)) {
             Owner Owner = new Owner(Owner_USERNAME, Owner_EMAIL, Owner_PASSWORD);
             return Owner;
@@ -54,6 +55,10 @@ public void setMockOutput() {
             return null;
         }
     });
+
+	lenient().when(ownerDao.save(any(Owner.class))).thenAnswer(
+			(InvocationOnMock invocation) -> invocation.getArgument(0)
+	);
 }
 
 /*

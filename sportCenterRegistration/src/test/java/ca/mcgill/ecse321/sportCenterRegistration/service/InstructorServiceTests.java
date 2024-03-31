@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.sportCenterRegistration.service;
 
+import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -31,7 +32,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 public class InstructorServiceTests {
 
 	@Mock
-	private InstructorRepository InstructorDao;
+	private InstructorRepository instructorDao;
 
 	@InjectMocks
 	private InstructorService service;
@@ -46,7 +47,7 @@ public class InstructorServiceTests {
 
 	@BeforeEach
 	public void setMockOutput() {
-		lenient().when(InstructorDao.findInstructorByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+		lenient().when(instructorDao.findInstructorByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
 			if(invocation.getArgument(0).equals(Instructor_USERNAME)) {
 				Instructor Instructor = new Instructor(Instructor_USERNAME, Instructor_EMAIL, Instructor_PASSWORD);
 				return Instructor;
@@ -54,6 +55,10 @@ public class InstructorServiceTests {
 				return null;
 			}
 		});
+
+		lenient().when(instructorDao.save(any(Instructor.class))).thenAnswer(
+				(InvocationOnMock invocation) -> invocation.getArgument(0)
+		);
 	}
 
 	/*
