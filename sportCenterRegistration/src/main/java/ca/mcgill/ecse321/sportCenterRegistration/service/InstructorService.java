@@ -242,23 +242,11 @@ public class InstructorService {
 		InstructorUpdated.setUsername(username);
 		InstructorUpdated.setEmail(email);
 		InstructorUpdated.setPassword(password);
-		return InstructorUpdated;
+		return InstructorRepository.save(InstructorUpdated);
 
 	}
 
 
 
-
-	@Transactional
-	public SportClass createSportClass(String name){
-		if (name==null || name.length()<=0){
-			throw new IllegalArgumentException("Sport Class name should not be empty!");
-		}
-		if (sportClassRepo.findSportClassByName(name)!=null){
-			throw new IllegalArgumentException("Sport Class already exists!");
-		}
-		SportClass sportClass = new SportClass(name);
-		return sportClassRepo.save(sportClass);
-	}
 
 }

@@ -252,7 +252,7 @@ public class CustomerService {
 		CustomerUpdated.setUsername(username);
 		CustomerUpdated.setEmail(email);
 		CustomerUpdated.setPassword(password);
-		return CustomerUpdated;
+		return CustomerRepository.save(CustomerUpdated);
 
 	}
 	
