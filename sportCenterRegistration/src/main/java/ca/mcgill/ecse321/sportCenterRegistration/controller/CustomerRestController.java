@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.sportCenterRegistration.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.checkerframework.checker.units.qual.A;
+// import org.checkerframework.checker.units.qual.A; // I don't know what this is, so I just commented it out
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -126,8 +126,8 @@ public class CustomerRestController {
     @DeleteMapping(value= {"/customer/{username}", "/customer/{username}/"})
     public ResponseEntity<?> deleteCustomer(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
-            Boolean deleteSucess = customerService.deleteCustomer(username);
-            return ResponseEntity.ok(deleteSucess);
+            Customer deleteCustomer = customerService.deleteCustomer(username);
+            return ResponseEntity.ok(convertToDTO(deleteCustomer));
         }
         catch(IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());

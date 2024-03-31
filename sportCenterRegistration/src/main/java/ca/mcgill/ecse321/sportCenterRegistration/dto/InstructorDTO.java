@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dto;
 
-public class InstructorDTO {
+public class InstructorDTO extends AccountDTO{
     private int id;
     private String username;
     private String email;

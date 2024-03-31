@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.RegistrationRepository;
@@ -22,6 +23,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.dao.StaffRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Shift;
@@ -34,15 +36,15 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 @Service
 public class OwnerService {
-
+    
     @Autowired
-    OwnerRepository OwnerRepository;
-    @Autowired
-    SportClassRepository sportClassRepo;
+	OwnerRepository OwnerRepository;
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	SportClassRepository sportClassRepo;
 
-    private <T> List<T> toList(Iterable<T> iterable){
+	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
 			resultList.add(t);
@@ -63,13 +65,13 @@ public class OwnerService {
 	 * 
 	 */
     @Transactional
-    public Owner getOwner(String username) {
-        Owner Owner = OwnerRepository.findOwnerByUsername(username);
+	public Owner getOwner(String username) {
+		Owner Owner = OwnerRepository.findOwnerByUsername(username);
         if (Owner == null) {
             throw new IllegalArgumentException("Owner name is invalid");
         }
-        return Owner;
-    }
+		return Owner;
+	}
 
 	/*
 	 * 
@@ -93,6 +95,8 @@ public class OwnerService {
 		return true;
 	}
 
+
+
 	private boolean usernameIsUnique(String username){
 		if (OwnerRepository.findOwnerByUsername(username) == null) {
 			return true;
@@ -100,8 +104,8 @@ public class OwnerService {
 		return false;
 	}
 
-	
-	/*
+
+ 	/*
 	@author Muhammad Hammad
 
 	Method deletes Owner with a given username adn returns a boolean indicating whether the deletion is sucessful 
@@ -110,14 +114,15 @@ public class OwnerService {
 
 	
 	*/
+
     @Transactional
-	public Boolean deleteOwner(String username) {
+	public Owner deleteOwner(String username) {
         if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Owner name cannot be empty!");
 		}
 		Owner OwnerToDelete = getOwner(username);
 		OwnerRepository.delete(OwnerToDelete);
-		return true;
+		return OwnerToDelete;
 	}
 
 	/*
@@ -134,8 +139,11 @@ public class OwnerService {
 	 * 
 	 * 
 	 */
+
     @Transactional
     public Owner createOwner(String username, String email, String password ) {
+		
+
         if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
@@ -151,12 +159,12 @@ public class OwnerService {
 		if(!(usernameIsUnique(username))) {
 			throw new IllegalArgumentException("Username is not unique!");
 		}
+		
 
-        Owner Owner = new Owner(username, email, password);
+		Owner Owner = new Owner(username, email, password);
 		OwnerRepository.save(Owner);
-	    accountRepository.save(Owner);
 		return Owner;
-    }
+	}
 
 	/*
 	 * 
@@ -167,12 +175,12 @@ public class OwnerService {
 	 * 
 	 * 
 	 */
-    @Transactional
+	@Transactional
 	public List<Owner> getAllOwners() {
 		return toList(OwnerRepository.findAll());
 	}
 
-	/*
+    /*
      * 
      * @author Muhammad Hammad
      * @param username
@@ -185,6 +193,7 @@ public class OwnerService {
      * 
      * 
      */
+
 	@Transactional
 	public Owner OwnerLogin(String username, String password){
 		//chose to only return one type of error message for invalid username and password to maintain security for the application
@@ -196,8 +205,7 @@ public class OwnerService {
 		}
 		return OwnerRepository.findOwnerByUsername(username);
 	}
-
-	/*
+    /*
      * @author Muhammad Hammad
      * 
      * @param String oldUsername
@@ -210,6 +218,7 @@ public class OwnerService {
      * 
      * 
      */
+
 	@Transactional
 	public Owner updateOwner(String oldUsername, String username, String email, String password) {
 		if (username == null || username.strip() == "") {
@@ -232,33 +241,10 @@ public class OwnerService {
 		OwnerUpdated.setUsername(username);
 		OwnerUpdated.setEmail(email);
 		OwnerUpdated.setPassword(password);
-		return OwnerUpdated;
+		return OwnerRepository.save(OwnerUpdated);
 
 	}
 
-    @Transactional
-    public SportClass approveSportClass(String name){
-        if (name==null || name.length()<=0){
-            throw new IllegalArgumentException("Sport Class name should not be empty!");
-        }
-        SportClass sportClass = sportClassRepo.findSportClassByName(name);
-        if (sportClass==null){
-            throw new IllegalArgumentException("Sport Class doesn't exist!");
-        }
-        sportClass.setApproved(true);
-        return sportClassRepo.save(sportClass);
-    }
 
-    @Transactional
-    public void deleteSportClass(String name){
-        if (name==null || name.length()<=0){
-            throw new IllegalArgumentException("Sport Class name should not be empty!");
-        }
-        SportClass sportClass = sportClassRepo.findSportClassByName(name);
-        if (sportClass==null){
-            throw new IllegalArgumentException("Sport Class doesn't exist!");
-        }
-        sportClassRepo.delete(sportClass);
-    }
 
 }

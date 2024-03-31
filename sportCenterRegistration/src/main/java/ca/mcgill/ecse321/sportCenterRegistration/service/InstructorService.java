@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.RegistrationRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.SessionRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.ShiftRepository;
@@ -21,7 +22,8 @@ import ca.mcgill.ecse321.sportCenterRegistration.dao.StaffRepository;
 
 import ca.mcgill.ecse321.sportCenterRegistration.model.Account;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Registration;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Shift;
@@ -34,16 +36,15 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 @Service
 public class InstructorService {
+    
     @Autowired
-    InstructorRepository InstructorRepository;
-    @Autowired
-    AccountRepository accountRepository;
-    @Autowired
-    StaffRepository staffRepository;
-    @Autowired
-    SportClassRepository sportClassRepo;
+	InstructorRepository InstructorRepository;
+	@Autowired
+	AccountRepository accountRepository;
+	@Autowired
+	SportClassRepository sportClassRepo;
 
-    private <T> List<T> toList(Iterable<T> iterable){
+	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
 			resultList.add(t);
@@ -94,6 +95,8 @@ public class InstructorService {
 		return true;
 	}
 
+
+
 	private boolean usernameIsUnique(String username){
 		if (InstructorRepository.findInstructorByUsername(username) == null) {
 			return true;
@@ -101,7 +104,8 @@ public class InstructorService {
 		return false;
 	}
 
-    /*
+
+ 	/*
 	@author Muhammad Hammad
 
 	Method deletes Instructor with a given username adn returns a boolean indicating whether the deletion is sucessful 
@@ -110,17 +114,18 @@ public class InstructorService {
 
 	
 	*/
+
     @Transactional
-	public Boolean deleteInstructor(String username) {
+	public Instructor deleteInstructor(String username) {
         if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Instructor name cannot be empty!");
 		}
 		Instructor InstructorToDelete = getInstructor(username);
 		InstructorRepository.delete(InstructorToDelete);
-		return true;
+		return InstructorToDelete;
 	}
 
-    /*
+	/*
 	 * 
 	 * @author Muhammad Hammad
 	 * 
@@ -137,6 +142,8 @@ public class InstructorService {
 
     @Transactional
     public Instructor createInstructor(String username, String email, String password ) {
+		
+
         if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
@@ -156,12 +163,11 @@ public class InstructorService {
 
 		Instructor Instructor = new Instructor(username, email, password);
 		InstructorRepository.save(Instructor);
-	    accountRepository.save(Instructor);
+	    // accountRepository.save(Instructor);
 		return Instructor;
-    }
-	
+	}
 
-    /*
+	/*
 	 * 
 	 * @author Muhammad Hammad
 	 * Method returns a list of all the Instructor in the repository
@@ -175,7 +181,7 @@ public class InstructorService {
 		return toList(InstructorRepository.findAll());
 	}
 
-	/*
+    /*
      * 
      * @author Muhammad Hammad
      * @param username
@@ -200,8 +206,7 @@ public class InstructorService {
 		}
 		return InstructorRepository.findInstructorByUsername(username);
 	}
-
-	/*
+    /*
      * @author Muhammad Hammad
      * 
      * @param String oldUsername
@@ -237,21 +242,11 @@ public class InstructorService {
 		InstructorUpdated.setUsername(username);
 		InstructorUpdated.setEmail(email);
 		InstructorUpdated.setPassword(password);
-		return InstructorUpdated;
+		return InstructorRepository.save(InstructorUpdated);
 
 	}
 
 
-    @Transactional
-	public SportClass createSportClass(String name){
-		if (name==null || name.length()<=0){
-			throw new IllegalArgumentException("Sport Class name should not be empty!");
-		}
-		if (sportClassRepo.findSportClassByName(name)!=null){
-			throw new IllegalArgumentException("Sport Class already exists!");
-		}
-		SportClass sportClass = new SportClass(name);
-		return sportClassRepo.save(sportClass);
-	}
+
 
 }

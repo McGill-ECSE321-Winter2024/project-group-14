@@ -65,7 +65,8 @@ public class CustomerService {
     @Transactional
 	public Customer getCustomer(String username) {
 		Customer Customer = CustomerRepository.findCustomerByUsername(username);
-        if (Customer == null) {
+        // if the customer doesn't exist then the customer object will be equal to null
+		if (Customer == null) {
             throw new IllegalArgumentException("Customer name is invalid");
         }
 		return Customer;
@@ -83,19 +84,27 @@ public class CustomerService {
 	 */
 	private Boolean emailIsValid(String email){
 		int i = email.indexOf("@");
-
+		//confirms that there is an @ sign in the string and that the @sign is not at the beginning or end of the string
 		if (i == -1 || i == 0 || i == email.length() - 1){
 			return false;
 		}
+		//confirms that there is onyl one @ sign
 		if (!(email.chars().filter(ch -> ch == '@').count() == 1)){
 			return false;
 		}
 		return true;
 	}
 
-
+/*
+ * @author Muhammad Hammad
+ * 
+ * Helper method that helps determine if a username is unique
+ * 
+ * 
+ */
 
 	private boolean usernameIsUnique(String username){
+		// if there already exists a username then null would not be returned
 		if (CustomerRepository.findCustomerByUsername(username) == null) {
 			return true;
 		}
@@ -114,13 +123,15 @@ public class CustomerService {
 	*/
 
     @Transactional
-	public Boolean deleteCustomer(String username) {
-        if (username == null || username.trim().length() == 0) {
+	public Customer deleteCustomer(String username) {
+        //confirms that the username inputted is valid
+		if (username == null || username.trim().length() == 0) {
 			throw new IllegalArgumentException("Customer name cannot be empty!");
 		}
+		
 		Customer CustomerToDelete = getCustomer(username);
 		CustomerRepository.delete(CustomerToDelete);
-		return true;
+		return CustomerToDelete;
 	}
 
 	/*
@@ -141,7 +152,7 @@ public class CustomerService {
     @Transactional
     public Customer createCustomer(String username, String email, String password ) {
 		
-
+		// pefroms various input checks on the username, email, and password
         if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
@@ -158,10 +169,10 @@ public class CustomerService {
 			throw new IllegalArgumentException("Username is not unique!");
 		}
 		
-
+		//creates and saves to the repository
 		Customer Customer = new Customer(username, email, password);
 		CustomerRepository.save(Customer);
-	    accountRepository.save(Customer);
+		
 		return Customer;
 	}
 
@@ -194,7 +205,7 @@ public class CustomerService {
      */
 
 	@Transactional
-	public Customer CustomerLogin(String username, String password){
+	public Customer customerLogin(String username, String password){
 		//chose to only return one type of error message for invalid username and password to maintain security for the application
 		if (CustomerRepository.findCustomerByUsername(username) == null){
 			throw new IllegalArgumentException("Either the username or password is invalid!");
@@ -220,6 +231,7 @@ public class CustomerService {
 
 	@Transactional
 	public Customer updateCustomer(String oldUsername, String username, String email, String password) {
+		//validates the information and then accordingly updates the customer information
 		if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
         }
@@ -240,8 +252,9 @@ public class CustomerService {
 		CustomerUpdated.setUsername(username);
 		CustomerUpdated.setEmail(email);
 		CustomerUpdated.setPassword(password);
-		return CustomerUpdated;
+		return CustomerRepository.save(CustomerUpdated);
 
 	}
+	
 
 }

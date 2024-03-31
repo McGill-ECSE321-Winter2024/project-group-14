@@ -30,9 +30,9 @@ public class StaffRepositoryTest {
     @Test
     public void testCreateAndReadStaff() {
         // create staff
-        String username = "Stephen";
-        String email = "stephen@gmail.com";
-        String password = "stephen123";
+        String username = "Admin";
+        String email = "admin@gmail.com";
+        String password = "admin123";
         Owner stephenOwner = new Owner(username, email, password);
         Staff stephenStaff = stephenOwner;
         // Save in the database

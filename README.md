@@ -50,12 +50,12 @@ To run the tests locally, follow these steps:
 
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
 | -- | -- | --  | -- | -- |
-| Hammad Muhammad | 35 | -- | --  | -- |
-| Motta Vivek | 35 | -- | -- | -- |
-| Marji David | 30 | -- | -- | -- |
-| Yue Ming Xuan | 35 | -- | -- | -- |
-| Huang Stephen | 40 | -- | -- | -- |
-| Luo Loridy | 40 | -- | -- | -- |
+| Hammad Muhammad | 35 | 60| --  | -- |
+| Motta Vivek | 35 | 30 | -- | -- |
+| Marji David | 30 | 60 | -- | -- |
+| Yue Ming Xuan | 35 | 60 | -- | -- |
+| Huang Stephen | 40 | 60 | -- | -- |
+| Luo Loridy | 40 | 70 | -- | -- |
 
 # Deliverable 1
 ## Links
@@ -72,5 +72,21 @@ To run the tests locally, follow these steps:
 
 ## Sprint 1 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-1)
+
+# Deliverable 2
+## Links
+## Sprint 2 effort table
+
+| Team Member | Contributions  | Effort (Hours) |
+| -- | -- | -- | 
+| Hammad Muhammad | Wrote service logic for instructor owner and customer, Wrote the service tests instructor owner and customer, wrote the controller methods for instructor owner and customer, wrote the integration tests for instructor owner and customer | 60 |
+| Motta Vivek | Wrote the SAQ report and sprint 2 report | 30 |
+| Marji David | Wrote service logic for Registration, Wrote the service tests Registration, wrote the controller methods Registration, wrote the integration tests for Session Registration and Shift | 60 | 
+| Yue Ming Xuan | Wrote service logic Shift, Wrote the service tests Shift, wrote the controller methods Shift | 60 | 
+| Huang Stephen | Wrote service logic Session, Wrote the service tests Session, wrote the controller methods Session | 60 |
+| Luo Loridy | Wrote service logic SportClass, Wrote the service tests, wrote the controller methods, wrote the integration tests  SportClass | 70 |
+
+## Sprint 2 Project report
+The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-2)
 
 

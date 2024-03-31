@@ -52,10 +52,6 @@ public class SportClassServiceTests{
 
     @InjectMocks
     private SportClassService sportClassService;
-    @InjectMocks
-    private InstructorService instructorService;
-    @InjectMocks
-    private OwnerService ownerService;
 
     private static final String TEST_NAME = "cardio";
     @BeforeEach
@@ -131,7 +127,7 @@ public class SportClassServiceTests{
         SportClass createdSportClass = null;
 
         try{
-            createdSportClass = instructorService.createSportClass(name);
+            createdSportClass = sportClassService.createSportClass(name);
         } catch(IllegalArgumentException e){
             fail();
         }
@@ -149,7 +145,7 @@ public class SportClassServiceTests{
         String error = null;
         SportClass createdSportClass = null;
         try {
-            createdSportClass = instructorService.createSportClass(TEST_NAME);
+            createdSportClass = sportClassService.createSportClass(TEST_NAME);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -167,7 +163,7 @@ public class SportClassServiceTests{
         String error = null;
         SportClass createdSportClass = null;
         try {
-            createdSportClass = instructorService.createSportClass(name);
+            createdSportClass = sportClassService.createSportClass(name);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -184,7 +180,7 @@ public class SportClassServiceTests{
         SportClass approvedSportClass = null;
         String error = null;
         try {
-            approvedSportClass = ownerService.approveSportClass(TEST_NAME);
+            approvedSportClass = sportClassService.approveSportClass(TEST_NAME);
         } catch(IllegalArgumentException e){
             error = e.getMessage();
         }
@@ -201,7 +197,7 @@ public class SportClassServiceTests{
         SportClass approvedSportClass = null;
         String error = null;
         try {
-            approvedSportClass = ownerService.approveSportClass(name);
+            approvedSportClass = sportClassService.approveSportClass(name);
         } catch(IllegalArgumentException e){
             error = e.getMessage();
         }
@@ -218,7 +214,7 @@ public class SportClassServiceTests{
         SportClass approvedSportClass = null;
         String error = null;
         try {
-            approvedSportClass = ownerService.approveSportClass(name);
+            approvedSportClass = sportClassService.approveSportClass(name);
         } catch(IllegalArgumentException e){
             error = e.getMessage();
         }
@@ -231,7 +227,7 @@ public class SportClassServiceTests{
     @Test
     public void testDeleteSportClass(){
         try{
-            ownerService.deleteSportClass(TEST_NAME);
+            sportClassService.deleteSportClass(TEST_NAME);
         } catch (IllegalArgumentException e){
             fail(e.getMessage());
         }

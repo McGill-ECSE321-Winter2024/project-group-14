@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.sportCenterRegistration.dto;
 
-public class CustomerDTO {
+import java.util.List;
+
+public class CustomerDTO extends AccountDTO{
     private int id;
     private String username;
     private String email;
@@ -9,7 +11,17 @@ public class CustomerDTO {
     public CustomerDTO() {
 
     }
+    private List<String> errors;
+
+    public CustomerDTO(String error) {
+        this.errors = List.of(error);
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
     
+
     public CustomerDTO(int id, String username, String email, String password) {
             this.id = id;
             this.username = username;
@@ -32,4 +44,6 @@ public class CustomerDTO {
     public String getCustomerPassword() {
         return this.password;
     }
+
+  
 }
