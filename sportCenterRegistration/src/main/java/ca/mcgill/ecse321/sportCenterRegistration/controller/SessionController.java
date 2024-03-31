@@ -1,4 +1,4 @@
-package main.java.ca.mcgill.ecse321.sportCenterRegistration.controller;
+package ca.mcgill.ecse321.sportCenterRegistration.controller;
 
 import java.sql.Time;
 import java.sql.Date;

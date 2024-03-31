@@ -23,10 +23,6 @@ import ca.mcgill.ecse321.sportCenterRegistration.service.OwnerService;
 public class SportClassController{
     @Autowired
     private SportClassService sportClassService;
-    @Autowired
-    private InstructorService instructorService;
-    @Autowired
-    private OwnerService ownerService;
 
     @GetMapping(value= {"/sport-class/{name}", "/sport-class/{name}/"})
     public SportClassDTO getSportClass(@PathVariable("name") String name) throws IllegalArgumentException{
@@ -36,19 +32,19 @@ public class SportClassController{
 
     @PostMapping(value= {"/sport-class/{name}", "/sport-class/{name}/"})
     public SportClassDTO createSportClass(@PathVariable("name") String name) throws IllegalArgumentException{
-        SportClass sportClass = instructorService.createSportClass(name);
+        SportClass sportClass = sportClassService.createSportClass(name);
         return convertToDto(sportClass);
     }
 
     @PutMapping(value= {"/sport-class/approve/{name}", "/sport-class/approve/{name}/"})
     public SportClassDTO approveSportClass(@PathVariable("name") String name) throws IllegalArgumentException{
-        SportClass sportClass = ownerService.approveSportClass(name);
+        SportClass sportClass = sportClassService.approveSportClass(name);
         return convertToDto(sportClass);
     }
 
     @DeleteMapping(value={"/sport-class/{name}", "/sport-class/{name}/"})
     public void delete(@PathVariable("name") String name) throws IllegalArgumentException{
-        ownerService.deleteSportClass(name);
+        sportClassService.deleteSportClass(name);
     }
 
     @GetMapping(value={"/sport-class", "/sport-class/"})
