@@ -30,6 +30,43 @@ public class SportClassService{
     }
 
     @Transactional
+    public SportClass createSportClass(String name){
+        if (name==null || name.length()<=0){
+            throw new IllegalArgumentException("Sport Class name should not be empty!");
+        }
+        if (sportClassRepo.findSportClassByName(name)!=null){
+            throw new IllegalArgumentException("Sport Class already exists!");
+        }
+        SportClass sportClass = new SportClass(name);
+        return sportClassRepo.save(sportClass);
+    }
+
+    @Transactional
+    public void deleteSportClass(String name){
+        if (name==null || name.length()<=0){
+            throw new IllegalArgumentException("Sport Class name should not be empty!");
+        }
+        SportClass sportClass = sportClassRepo.findSportClassByName(name);
+        if (sportClass==null){
+            throw new IllegalArgumentException("Sport Class doesn't exist!");
+        }
+        sportClassRepo.delete(sportClass);
+    }
+
+    @Transactional
+    public SportClass approveSportClass(String name){
+        if (name==null || name.length()<=0){
+            throw new IllegalArgumentException("Sport Class name should not be empty!");
+        }
+        SportClass sportClass = sportClassRepo.findSportClassByName(name);
+        if (sportClass==null){
+            throw new IllegalArgumentException("Sport Class doesn't exist!");
+        }
+        sportClass.setApproved(true);
+        return sportClassRepo.save(sportClass);
+    }
+
+    @Transactional
     public List<SportClass> getAllSportClass(){
         return sportClassRepo.findAll();
     }
