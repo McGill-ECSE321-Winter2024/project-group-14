@@ -11,4 +11,6 @@ public interface OwnerRepository extends CrudRepository<Owner, Integer> {
     public Owner findOwnerByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
 }

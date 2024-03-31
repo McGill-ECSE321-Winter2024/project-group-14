@@ -13,4 +13,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     void deleteCustomerByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
 }

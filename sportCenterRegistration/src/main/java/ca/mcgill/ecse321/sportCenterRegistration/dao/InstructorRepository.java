@@ -13,4 +13,6 @@ public interface InstructorRepository extends CrudRepository<Instructor, Integer
     void deleteInstructorByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
 }
