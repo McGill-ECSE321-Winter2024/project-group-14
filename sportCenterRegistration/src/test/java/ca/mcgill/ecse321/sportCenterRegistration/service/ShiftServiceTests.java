@@ -26,7 +26,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Shift;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Staff;
 
 @ExtendWith(MockitoExtension.class)
-public class TestShiftService {
+public class ShiftServiceTests {
     @Mock
     private ShiftRepository shiftDao;
 

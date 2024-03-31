@@ -13,56 +13,43 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
-import java.util.ArrayList;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.support.CustomSQLExceptionTranslatorRegistrar;
 
-import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
-import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 
 
 
 @ExtendWith(MockitoExtension.class)
-public class TestCustomerService {
+public class OwnerServiceTests {
 
 @Mock
-private CustomerRepository customerDao;
+private OwnerRepository OwnerDao;
 
 @InjectMocks
-private CustomerService service;
+private OwnerService service;
 
-private static final String Customer_USERNAME = "TestCustomerUsername";
-private static final String Customer_EMAIL = "TestCustomerEmail@gmail.com";
-private static final String Customer_PASSWORD = "TestCustomerPassword";
+private static final String Owner_USERNAME = "TestOwnerUsername";
+private static final String Owner_EMAIL = "admin@gmail.com";
+private static final String Owner_PASSWORD = "admin123";
 
-private static final String NONEXISTING_Customer_USERNAME = "NotAnCustomerUsername";
-private static final String NONEXISTING_Customer_EMAIL = "NotAnCustomerEmail";
-private static final String NONEXISTING_Customer_PASSWORD = "NotAnCustomerPassword";
+private static final String NONEXISTING_Owner_USERNAME = "NotAnOwnerUsername";
+private static final String NONEXISTING_Owner_EMAIL = "NotAnOwnerEmail";
+private static final String NONEXISTING_Owner_PASSWORD = "NotAnOwnerPassword";
 
 @BeforeEach
 public void setMockOutput() {
-    lenient().when(customerDao.findCustomerByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-        if(invocation.getArgument(0).equals(Customer_USERNAME)) {
-            Customer Customer = new Customer(Customer_USERNAME, Customer_EMAIL, Customer_PASSWORD);
-            return Customer;
+    lenient().when(OwnerDao.findOwnerByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+        if(invocation.getArgument(0).equals(Owner_USERNAME)) {
+            Owner Owner = new Owner(Owner_USERNAME, Owner_EMAIL, Owner_PASSWORD);
+            return Owner;
         } else {
             return null;
         }
@@ -71,227 +58,227 @@ public void setMockOutput() {
 
 /*
  * @author Muhammad Hammad
- *  Method that tests getting an existing customer
+ *  Method that tests getting an existing Owner
  * 
  */
 @Test
-public void testGetExistingCustomer() {
-    assertEquals(Customer_USERNAME, service.getCustomer(Customer_USERNAME).getUsername());
-    assertEquals(Customer_EMAIL, service.getCustomer(Customer_USERNAME).getEmail());
-    assertEquals(Customer_PASSWORD, service.getCustomer(Customer_USERNAME).getPassword());
+public void testGetExistingOwner() {
+    assertEquals(Owner_USERNAME, service.getOwner(Owner_USERNAME).getUsername());
+    assertEquals("admin@gmail.com", service.getOwner(Owner_USERNAME).getEmail());
+    assertEquals("admin123", service.getOwner(Owner_USERNAME).getPassword());
 }
 
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error frmo getting a non existing customer
+ *  Method that tests if there is an error frmo getting a non existing Owner
  * 
  */
 @Test
-public void testGetNonExistingCustomer() {
+public void testGetNonExistingOwner() {
 
     assertThrows(IllegalArgumentException.class, () -> {
-        service.getCustomer(NONEXISTING_Customer_USERNAME);
+        service.getOwner(NONEXISTING_Owner_USERNAME);
     });
 
 }
 /*
  * @author Muhammad Hammad
- *  Method that tests of creating customer
+ *  Method that tests of creating Owner
  * 
  */
 @Test
-public void testCreateCustomer() {
-		assertEquals(0, service.getAllCustomers().size());
+public void testCreateOwner() {
+		assertEquals(0, service.getAllOwners().size());
 
 		String username = "Muhammad";
-        String email = "Memail@gmail.com";
-        String password = "Mpass";
-		Customer customer = null;
+        String email = "admin@gmail.com";
+        String password = "admin123";
+		Owner Owner = null;
 		try {
-			customer = service.createCustomer(username, email, password);
+			Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
-		assertNotNull(customer);
-		assertEquals(username, customer.getUsername());
-        assertEquals(email, customer.getEmail());
-        assertEquals(password, customer.getPassword());
+		assertNotNull(Owner);
+		assertEquals(username, Owner.getUsername());
+        assertEquals("admin@gmail.com", Owner.getEmail());
+        assertEquals("admin123", Owner.getPassword());
     }
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in creating a null username customer
+ *  Method that tests if there is an error in creating a null username Owner
  * 
  */
     @Test
-	public void testCreateCustomerNullUsername() {
+	public void testCreateOwnerNullUsername() {
 		String username = null;
 		String email = "email@gmail.com";
 		String password = "password";
-        Customer customer = null;
+        Owner Owner = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Owner);
 		
 		assertEquals("Username cannot be empty!", error);
 	}
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in creating a null email customer
+ *  Method that tests if there is an error in creating a null email Owner
  * 
  */
     @Test
-	public void testCreateCustomerNullEmail() {
+	public void testCreateOwnerNullEmail() {
 		String username = "username";
 		String email = null;
 		String password = "password";
-        Customer customer = null;
+        Owner Owner = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Owner);
 		
 		assertEquals("Email cannot be empty!", error);
 	}
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in creating a null password customer
+ *  Method that tests if there is an error in creating a null password Owner
  * 
  */
     @Test
-	public void testCreateCustomerNullPassword() {
+	public void testCreateOwnerNullPassword() {
 		String username = "username";
 		String email = "email@gmail.com";
         String password = null;
-        Customer customer = null;
+        Owner Owner = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Owner);
 		
 		assertEquals("Password cannot be empty!", error);
 	}
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in creating an invalid email customer
+ *  Method that tests if there is an error in creating an invalid email Owner
  * 
  */
 	@Test
-	public void testCreateCustomerInvalidEmail() {
+	public void testCreateOwnerInvalidEmail() {
 		String username = "username";
 		String email = "email";
         String password = "password";
-        Customer customer = null;
+        Owner Owner = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Owner);
 		
 		assertEquals("Email is invalid!", error);
 	}
 
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in creating an invalid  username customer
+ *  Method that tests if there is an error in creating an invalid  username Owner
  * 
  */	@Test
-	public void testCreateCustomerInvalidUsername() {
+	public void testCreateOwnerInvalidUsername() {
 		String username = "username";
 		String email = "email";
         String password = "password";
-        Customer customer = null;
+        Owner Owner = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Owner);
 		
 		assertEquals("Email is invalid!", error);
 	}
 
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in creating an empty username customer
+ *  Method that tests if there is an error in creating an empty username Owner
  * 
  */
     @Test
-	public void testCreateCustomerEmptyUsername() {
+	public void testCreateOwnerEmptyUsername() {
 		String username = "";
 		String email = "email@gmail.com";
 		String password = "password";
-        Customer customer = null;
+        Owner Owner = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Owner);
 		
 		assertEquals("Username cannot be empty!", error);
 	}
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in creating an empty email customer
+ *  Method that tests if there is an error in creating an empty email Owner
  * 
  */
     @Test
-	public void testCreateCustomerEmptyEmail() {
+	public void testCreateOwnerEmptyEmail() {
 		String username = "username";
 		String email = "";
 		String password = "password";
-        Customer customer = null;
+        Owner Owner = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Owner);
 		
 		assertEquals("Email cannot be empty!", error);
 	}
 
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in creating an empty password customer
+ *  Method that tests if there is an error in creating an empty password Owner
  * 
  */
     @Test
-	public void testCreateCustomerEmptyPassword() {
+	public void testCreateOwnerEmptyPassword() {
 		String username = "username";
 		String email = "email@gmail.com";
 		String password = "";
-        Customer customer = null;
+        Owner Owner = null;
         String error = null;
 		try {
-            customer = service.createCustomer(username, email, password);
+            Owner = service.createOwner(username, email, password);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(customer);
+		assertNull(Owner);
 		
 		assertEquals("Password cannot be empty!", error);
 	}
@@ -299,103 +286,103 @@ public void testCreateCustomer() {
 
 /*
  * @author Muhammad Hammad
- *  Method that tests deleting a customer
+ *  Method that tests deleting a Owner
  * 
  */    @Test
-	public void testDeleteCustomer() {
+	public void testDeleteOwner() {
 		
 
-		Customer customerDelete = null;
+		Owner OwnerDelete = null;
 
 		String error = null;
 		try {
-        	customerDelete = service.deleteCustomer(Customer_USERNAME);
+        	OwnerDelete = service.deleteOwner(Owner_USERNAME);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertEquals(Customer_USERNAME, customerDelete.getUsername());
-		assertEquals(Customer_EMAIL, customerDelete.getEmail());
-		assertEquals(Customer_PASSWORD, customerDelete.getPassword());
+		assertEquals(Owner_USERNAME, OwnerDelete.getUsername());
+		assertEquals(Owner_EMAIL, OwnerDelete.getEmail());
+		assertEquals(Owner_PASSWORD, OwnerDelete.getPassword());
 
 	}
 
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in deleting a null username customer
+ *  Method that tests if there is an error in deleting a null username Owner
  * 
  */
 	@Test
-	public void testDeleteCustomerNullUsername() {
+	public void testDeleteOwnerNullUsername() {
 		
-		Customer customerDelete = null;
+		Owner OwnerDelete = null;
 
 		String error = null;
 		try {
-        	customerDelete = service.deleteCustomer(null);
+        	OwnerDelete = service.deleteOwner(null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Customer name cannot be empty!", error);
+		assertEquals("Owner name cannot be empty!", error);
 
 	}
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in deleting an invalid username customer
+ *  Method that tests if there is an error in deleting an invalid username Owner
  * 
  */
 	@Test
-	public void testDeleteCustomerInvalidUsername() {
+	public void testDeleteOwnerInvalidUsername() {
 		
-		Customer customerDelete = null;
+		Owner OwnerDelete = null;
 
 		String error = null;
 		try {
-        	customerDelete = service.deleteCustomer("");
+        	OwnerDelete = service.deleteOwner("");
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Customer name cannot be empty!", error);
+		assertEquals("Owner name cannot be empty!", error);
 
 	}
 /*
  * @author Muhammad Hammad
- *  Method that tests if there is an error in deleting a non existing username customer
+ *  Method that tests if there is an error in deleting a non existing username Owner
  * 
  */
 	@Test
-	public void testDeleteCustomerNonExistingdUsername() {
+	public void testDeleteOwnerNonExistingdUsername() {
 		
-		Customer customerDelete = null;
+		Owner OwnerDelete = null;
 
 		String error = null;
 		try {
-        	customerDelete = service.deleteCustomer("nonexistingusername");
+        	OwnerDelete = service.deleteOwner("nonexistingusername");
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Customer name is invalid", error);
+		assertEquals("Owner name is invalid", error);
 
 	}
 /*
  * @author Muhammad Hammad
  * 
- * The below method tests getting all customers
+ * The below method tests getting all Owners
  */
 
 	@Test
-	public void testGetAllCustomers() {
-		List<Customer> customerList = null;
+	public void testGetAllOwners() {
+		List<Owner> OwnerList = null;
 		String error = null;
 		String username = "username";
 		String email = "email@gmail.com";
 		String password = "password";
 		
 		try {
-			service.createCustomer(username, email, password);
-        	customerList = service.getAllCustomers();
+			service.createOwner(username, email, password);
+        	OwnerList = service.getAllOwners();
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -406,12 +393,12 @@ public void testCreateCustomer() {
 	/*
 	 * @author Muhammad Hammad
 	 * 
-	 * checks to see if a customers information can be updated sucessfully
+	 * checks to see if a Owners information can be updated sucessfully
 	 */
 	
 	@Test
-	public void testUpdateCustomer() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwner() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newUsername = "newUsername";
@@ -419,14 +406,14 @@ public void testCreateCustomer() {
 		String newPassword = "newPassword";
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		
-		assertEquals(newUsername, updatedCustomer.getUsername());
-		assertEquals(newEmail, updatedCustomer.getEmail());
-		assertEquals(newPassword, updatedCustomer.getPassword());
+		assertEquals(newUsername, updatedOwner.getUsername());
+		assertEquals(newEmail, updatedOwner.getEmail());
+		assertEquals(newPassword, updatedOwner.getPassword());
 
 	}
 
@@ -436,8 +423,8 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid suername is provided
 	 */
 	@Test
-	public void testUpdateCustomerInvalidUsername() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwnerInvalidUsername() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newUsername = "";
@@ -445,7 +432,7 @@ public void testCreateCustomer() {
 		String newPassword = "newPassword";
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -461,8 +448,8 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid suername is provided
 	 */
 	@Test
-	public void testUpdateCustomerInvalidUsernameNull() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwnerInvalidUsernameNull() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newUsername = null;
@@ -470,7 +457,7 @@ public void testCreateCustomer() {
 		String newPassword = "newPassword";
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -487,8 +474,8 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid email is provided
 	 */
 	@Test
-	public void testUpdateCustomerInvalidEmail() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwnerInvalidEmail() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newUsername = "username";
@@ -496,7 +483,7 @@ public void testCreateCustomer() {
 		String newPassword = "newPassword";
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -515,8 +502,8 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid suername is provided
 	 */
 	@Test
-	public void testUpdateCustomerInvalidEmailNull() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwnerInvalidEmailNull() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newUsername = "username";
@@ -524,7 +511,7 @@ public void testCreateCustomer() {
 		String newPassword = "newPassword";
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -538,8 +525,8 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid suername is provided
 	 */
 	@Test
-	public void testUpdateCustomerInvalidEmailFromat() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwnerInvalidEmailFromat() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newUsername = "username";
@@ -547,7 +534,7 @@ public void testCreateCustomer() {
 		String newPassword = "newPassword";
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -561,8 +548,8 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid password is provided
 	 */
 	@Test
-	public void testUpdateCustomerInvalidPassword() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwnerInvalidPassword() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newUsername = "username";
@@ -570,7 +557,7 @@ public void testCreateCustomer() {
 		String newPassword = "";
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -584,8 +571,8 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid suername is provided
 	 */
 	@Test
-	public void testUpdateCustomerInvalidPasswordNull() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwnerInvalidPasswordNull() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newUsername = "username";
@@ -593,7 +580,7 @@ public void testCreateCustomer() {
 		String newPassword = null;
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, newUsername, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, newUsername, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -607,15 +594,15 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when a non unique username is provided
 	 */
 	@Test
-	public void testUpdateCustomerNonUniqueUsername() {
-		Customer updatedCustomer = null;
+	public void testUpdateOwnerNonUniqueUsername() {
+		Owner updatedOwner = null;
 		String error = null;
 
 		String newEmail = "email@gmail.com";
 		String newPassword = "newPassword";
 		
 		try {
-        	updatedCustomer = service.updateCustomer(Customer_USERNAME, Customer_USERNAME, newEmail, newPassword);
+        	updatedOwner = service.updateOwner(Owner_USERNAME, Owner_USERNAME, newEmail, newPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -631,12 +618,12 @@ public void testCreateCustomer() {
 	 */
 	
 	  @Test
-	  public void testCustomerLoginINvalidUsernameOrEmail() {
+	  public void testOwnerLoginINvalidUsernameOrEmail() {
 		  String error = null;
-		  Customer customerLogin = null;
+		  Owner OwnerLogin = null;
 		  
 		  try {
-			  customerLogin = service.customerLogin(NONEXISTING_Customer_USERNAME, Customer_PASSWORD);
+			  OwnerLogin = service.OwnerLogin(NONEXISTING_Owner_USERNAME, Owner_PASSWORD);
 		  } catch (IllegalArgumentException e) {
 			  error = e.getMessage();
 		  }
@@ -650,12 +637,12 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid username or email combination is provided
 	 */
 	  @Test
-	  public void testCustomerLoginInvalidCombination() {
+	  public void testOwnerLoginInvalidCombination() {
 		  String error = null;
-		  Customer customerLogin = null;
+		  Owner OwnerLogin = null;
 		  
 		  try {
-			  customerLogin = service.customerLogin(Customer_USERNAME, NONEXISTING_Customer_PASSWORD);
+			  OwnerLogin = service.OwnerLogin(Owner_USERNAME, NONEXISTING_Owner_PASSWORD);
 		  } catch (IllegalArgumentException e) {
 			  error = e.getMessage();
 		  }
@@ -671,19 +658,19 @@ public void testCreateCustomer() {
 	 * checks to see if an error is thrown when an invalid username or email is provided
 	 */
 	@Test
-	  public void testCustomerLogin() {
+	  public void testOwnerLogin() {
 		  String error = null;
-		  Customer customerLogin = null;
+		  Owner OwnerLogin = null;
 		  
 		  try {
-			  customerLogin = service.customerLogin(Customer_USERNAME, Customer_PASSWORD);
+			  OwnerLogin = service.OwnerLogin(Owner_USERNAME, Owner_PASSWORD);
 		  } catch (IllegalArgumentException e) {
 			  error = e.getMessage();
 		  }
 		  
-		  assertEquals(customerLogin.getUsername(), Customer_USERNAME);
-		  assertEquals(customerLogin.getEmail(), Customer_EMAIL);
-		  assertEquals(customerLogin.getPassword(), Customer_PASSWORD);
+		  assertEquals(OwnerLogin.getUsername(), Owner_USERNAME);
+		  assertEquals(OwnerLogin.getEmail(), Owner_EMAIL);
+		  assertEquals(OwnerLogin.getPassword(), Owner_PASSWORD);
 
   
 	  }
@@ -692,3 +679,7 @@ public void testCreateCustomer() {
 
 	 
 	}
+
+
+  
+

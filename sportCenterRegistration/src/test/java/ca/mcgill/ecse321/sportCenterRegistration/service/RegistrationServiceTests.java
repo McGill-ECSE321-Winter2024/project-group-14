@@ -31,7 +31,7 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Session;
 import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
 
 @ExtendWith(MockitoExtension.class)
-public class TestRegistrationService {
+public class RegistrationServiceTests {
 
 	@Mock
 	private RegistrationRepository registrationRepository;
