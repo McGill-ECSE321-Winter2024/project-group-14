@@ -79,10 +79,14 @@ public class SessionTests{
 
         lenient().when(sessionRepo.findSessionBySportClass(any(SportClass.class))).thenAnswer(
                 (InvocationOnMock invocation) -> {
-                    List<Session> sessions = new ArrayList<>();
+                    if (invocation.getArgument(0).equals("cardio")){
+                        List<Session> sessions = new ArrayList<>();
                         sessions.add(session1);
                         sessions.add(session2);
                         return sessions;
+                    } else {
+                        return null;
+                    }
                 }
         );
 
@@ -253,12 +257,25 @@ public class SessionTests{
     public void testGetSessionBySportClass(){
         List<Session> sessions = null;
         try {
-            sessions = sessionService.getSession(new SportClass("cardio"));
+            sessions = sessionService.getSessionBySportClass("cardio");
         } catch (IllegalArgumentException e) { 
             fail();
         }
 
         assertEquals(2, sessions.size());
+    }
+
+    @Test
+    public void testGetSessionBySportClassFail(){
+        List<Session> sessions = null;
+        String error = null;
+        try {
+            sessions = sessionService.getSessionBySportClass("stretching");
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        }
+        assertNull(sessions);
+        assertEquals(error, "Sport Class does not exist!");
     }
 
     @Test

@@ -17,7 +17,9 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.*;
 @Service
 public class SessionService {
     @Autowired
-    SessionRepository SessionRepository;
+    SessionRepository sessionRepo;
+    @Autowired
+    SportClassRepository sportClassRepo;
 
     /**
      * Section: Session servive
@@ -54,7 +56,7 @@ public class SessionService {
         
         // create a session
         Session session = new Session(startTime, endTime, location, date, instructor, sportClass);
-        Session newSession = SessionRepository.save(session);
+        Session newSession = sessionRepo.save(session);
         return newSession;
     }
 
@@ -67,7 +69,7 @@ public class SessionService {
     public Session updateSession(int id, Time startTime, Time endTime, String location, Date date, Instructor instructor, SportClass sportClass) {
 
         // check if the session exists
-        Session session = SessionRepository.findSessionById(id);
+        Session session = sessionRepo.findSessionById(id);
         if (session == null) {
             throw new IllegalArgumentException("No Session found");
         }
@@ -99,7 +101,7 @@ public class SessionService {
         session.setStartTime(startTime);
         session.setEndTime(endTime);
         session.setLocation(location);
-        return SessionRepository.save(session);
+        return sessionRepo.save(session);
     }
 
     /**
@@ -111,7 +113,7 @@ public class SessionService {
     public Session getSession(int id) {
 
         // return dailyschedule with the inputed id
-        Session session = SessionRepository.findSessionById(id);
+        Session session = sessionRepo.findSessionById(id);
         return session;
     }
 
@@ -119,12 +121,17 @@ public class SessionService {
      * Section: Session servive
      * Author: Stephen Huang
      * This method gets a specific session schedule given the corresponding
+     * @param sportClassName is the target sport class used to retrive all Sessions from database
      * sportclasstype
      */
     @Transactional
-    public List<Session> getSession(SportClass sportClass) {
+    public List<Session> getSessionBySportClass(String sportClassName) {
         // return dailyschedule with the inputed id
-        List<Session> sessions = SessionRepository.findSessionBySportClass(sportClass);
+        SportClass sportClass = sportClassRepo.findSportClassByName(sportClassName);
+        if (sportClass == null){
+            throw new IllegalArgumentException("Sport Class does not exist!");
+        }
+        List<Session> sessions = sessionRepo.findSessionBySportClass(sportClass);
         return sessions;
     }
 
@@ -137,7 +144,7 @@ public class SessionService {
     public boolean deleteSession(int id) {
 
         // check if the daily schedule exists
-        Session session = SessionRepository.findSessionById(id);
+        Session session = sessionRepo.findSessionById(id);
 
         // check null
         if (session == null)
@@ -149,7 +156,7 @@ public class SessionService {
         }
 
         // delete dailyschedule
-        SessionRepository.delete(session);
+        sessionRepo.delete(session);
 //        session.delete();
         return true;
     }
@@ -163,7 +170,7 @@ public class SessionService {
     public List<Session> getAllSession() {
 
         // return all session in the system
-        return toList(SessionRepository.findAll());
+        return toList(sessionRepo.findAll());
     }
 
     private <T> List<T> toList(Iterable<T> iterable) {
