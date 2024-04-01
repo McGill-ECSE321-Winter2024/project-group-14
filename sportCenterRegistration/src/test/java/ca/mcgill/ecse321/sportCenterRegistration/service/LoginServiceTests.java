@@ -91,7 +91,7 @@ public class LoginServiceTests{
         String password = "password";
         String error =null;
         try {
-            customer = loginService.login(email, password);
+            customer = loginService.loginByEmail(email, password);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -105,7 +105,7 @@ public class LoginServiceTests{
         String password = "password";
         String error =null;
         try {
-            customer = loginService.login(email,password);
+            customer = loginService.loginByEmail(email,password);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -120,7 +120,7 @@ public class LoginServiceTests{
         String password = "wrong";
         String error =null;
         try {
-            customer = loginService.login(email,password);
+            customer = loginService.loginByEmail(email,password);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
