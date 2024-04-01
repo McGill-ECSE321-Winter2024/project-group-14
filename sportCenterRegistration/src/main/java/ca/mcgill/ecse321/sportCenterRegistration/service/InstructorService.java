@@ -162,9 +162,8 @@ public class InstructorService {
 		
 
 		Instructor Instructor = new Instructor(username, email, password);
-		InstructorRepository.save(Instructor);
-	    // accountRepository.save(Instructor);
-		return Instructor;
+//		InstructorRepository.save(Instructor);
+		return InstructorRepository.save(Instructor);
 	}
 
 	/*

@@ -39,8 +39,7 @@ public class CustomerService {
     
     @Autowired
 	CustomerRepository CustomerRepository;
-	@Autowired
-	AccountRepository accountRepository;
+
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
@@ -64,12 +63,12 @@ public class CustomerService {
 	 */
     @Transactional
 	public Customer getCustomer(String username) {
-		Customer Customer = CustomerRepository.findCustomerByUsername(username);
+		Customer customer = CustomerRepository.findCustomerByUsername(username);
         // if the customer doesn't exist then the customer object will be equal to null
-		if (Customer == null) {
+		if (customer == null) {
             throw new IllegalArgumentException("Customer name is invalid");
         }
-		return Customer;
+		return customer;
 	}
 
 	/*
@@ -170,10 +169,10 @@ public class CustomerService {
 		}
 		
 		//creates and saves to the repository
-		Customer Customer = new Customer(username, email, password);
-		CustomerRepository.save(Customer);
+		Customer customer = new Customer(username, email, password);
+//		CustomerRepository.save(Customer);
 		
-		return Customer;
+		return CustomerRepository.save(customer);
 	}
 
 	/*
@@ -231,6 +230,10 @@ public class CustomerService {
 
 	@Transactional
 	public Customer updateCustomer(String oldUsername, String username, String email, String password) {
+		Customer CustomerUpdated = this.getCustomer(oldUsername);
+		if (CustomerUpdated == null) {
+			throw new IllegalArgumentException("Customer does not exist!");
+		}
 		//validates the information and then accordingly updates the customer information
 		if (username == null || username.strip() == "") {
             throw new IllegalArgumentException("Username cannot be empty!");
@@ -243,16 +246,16 @@ public class CustomerService {
         }
 		if (!(emailIsValid(email))){
 			throw new IllegalArgumentException("Email is invalid!");
-		}
-		if(!(usernameIsUnique(username))) {
+		} 
+		if (!username.equals(oldUsername) && CustomerRepository.findCustomerByUsername(username) != null) {
 			throw new IllegalArgumentException("Username is not unique!");
 		}
 		
-		Customer CustomerUpdated = CustomerRepository.findCustomerByUsername(oldUsername);
 		CustomerUpdated.setUsername(username);
 		CustomerUpdated.setEmail(email);
 		CustomerUpdated.setPassword(password);
-		return CustomerRepository.save(CustomerUpdated);
+		CustomerRepository.save(CustomerUpdated);
+		return CustomerUpdated;
 
 	}
 	

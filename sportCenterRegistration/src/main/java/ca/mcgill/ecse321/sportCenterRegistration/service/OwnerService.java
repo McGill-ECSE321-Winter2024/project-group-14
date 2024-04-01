@@ -162,8 +162,8 @@ public class OwnerService {
 		
 
 		Owner Owner = new Owner(username, email, password);
-		OwnerRepository.save(Owner);
-		return Owner;
+//		OwnerRepository.save(Owner);
+		return OwnerRepository.save(Owner);
 	}
 
 	/*
