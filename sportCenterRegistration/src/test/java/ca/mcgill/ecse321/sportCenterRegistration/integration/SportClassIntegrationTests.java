@@ -23,10 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dto.SportClassDTO;
-import ca.mcgill.ecse321.sportCenterRegistration.dto.AccountDTO;
-import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
-import ca.mcgill.ecse321.sportCenterRegistration.dto.InstructorDTO;
-import ca.mcgill.ecse321.sportCenterRegistration.dto.OwnerDTO;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestInstance(Lifecycle.PER_CLASS)
@@ -43,7 +39,7 @@ public class SportClassIntegrationTests{
     @Autowired
     private TestRestTemplate client;
 
-    private static final String SPORT_CLASS_NAME = "cardio";
+    private final String SPORT_CLASS_NAME = "cardio";
 
 
 
@@ -51,8 +47,9 @@ public class SportClassIntegrationTests{
     @Order(1)
     public void testCreateSportClass(){
         String url = "/sport-class/" + SPORT_CLASS_NAME;
-        ResponseEntity<SportClassDTO> response = client.postForEntity(url, null, SportClassDTO.class);
 
+        ResponseEntity<SportClassDTO> response = client.postForEntity(url, null, SportClassDTO.class);
+        
         assertEquals(HttpStatus.OK, response.getStatusCode());
         SportClassDTO sportClass = response.getBody();
         assertNotNull(sportClass);
