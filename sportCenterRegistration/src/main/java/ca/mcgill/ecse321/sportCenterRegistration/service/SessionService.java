@@ -14,12 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.*;
 import ca.mcgill.ecse321.sportCenterRegistration.model.*;
 
+
 @Service
 public class SessionService {
     @Autowired
     SessionRepository sessionRepo;
     @Autowired
     SportClassRepository sportClassRepo;
+    @Autowired
+    InstructorRepository instructorRepo;
+
 
     /**
      * Section: Session servive
@@ -28,8 +32,9 @@ public class SessionService {
      */
 
     @Transactional
-    public Session createSession(Time startTime, Time endTime, String location, Date date, Instructor instructor, SportClass sportClass) {
-
+    public Session createSession(Time startTime, Time endTime, String location, Date date, String instructorName, String sportClassName) {
+        Instructor instructor = instructorRepo.findInstructorByUsername(instructorName);
+        SportClass sportClass = sportClassRepo.findSportClassByName(sportClassName);
         // checking all inputs are valid
         String error = "";
         if (location == null) {
@@ -53,7 +58,7 @@ public class SessionService {
         if (sportClass == null) {
             throw new IllegalArgumentException("Session sport class cannot be empty!");
         }
-        
+        System.out.println("ok");
         // create a session
         Session session = new Session(startTime, endTime, location, date, instructor, sportClass);
         Session newSession = sessionRepo.save(session);
@@ -66,13 +71,14 @@ public class SessionService {
      * This method updates a session schedual
      */
 
-    public Session updateSession(int id, Time startTime, Time endTime, String location, Date date, Instructor instructor, SportClass sportClass) {
-
+    public Session updateSession(int id, Time startTime, Time endTime, String location, Date date, String instructorName, SportClass sportClass) {
+        Instructor instructor = instructorRepo.findInstructorByUsername(instructorName);
         // check if the session exists
         Session session = sessionRepo.findSessionById(id);
         if (session == null) {
             throw new IllegalArgumentException("No Session found");
         }
+        System.out.println("ok");
 
         // check if all the inputs are vaild
         String error = "";
@@ -101,6 +107,7 @@ public class SessionService {
         session.setStartTime(startTime);
         session.setEndTime(endTime);
         session.setLocation(location);
+        session.setInstructor(instructor);
         return sessionRepo.save(session);
     }
 

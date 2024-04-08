@@ -22,36 +22,22 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
-	@GetMapping(value = { "/login/email", "/login/email/" })
-	public ResponseEntity<?> loginByEmail(@RequestParam String email, @RequestParam String password) {
+	@GetMapping(value = { "/login", "/login/" })
+	public ResponseEntity<?> loginByEmail(
+			@RequestParam(value = "email", required=false) String email, 
+			@RequestParam(value = "username", required=false) String username,
+			@RequestParam(value = "password", required=true) String password) {
 		Account user = null;
 		try {
-			user = loginService.loginByEmail(email, password);
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+			if (email == null && username == null) {
+				throw new IllegalArgumentException("Please provide either an email or a username.");
+			}
 
-		// Determine what type of user is login in in the system.
-		if (user instanceof Customer) {
-
-			return new ResponseEntity<>(convertToCustomerDto((Customer) user), HttpStatus.OK);
-		}
-
-		if (user instanceof Instructor) {
-			return new ResponseEntity<>(convertToInstructorDto((Instructor) user), HttpStatus.OK);
-		}
-
-		if (user instanceof Owner) {
-			return new ResponseEntity<>(convertToOwnerDTO((Owner) user), HttpStatus.OK);
-		}
-		return null;
-	}
-
-	@GetMapping(value = { "/login/username", "/login/username/" })
-	public ResponseEntity<?> loginByUsername(@RequestParam String username, @RequestParam String password) {
-		Account user = null;
-		try {
-			user = loginService.loginByUsername(username, password);
+			if (email != null) {
+				user = loginService.loginByEmail(email, password);
+			} else if (username != null) {
+				user = loginService.loginByUsername(username, password);
+			}
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

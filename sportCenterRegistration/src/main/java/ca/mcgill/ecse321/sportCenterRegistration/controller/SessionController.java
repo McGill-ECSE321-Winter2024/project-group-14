@@ -39,7 +39,7 @@ public class SessionController {
      * author: Stephen
      * This method gets all session
      */
-    @GetMapping(value = { "/view_session" })
+    @GetMapping(value = { "/view_sessions" })
 	public List<SessionDTO> getAllStores() {
 		return SessionService.getAllSession().stream().map(session -> convertToDTO(session))
 				.collect(Collectors.toList());
@@ -57,7 +57,17 @@ public class SessionController {
     // Assuming SessionService.getSession expects an int and returns a Session object
     // that needs to be converted to SessionDTO
     return convertToDTO(SessionService.getSession(sessionId));
-}
+	}
+
+	@GetMapping(value="view_sessios/{sportclassName}")
+	public List<SessionDTO> getSessionBySportClass(@PathVariable("sportclassName") String sportclassName) {
+		try {
+			return SessionService.getSessionBySportClass(sportclassName).stream().map(session -> convertToDTO(session))
+					.collect(Collectors.toList());
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+	}
 
      /**
      * author: Stephen
@@ -68,39 +78,40 @@ public class SessionController {
 										   @RequestParam("startTime") String startTime,
 			                               @RequestParam("endTime") String endTime,
 										   @RequestParam("location") String location,
-										   @RequestParam("date") Date date,
-                                           @RequestParam("instructor") Instructor instructor,
-                                           @RequestParam("sportclass") SportClass sportclass) {
+										   @RequestParam("date") String date,
+                                           @RequestParam("instructorName") String instructorName,
+                                           @RequestParam("sportclassName") String sportclassName) {
 
 		Session session = null;
 
 		startTime = startTime+":00";
 		endTime = endTime+":00";
 
-    try {
-			session = SessionService.createSession(Time.valueOf(startTime), Time.valueOf(endTime), location, date, instructor, sportclass);
+    	try {
+			session = SessionService.createSession(Time.valueOf(startTime), Time.valueOf(endTime), location, Date.valueOf(date), instructorName, sportclassName);
+			return ResponseEntity.ok(convertToDTO(session));
 		} catch (IllegalArgumentException exception) {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(session), HttpStatus.CREATED);
-		
+	}
 
-}
-
-@PutMapping(value = { "/update_session" })
-	public ResponseEntity<?> updateSession(@RequestParam("SessionId") int Id,
-			@RequestParam("date") Date date, @RequestParam("startTime") String startTime,
-			@RequestParam("endTime") String endTime) {
+	@PutMapping(value = { "/update_session" })
+	public ResponseEntity<?> updateSession(@RequestParam("SessionId") String Id, 
+			@RequestParam(value="startTime", required=false) String startTime,
+			@RequestParam(value="endTime", required=false) String endTime,
+			@RequestParam(value="location", required=false) String location, 
+			@RequestParam(value="date", required = false) String date,
+			@RequestParam(value="instructorName",required = false) String instructorName
+			) {
 
 		Session session = null;
 
 		try {
-			session = SessionService.updateSession(Id,Time.valueOf(startTime), Time.valueOf(endTime), SessionService.getSession(Id).getLocation(), date, SessionService.getSession(Id).getInstructor(), SessionService.getSession(Id).getSportClass());
-
+			session = SessionService.updateSession(Integer.parseInt(Id),Time.valueOf(startTime), Time.valueOf(endTime), location, Date.valueOf(date), instructorName, SessionService.getSession(Integer.parseInt(Id)).getSportClass());
+			return ResponseEntity.ok(convertToDTO(session));
 		} catch (IllegalArgumentException exception) {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(session), HttpStatus.CREATED);
 	}
 
     @DeleteMapping(value = { "/delete_session" })
