@@ -9,7 +9,7 @@
             </div>
             <!-- Enter you password here  -->
             <div class="password">
-            <input type="password" class="text-field2" v-model="email" placeholder="" />
+            <input type="password" class="text-field2" v-model="password" placeholder="" />
             <div class="password2">Password</div>
             </div>
             <!-- Error login -->
