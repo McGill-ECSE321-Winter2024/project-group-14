@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
 import ca.mcgill.ecse321.sportCenterRegistration.dto.InstructorDTO;
 import ca.mcgill.ecse321.sportCenterRegistration.dto.OwnerDTO;
@@ -17,7 +16,6 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Owner;
 import ca.mcgill.ecse321.sportCenterRegistration.service.LoginService;
 
-@CrossOrigin(origins = "*")
 @RestController
 public class LoginController {
 
@@ -26,9 +24,9 @@ public class LoginController {
 
 	@GetMapping(value = { "/login", "/login/" })
 	public ResponseEntity<?> loginByEmail(
-			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "username", required = false) String username,
-			@RequestParam(value = "password", required = true) String password) {
+			@RequestParam(value = "email", required=false) String email, 
+			@RequestParam(value = "username", required=false) String username,
+			@RequestParam(value = "password", required=true) String password) {
 		Account user = null;
 		try {
 			if (email == null && username == null) {
@@ -59,6 +57,7 @@ public class LoginController {
 		}
 		return null;
 	}
+
 
 	public static CustomerDTO convertToCustomerDto(Customer customer) {
 		if (customer == null) {
