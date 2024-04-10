@@ -11,7 +11,7 @@
     </div>
     <div class="inputdata">
     <button v-bind:disabled="!SportClassName1 || !SportClassName2" @click="sameInput">
-    Confirma
+    Confirm
     </button>
     <p>
     <span v-if="errorSportClass" style="color:red">Error: {{errorSportClass}} </span>    </p>

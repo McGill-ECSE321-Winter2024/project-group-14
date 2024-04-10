@@ -26,14 +26,13 @@ export default {
     },
     created: function () {
         // Initializing persons from backend
-        AXIOS.get('/sport-class')
-            .then(response => {
-                // JSON responses are automatically parsed.
-                this.SportClasses = response.data
-            })
-            .catch(e => {
-                this.errorSportClass = e
-            })
+        //AXIOS.get('/sport-class/all')
+        //    .then(response => {
+        //        this.SportClasses = response.data
+        //   })
+        //    .catch(e => {
+        //        this.errorSportClass = e
+        //    })
     },
     methods: {
         sameInput: function () {
@@ -44,17 +43,19 @@ export default {
                 this.errorSportClass = "Sport Class Names do not Match";
             }
         },
-        createSportClass: function (SportClassName1) {
-            AXIOS.post('/sport-class/'.concat(SportClassName1))
+        createSportClass: function (SportClassName) {
+            AXIOS.post('/sport-class/'.concat(SportClassName), {}, {})
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.SportClasses.push(response.data)
                     this.errorSportClass = ''
                     this.SportClassName1 = ''
                     this.SportClassName2 = ''
+                    this.errorSportClass = "test"
                 })
 
                 .catch(e => {
+                    this.errorSportClass = "test3"
                     const errorMsg = e.response.data.message
                     console.log(errorMsg)
                     this.errorSportClass = errorMsg
