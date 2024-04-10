@@ -79,12 +79,33 @@ public class SessionTests{
 
         lenient().when(sessionRepo.findSessionBySportClass(any(SportClass.class))).thenAnswer(
                 (InvocationOnMock invocation) -> {
-                    if (invocation.getArgument(0).equals("cardio")){
+                    SportClass sp = (SportClass) invocation.getArgument(0);
+                    if (sp.getName().equals("cardio")){
                         List<Session> sessions = new ArrayList<>();
                         sessions.add(session1);
                         sessions.add(session2);
                         return sessions;
                     } else {
+                        return null;
+                    }
+                }
+        );
+
+        lenient().when(sportClassRepo.findSportClassByName(anyString())).thenAnswer(
+                (InvocationOnMock invocation) ->{
+                    if (invocation.getArgument(0).equals("cardio")){
+                        return new SportClass("cardio");
+                    } else{
+                        return null;
+                    }
+                }
+        );
+
+        lenient().when(instructorRepo.findInstructorByUsername(anyString())).thenAnswer(
+                (InvocationOnMock invocation) ->{
+                    if (invocation.getArgument(0).equals("Loridy")){
+                        return INSTRUCTOR_0;
+                    } else{
                         return null;
                     }
                 }
@@ -124,8 +145,8 @@ public class SessionTests{
         Time end = Time.valueOf("11:00:00");
         String location = "trottbuilding";
         Date date = Date.valueOf("2024-03-03");
-        Instructor instructor = new Instructor("Loridy", "loridy@gmail.com", "loridy123");
-        SportClass sportClass = new SportClass("cardio");
+        String instructor = "Loridy";
+        String sportClass = "cardio";
         Session session = null;
         String error = null;
         try{
@@ -139,14 +160,13 @@ public class SessionTests{
         assertEquals(end, session.getEndTime());
         assertEquals(location, session.getLocation());
         assertEquals(date, session.getDate());
-        assertEquals(instructor, session.getInstructor());
     }
 
     @Test
     public void testCreateSessionWithNullStartTime() {
         String error = null;
         try {
-            sessionService.createSession(null, Time.valueOf("11:00:00"), "trottbuilding", Date.valueOf("2024-03-03"), new Instructor("Loridy", "loridy@gmail.com", "loridy123"), new SportClass("cardio"));
+            sessionService.createSession(null, Time.valueOf("11:00:00"), "trottbuilding", Date.valueOf("2024-03-03"), "Loridy", "cardio");
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -157,7 +177,7 @@ public class SessionTests{
     public void testCreateSessionWithNullEndTime() {
         String error = null;
         try {
-            sessionService.createSession(Time.valueOf("08:00:00"), null, "trottbuilding", Date.valueOf("2024-03-03"), new Instructor("Loridy", "loridy@gmail.com", "loridy123"), new SportClass("cardio"));
+            sessionService.createSession(Time.valueOf("08:00:00"), null, "trottbuilding", Date.valueOf("2024-03-03"), "Loridy", "cardio");
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -167,7 +187,7 @@ public class SessionTests{
     public void testCreateSessionWithNullLocation() {
         String error = null;
         try {
-            sessionService.createSession(Time.valueOf("08:00:00"), Time.valueOf("11:00:00"), null, Date.valueOf("2024-03-03"), new Instructor("Loridy", "loridy@gmail.com", "loridy123"), new SportClass("cardio"));
+            sessionService.createSession(Time.valueOf("08:00:00"), Time.valueOf("11:00:00"), null, Date.valueOf("2024-03-03"), "Loridy", "cardio");
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -178,7 +198,7 @@ public class SessionTests{
     public void testCreateSessionWithNullDate() {
         String error = null;
         try {
-            sessionService.createSession(Time.valueOf("08:00:00"), Time.valueOf("11:00:00"), "trottbuilding", null, new Instructor("Loridy", "loridy@gmail.com", "loridy123"), new SportClass("cardio"));
+            sessionService.createSession(Time.valueOf("08:00:00"), Time.valueOf("11:00:00"), "trottbuilding", null, "Loridy", "cardio");
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -189,7 +209,7 @@ public class SessionTests{
     public void testCreateSessionWithNullInstructor() {
         String error = null;
         try {
-            sessionService.createSession(Time.valueOf("08:00:00"), Time.valueOf("11:00:00"), "trottbuilding", Date.valueOf("2024-03-03"), null, new SportClass("cardio"));
+            sessionService.createSession(Time.valueOf("08:00:00"), Time.valueOf("11:00:00"), "trottbuilding", Date.valueOf("2024-03-03"), null, "cardio");
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -200,7 +220,7 @@ public class SessionTests{
     public void testCreateSessionWithNullSportClass() {
         String error = null;
         try {
-            sessionService.createSession(Time.valueOf("08:00:00"), Time.valueOf("11:00:00"), "trottbuilding", Date.valueOf("2024-03-03"), new Instructor("Loridy", "loridy@gmail.com", "loridy123"), null);
+            sessionService.createSession(Time.valueOf("08:00:00"), Time.valueOf("11:00:00"), "trottbuilding", Date.valueOf("2024-03-03"), "Loridy", null);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -220,7 +240,7 @@ public class SessionTests{
         String error = null;
 
         try{
-            session = sessionService.updateSession(1, start, end, location, date, instructor, sportClass);
+            session = sessionService.updateSession(1, start, end, location, date, "Test", sportClass);
         } catch (IllegalArgumentException e){
             error = e.getMessage();
         }

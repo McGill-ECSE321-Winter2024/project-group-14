@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse321.sportCenterRegistration.dto.SportClassDTO;
 import ca.mcgill.ecse321.sportCenterRegistration.model.SportClass;
 import ca.mcgill.ecse321.sportCenterRegistration.service.SportClassService;
-import ca.mcgill.ecse321.sportCenterRegistration.service.InstructorService;
-import ca.mcgill.ecse321.sportCenterRegistration.service.OwnerService;
+
+
 @RestController
 public class SportClassController{
     @Autowired
@@ -47,10 +47,12 @@ public class SportClassController{
         sportClassService.deleteSportClass(name);
     }
 
-    @GetMapping(value={"/sport-class", "/sport-class/"})
+    @GetMapping(value={"/sport-class/all", "/sport-class/all/"})
     public List<SportClassDTO> getAllSportClass() throws IllegalArgumentException{
         return sportClassService.getAllSportClass().stream().map(p->convertToDto(p)).collect(Collectors.toList());
     }
+
+
 
     private SportClassDTO convertToDto(SportClass s) throws IllegalArgumentException{
         return new SportClassDTO(s.getName(), s.getApproved());

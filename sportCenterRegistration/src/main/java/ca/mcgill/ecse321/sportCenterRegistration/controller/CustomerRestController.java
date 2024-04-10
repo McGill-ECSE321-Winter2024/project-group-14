@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dto.CustomerDTO;
@@ -19,7 +21,6 @@ import ca.mcgill.ecse321.sportCenterRegistration.model.Customer;
 import ca.mcgill.ecse321.sportCenterRegistration.service.CustomerService;
 
 
-@CrossOrigin(origins = "*")
 @RestController
 public class CustomerRestController {
     @Autowired
@@ -34,11 +35,7 @@ public class CustomerRestController {
      * 
      */
     private CustomerDTO convertToDTO(Customer customer){
-        if (customer == null) {
-            throw new IllegalArgumentException("There is no such customer!");
-        }
-        CustomerDTO customerDTO = new CustomerDTO(customer.getId(), customer.getUsername(), customer.getEmail(), customer.getPassword());
-        return customerDTO;
+        return new CustomerDTO(customer.getId(), customer.getUsername(), customer.getEmail(), customer.getPassword());            
     }
 
     /*
@@ -73,10 +70,10 @@ public class CustomerRestController {
         try {
             Customer customer = customerService.createCustomer(username, email, password);
             return ResponseEntity.ok(convertToDTO(customer));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
         }
-        catch(IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } 
     }
     /*
      * 
@@ -89,13 +86,13 @@ public class CustomerRestController {
 
     @GetMapping(value= {"/customer/{username}", "/customer/{username}/"})
     public ResponseEntity<?> getCustomer(@PathVariable("username") String username) throws IllegalArgumentException {
-        try {
+        try{
             Customer customer = customerService.getCustomer(username);
             return ResponseEntity.ok(convertToDTO(customer));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
+
     }
 
     @GetMapping(value= {"/customer/all", "/customer/all/"})
@@ -147,8 +144,7 @@ public class CustomerRestController {
         try {
             Customer customer = customerService.updateCustomer(oldUsername, username, email, password);
             return ResponseEntity.ok(convertToDTO(customer));
-        }
-        catch(IllegalArgumentException e){
+        } catch(IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         } 
     }

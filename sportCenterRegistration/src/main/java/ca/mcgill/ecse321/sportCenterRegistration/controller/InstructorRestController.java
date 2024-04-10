@@ -68,7 +68,7 @@ public class InstructorRestController {
      * 
      */
 
-    @PostMapping(value= {"/Instructor/{username}/{email}/{password}", "/Instructor/{username}/{email}/{password}/"})
+    @PostMapping(value= {"/instructor/{username}/{email}/{password}", "/instructor/{username}/{email}/{password}/"})
     public ResponseEntity<?> createInstructor(@PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Instructor Instructor = InstructorService.createInstructor(username, email, password);
@@ -87,7 +87,7 @@ public class InstructorRestController {
      * 
      */
 
-    @GetMapping(value= {"/Instructor/{username}", "/Instructor/{username}/"})
+    @GetMapping(value= {"/instructor/{username}", "/instructor/{username}/"})
     public ResponseEntity<?> getInstructor(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Instructor Instructor = InstructorService.getInstructor(username);
@@ -98,7 +98,7 @@ public class InstructorRestController {
         } 
     }
 
-    @GetMapping(value= {"/Instructor/all", "/Instructor/all/"})
+    @GetMapping(value= {"/instructor/all", "/instructor/all/"})
     public ResponseEntity<?> getAllInstructors() throws IllegalArgumentException {
         try {
             List<Instructor> Instructors = InstructorService.getAllInstructors();
@@ -123,7 +123,7 @@ public class InstructorRestController {
 
 
 
-    @DeleteMapping(value= {"/Instructor/{username}", "/Instructor/{username}/"})
+    @DeleteMapping(value= {"/instructor/{username}", "/instructor/{username}/"})
     public ResponseEntity<?> deleteInstructor(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Instructor instructorDelete = InstructorService.deleteInstructor(username);
@@ -142,7 +142,7 @@ public class InstructorRestController {
      * 
      */
 
-    @PutMapping(value= {"/Instructor/update/{oldUsername}/{username}/{email}/{password}", "/Instructor/update/{oldUsername}/{username}/{email}/{password}/"})
+    @PutMapping(value= {"/instructor/update/{oldUsername}/{username}/{email}/{password}", "/instructor/update/{oldUsername}/{username}/{email}/{password}/"})
     public ResponseEntity<?> updateInstructor(@PathVariable("oldUsername") String oldUsername, @PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Instructor Instructor = InstructorService.updateInstructor(oldUsername, username, email, password);

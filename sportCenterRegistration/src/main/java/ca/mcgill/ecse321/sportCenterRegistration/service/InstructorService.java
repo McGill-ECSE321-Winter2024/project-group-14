@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dao.AccountRepository;
+import ca.mcgill.ecse321.sportCenterRegistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.InstructorRepository;
@@ -162,9 +163,8 @@ public class InstructorService {
 		
 
 		Instructor Instructor = new Instructor(username, email, password);
-		InstructorRepository.save(Instructor);
-	    // accountRepository.save(Instructor);
-		return Instructor;
+//		InstructorRepository.save(Instructor);
+		return InstructorRepository.save(Instructor);
 	}
 
 	/*
@@ -234,7 +234,8 @@ public class InstructorService {
 		if (!(emailIsValid(email))){
 			throw new IllegalArgumentException("Email is invalid!");
 		}
-		if(!(usernameIsUnique(username))) {
+		
+		if(!username.equals(oldUsername) && InstructorRepository.findInstructorByUsername(username) != null) {
 			throw new IllegalArgumentException("Username is not unique!");
 		}
 		

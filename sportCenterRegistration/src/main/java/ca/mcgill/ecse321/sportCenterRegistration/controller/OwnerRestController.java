@@ -68,7 +68,7 @@ public class OwnerRestController {
      * 
      */
 
-    @PostMapping(value= {"/Owner/{username}/{email}/{password}", "/Owner/{username}/{email}/{password}/"})
+    @PostMapping(value= {"/owner/{username}/{email}/{password}", "/owner/{username}/{email}/{password}/"})
     public ResponseEntity<?> createOwner(@PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Owner Owner = OwnerService.createOwner(username, email, password);
@@ -87,7 +87,7 @@ public class OwnerRestController {
      * 
      */
 
-    @GetMapping(value= {"/Owner/{username}", "/Owner/{username}/"})
+    @GetMapping(value= {"/owner/{username}", "/owner/{username}/"})
     public ResponseEntity<?> getOwner(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Owner Owner = OwnerService.getOwner(username);
@@ -98,7 +98,7 @@ public class OwnerRestController {
         } 
     }
 
-    @GetMapping(value= {"/Owner/all", "/Owner/all/"})
+    @GetMapping(value= {"/owner/all", "/owner/all/"})
     public ResponseEntity<?> getAllOwners() throws IllegalArgumentException {
         try {
             List<Owner> Owners = OwnerService.getAllOwners();
@@ -123,7 +123,7 @@ public class OwnerRestController {
 
 
 
-    @DeleteMapping(value= {"/Owner/{username}", "/Owner/{username}/"})
+    @DeleteMapping(value= {"/owner/{username}", "/owner/{username}/"})
     public ResponseEntity<?> deleteOwner(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Owner ownerDelete = OwnerService.deleteOwner(username);
@@ -143,7 +143,7 @@ public class OwnerRestController {
      * 
      */
 
-    @PutMapping(value= {"/Owner/update/{oldUsername}/{username}/{email}/{password}", "/Owner/update/{oldUsername}/{username}/{email}/{password}/"})
+    @PutMapping(value= {"/owner/update/{oldUsername}/{username}/{email}/{password}", "/owner/update/{oldUsername}/{username}/{email}/{password}/"})
     public ResponseEntity<?> updateOwner(@PathVariable("oldUsername") String oldUsername, @PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Owner Owner = OwnerService.updateOwner(oldUsername, username, email, password);
