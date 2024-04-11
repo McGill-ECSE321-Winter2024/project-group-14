@@ -26,11 +26,11 @@ public class ShiftDto {
     public void setErrors(List<String> errors) {
         this.errors = errors;
     }
-    
-    public ShiftDto(){
+
+    public ShiftDto() {
     }
 
-    public ShiftDto(Date date, Time startTime, Time endTime, Integer id, Staff staff){
+    public ShiftDto(Date date, Time startTime, Time endTime, Integer id, Staff staff) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -38,11 +38,10 @@ public class ShiftDto {
         this.staff = staff;
     }
 
-    public Date getDate(){
+    public Date getDate() {
         return date;
     }
 
-    public Time getStartTime(){
     public Time getStartTime() {
         return startTime;
     }
