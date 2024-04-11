@@ -1,0 +1,176 @@
+<template>
+    <div>
+      <el-container>
+        <el-aside :width="asideWidth" style="min-height:100vh; background-color: #001529">
+          <div style="height:60px; color:white; display:flex; align-items:center; justify-content:center">
+            logo
+            <span style="margin-left: 4px; font-size:18px" v-show="!isCollapse">SPCR</span>
+          </div>
+  
+  
+          <el-menu router :collapse="isCollapse":collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
+            <el-menu-item index="/1">
+                <i class="el-icon-house"></i>
+                <span slot ="title">Home</span>
+            </el-menu-item>
+  
+            <el-submenu>
+              <template slot="title">
+                <i class="el-icon-s-custom"></i>
+                  <span>User Management</span>
+              </template>
+                <el-menu-item-group>
+                  <el-menu-item index="/OwnerApp/ManageInstructor">
+                    <!-- <i class="el-icon-s-custom"></i> -->
+                    <span>Instructor Management</span>
+                  </el-menu-item>
+                  <el-menu-item index="/OwnerApp/ManageCustomer">
+                    <!-- <i class="el-icon-user-solid"></i> -->
+                    <span>Customer Management</span>
+                  </el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+  
+              <el-menu-item index="/4">
+                <i class="el-icon-menu"></i>
+                <span slot="title">Schedules</span>
+              </el-menu-item>
+  
+              <el-menu-item index="/5">
+                <i class="el-icon-setting"></i>
+                <span slot="title">Settings</span>
+              </el-menu-item>       
+  
+          </el-menu>
+        </el-aside>
+  
+        <el-container>
+          <el-header>
+            <i :class="collapseIcon" style="font-size:25px ;" @click="handleCollapse"></i>
+            <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-left:20px">
+              <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/ManageInstructor' }">Instructor Management</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item>
+            </el-breadcrumb>
+          </el-header>
+  
+          <el-main>
+            <router-view/>
+            <!-- <div style="display:flex">
+                <el-card style="width:50%; margin-right:10px; height:50%">
+                    <div slot="header" class="clearfix">
+                        <span>Sport Classes</span>
+                    </div>
+                    <div>
+                        <el-table :data="classes">
+                            <el-table-column label="Sport Class" prop="name"></el-table-column>
+                        </el-table>
+                    </div>
+                </el-card>
+                
+                <el-card style="width:50%; margin-right:10px; height:50%">
+                    <span>{{classes[0].username}}</span>
+                </el-card>
+            </div> -->
+
+
+          </el-main>
+  
+        </el-container>
+  
+      </el-container>
+    </div>
+  </template>
+  
+  <script>
+    import axios from 'axios'
+    var config = require('../../config')
+
+    var backendConfigurer = function(){
+        switch(process.env.NODE_ENV){
+            case 'development':
+                return 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
+            case 'production':
+                return 'https://' + config.build.backendHost + ':' + config.build.backendPort ;
+        }
+    };
+
+    var backendUrl = backendConfigurer();
+
+    var AXIOS = axios.create({
+    baseURL: backendUrl,
+    //headers: { 'Access-Control-Allow-Origin': frontendUrl }
+    })
+
+  export default{
+    data(){
+      return{
+        isCollapse: false,
+        asideWidth: '200px',
+        collapseIcon: 'el-icon-s-fold',
+        classes:[],
+        errorClass:""
+      }
+    },
+    created: function(){
+        AXIOS.get('/instructor/all').then(response => {this.classes = response.data}).catch(e => {this.errorClass = e});
+    },
+    methods:{
+      handleCollapse(){
+        this.isCollapse = !this.isCollapse
+        this.asideWidth = this.isCollapse ? '64px': '200px'
+        this.collapseIcon = this.isCollapse ? 'el-icon-s-unfold': 'el-icon-s-fold'
+      }
+    }
+  }
+  </script>
+  
+  <style>
+
+  .el-menu--inline{
+    background-color:#000c17 !important;
+  }
+  .el-menu--inline .el-menu-item{
+    background-color:#000c17 !important;
+    padding-left: 49px !important;
+  }
+  .el-menu-item:hover, el-submenu__title:hover {
+    color: #fff !important;
+  }
+  .el-submenu__title:hover i{
+    color: #fff !important;
+  }
+  .el-menu-item.is-active{
+    background-color: #1890ff !important; 
+    border-radius: 5px !important;
+    width: calc(100% - 8px);
+    margin-left: 4px;
+  }
+  .el-menu-item.is-active i, .el-menu-item.is-active .el-tooltip{
+    margin-left: -4px;
+  }
+  .el-menu-item{
+    height: 40px !important;
+    line-height: 40px !important;
+    
+  }
+  .el-submenu__title{
+    height: 40px !important;
+    line-height: 40px !important;
+  }
+  .el-submenu .el-menu-item{
+    min-width:0 !important;
+  }
+  .el-menu--inline .el-menu-item.is-active{
+    padding-left: 10px;
+  }
+  .el-aside{
+    transition: width .5s;
+    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+  }
+  .el-header{
+    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    display: flex;
+    align-items: center;
+  }
+  </style>
