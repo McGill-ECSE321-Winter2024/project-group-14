@@ -12,19 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dto.InstructorDTO;
 import ca.mcgill.ecse321.sportCenterRegistration.model.Instructor;
 import ca.mcgill.ecse321.sportCenterRegistration.service.InstructorService;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class InstructorRestController {
     @Autowired
     public InstructorService InstructorService;
-
 
     /*
      * 
@@ -33,11 +32,12 @@ public class InstructorRestController {
      * method that converts a Instructor object to a Instructor dto
      * 
      */
-    private InstructorDTO convertToDTO(Instructor Instructor){
+    private InstructorDTO convertToDTO(Instructor Instructor) {
         if (Instructor == null) {
             throw new IllegalArgumentException("There is no such Instructor!");
         }
-        InstructorDTO InstructorDTO = new InstructorDTO(Instructor.getId(), Instructor.getUsername(), Instructor.getEmail(), Instructor.getPassword());
+        InstructorDTO InstructorDTO = new InstructorDTO(Instructor.getId(), Instructor.getUsername(),
+                Instructor.getEmail(), Instructor.getPassword());
         return InstructorDTO;
     }
 
@@ -48,16 +48,13 @@ public class InstructorRestController {
      * method that converts a list of Instructors into a list of Instructor dtos
      * 
      */
-    private List<InstructorDTO> convertListToDto(List<Instructor> listInstructor){
+    private List<InstructorDTO> convertListToDto(List<Instructor> listInstructor) {
         List<InstructorDTO> listInstructorDTO = new ArrayList<InstructorDTO>(listInstructor.size());
-        for (Instructor Instructor: listInstructor) {
+        for (Instructor Instructor : listInstructor) {
             listInstructorDTO.add(convertToDTO(Instructor));
         }
         return listInstructorDTO;
     }
-
-
-
 
     /*
      * 
@@ -68,15 +65,18 @@ public class InstructorRestController {
      * 
      */
 
-    @PostMapping(value= {"/instructor/{username}/{email}/{password}", "/instructor/{username}/{email}/{password}/"})
-    public ResponseEntity<?> createInstructor(@PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
+    @PostMapping(value = { "/instructor", "/instructor/" })
+    public ResponseEntity<?> createInstructor(
+            @RequestParam("username") String username,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password)
+            throws IllegalArgumentException {
         try {
             Instructor Instructor = InstructorService.createInstructor(username, email, password);
             return ResponseEntity.ok(convertToDTO(Instructor));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
     }
     /*
      * 
@@ -87,29 +87,26 @@ public class InstructorRestController {
      * 
      */
 
-    @GetMapping(value= {"/instructor/{username}", "/instructor/{username}/"})
+    @GetMapping(value = { "/instructor/{username}", "/instructor/{username}/" })
     public ResponseEntity<?> getInstructor(@PathVariable("username") String username) throws IllegalArgumentException {
         try {
             Instructor Instructor = InstructorService.getInstructor(username);
             return ResponseEntity.ok(convertToDTO(Instructor));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
     }
 
-    @GetMapping(value= {"/instructor/all", "/instructor/all/"})
+    @GetMapping(value = { "/instructor/all", "/instructor/all/" })
     public ResponseEntity<?> getAllInstructors() throws IllegalArgumentException {
         try {
             List<Instructor> Instructors = InstructorService.getAllInstructors();
-            
-            return ResponseEntity.ok(convertListToDto(Instructors));
-        }
-        catch(IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } 
-    }
 
+            return ResponseEntity.ok(convertListToDto(Instructors));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     /*
      * 
@@ -121,19 +118,16 @@ public class InstructorRestController {
      * 
      */
 
-
-
-    @DeleteMapping(value= {"/instructor/{username}", "/instructor/{username}/"})
-    public ResponseEntity<?> deleteInstructor(@PathVariable("username") String username) throws IllegalArgumentException {
+    @DeleteMapping(value = { "/instructor/{username}", "/instructor/{username}/" })
+    public ResponseEntity<?> deleteInstructor(@PathVariable("username") String username)
+            throws IllegalArgumentException {
         try {
             Instructor instructorDelete = InstructorService.deleteInstructor(username);
             return ResponseEntity.ok(convertToDTO(instructorDelete));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
     }
-
 
     /*
      * @author Muhammad Hammad
@@ -142,25 +136,17 @@ public class InstructorRestController {
      * 
      */
 
-    @PutMapping(value= {"/instructor/update/{oldUsername}/{username}/{email}/{password}", "/instructor/update/{oldUsername}/{username}/{email}/{password}/"})
-    public ResponseEntity<?> updateInstructor(@PathVariable("oldUsername") String oldUsername, @PathVariable("username") String username, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
+    @PutMapping(value = { "/instructor/update/{oldUsername}/{username}/{email}/{password}",
+            "/instructor/update/{oldUsername}/{username}/{email}/{password}/" })
+    public ResponseEntity<?> updateInstructor(@PathVariable("oldUsername") String oldUsername,
+            @PathVariable("username") String username, @PathVariable("email") String email,
+            @PathVariable("password") String password) throws IllegalArgumentException {
         try {
             Instructor Instructor = InstructorService.updateInstructor(oldUsername, username, email, password);
             return ResponseEntity.ok(convertToDTO(Instructor));
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
+        }
     }
-
-
-
-
-
-
-
-    
-
-
 
 }
