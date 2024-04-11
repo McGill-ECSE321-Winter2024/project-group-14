@@ -17,16 +17,16 @@
             <el-submenu>
               <template slot="title">
                 <i class="el-icon-s-custom"></i>
-                  <span>User Management</span>
+                  <span>Management</span>
               </template>
                 <el-menu-item-group>
-                  <el-menu-item index="/OwnerApp/ManageInstructor">
+                  <el-menu-item index="/CustomerApp/AddClasses">
                     <!-- <i class="el-icon-s-custom"></i> -->
-                    <span>Instructor Management</span>
+                    <span>Add and Drop Classes</span>
                   </el-menu-item>
-                  <el-menu-item index="/OwnerApp/ManageCustomer">
+                  <el-menu-item index="/CustomerApp/ReviewClasses">
                     <!-- <i class="el-icon-user-solid"></i> -->
-                    <span>Customer Management</span>
+                    <span>Review Classes</span>
                   </el-menu-item>
                 </el-menu-item-group>
               </el-submenu>

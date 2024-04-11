@@ -4,10 +4,10 @@ import Home from '@/components/Home'
 import ManageInstructor from '@/components/ManageInstructor'
 import ManageCustomer from '@/components/ManageCustomer'
 import OwnerApp from '@/components/OwnerApp'
-import NewClassTable from '@/components/NewClassTable'
-import ApproveClass from '@/components/ApproveClass'
 
-
+import ReviewClasses from '@/components/Customer/ReviewClasses'
+import AddClasses from '@/components/Customer/AddClasses'
+import CustomerApp from '@/components/CustomerApp'
 Vue.use(Router)
 
 export default new Router({
@@ -23,14 +23,14 @@ export default new Router({
       ]
     },
     {
-      path: '/newclass',
-      name: 'NewClassTable',
-      component: NewClassTable
+      path: '/customerApp/',
+      name: 'CustomerApp',
+      component: CustomerApp,
+      // redirect: '/home',
+      children: [
+        { path: 'addClasses', name: 'AddClasses', component: AddClasses },
+        { path: 'reviewClasses', name: 'ReviewClasses', component: ReviewClasses },
+      ]
     },
-    {
-      path: '/approve',
-      name: 'ApproveClass',
-      component: ApproveClass
-    }
   ]
 })
