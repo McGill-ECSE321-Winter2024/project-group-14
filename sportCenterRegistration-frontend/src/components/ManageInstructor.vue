@@ -137,11 +137,23 @@ import axios from 'axios'
                 this.tableData = this.tableData.filter((item) => item.id !== id);
             }).catch(e => {this.error = e});
         },
-        save(){
-            AXIOS.post(`/instructor/${username}/${email}/${password}`).then(response => {
-                this.tableData.push(response.data);}).catch(e => {this.error = e});
-        },
+        save() {
+            AXIOS.post(`/instructor/`, null, {
+                params: {
+                username: this.form.username,
+                email: this.form.email,
+                password: this.form.password,
+                },
+            })
+                .then((response) => {
+                this.tableData.push(response.data);
+                })
+                .catch((e) => {
+                this.error = e;
+                });
+            },
         update(){
+
 
         },
 
