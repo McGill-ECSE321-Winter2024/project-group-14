@@ -5,7 +5,7 @@ import ManageInstructor from '@/components/ManageInstructor'
 import ManageCustomer from '@/components/ManageCustomer'
 import OwnerApp from '@/components/OwnerApp'
 import NewClassTable from '@/components/NewClassTable'
-import ApproveNewClass from '@/components/ApproveNewClass'
+import ApproveClass from '@/components/ApproveClass'
 
 
 Vue.use(Router)
@@ -28,9 +28,9 @@ export default new Router({
       component: NewClassTable
     },
     {
-      path: '/approvenewclass',
-      name: 'ApproveNewClass',
-      component: ApproveNewClass
+      path: '/approve',
+      name: 'ApproveClass',
+      component: ApproveClass
     }
   ]
 })
