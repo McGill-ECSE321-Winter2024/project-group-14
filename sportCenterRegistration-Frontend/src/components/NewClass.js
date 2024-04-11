@@ -6,7 +6,7 @@ const backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backend
 
 const AXIOS = axios.create({
     baseURL: backendUrl,
-    headers: { 'Access-Control-Allow-Origin': frontendUrl }
+    // headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
 function SportClassDto(name) {
@@ -51,11 +51,9 @@ export default {
                     this.errorSportClass = ''
                     this.SportClassName1 = ''
                     this.SportClassName2 = ''
-                    this.errorSportClass = "test"
                 })
 
                 .catch(e => {
-                    this.errorSportClass = "test3"
                     const errorMsg = e.response.data.message
                     console.log(errorMsg)
                     this.errorSportClass = errorMsg
