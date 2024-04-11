@@ -2,7 +2,7 @@
   "name": "sportcenterregistration-frontend",
   "version": "1.0.0",
   "description": "A Vue.js frontend for Sport Center Registration App",
-  "author": "Ming Xuan Yue <ming.x.yue@mail.mcgill.ca>",
+  "author": "Loridy <loridyLuo@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -13,6 +13,8 @@
     "axios": "1.5",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "latest",
+    "element": "^0.1.4",
+    "element-ui": "^2.15.14",
     "popper.js": "^1.12.9",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
