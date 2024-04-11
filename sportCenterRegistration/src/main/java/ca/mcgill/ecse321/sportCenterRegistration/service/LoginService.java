@@ -25,7 +25,7 @@ public class LoginService {
      */
     @Transactional
     public Account loginByEmail(String email, String password) {
-        System.out.println(customerRepo.existsByEmail(email));
+        // System.out.println(customerRepo.existsByEmail(email));
         // Check if the user exists in the system, and throw an error if it does not.
         if (!customerRepo.existsByEmail(email) &&
                 !ownerRepo.existsByEmail(email) &&
@@ -33,8 +33,8 @@ public class LoginService {
             throw new IllegalArgumentException("Invalid email");
         }
 
-        System.out.println(email);
-        System.out.println(password);
+        // System.out.println(email);
+        // System.out.println(password);
 
         // Determine what type of user is logging in.
         Customer customer = customerRepo.findCustomerByEmail(email);
@@ -53,8 +53,6 @@ public class LoginService {
         throw new IllegalArgumentException("Incorrect password");
     }
 
-
-    
     @Transactional
     public Account loginByUsername(String username, String password) {
         System.out.println(customerRepo.existsByEmail(username));

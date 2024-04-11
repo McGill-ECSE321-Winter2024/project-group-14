@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.sportCenterRegistration.dao.*;
 import ca.mcgill.ecse321.sportCenterRegistration.model.*;
 
-
 @Service
 public class SessionService {
     @Autowired
@@ -24,7 +23,6 @@ public class SessionService {
     @Autowired
     InstructorRepository instructorRepo;
 
-
     /**
      * Section: Session servive
      * Author: Stephen Huang
@@ -32,7 +30,8 @@ public class SessionService {
      */
 
     @Transactional
-    public Session createSession(Time startTime, Time endTime, String location, Date date, String instructorName, String sportClassName) {
+    public Session createSession(Time startTime, Time endTime, String location, Date date, String instructorName,
+            String sportClassName) {
         Instructor instructor = instructorRepo.findInstructorByUsername(instructorName);
         SportClass sportClass = sportClassRepo.findSportClassByName(sportClassName);
         // checking all inputs are valid
@@ -51,10 +50,10 @@ public class SessionService {
         }
         if (endTime != null && startTime != null && endTime.before(startTime)) {
             throw new IllegalArgumentException("Session end time cannot be before Session start time! ");
-        } 
+        }
         if (instructor == null) {
             throw new IllegalArgumentException("Session instructor cannot be empty!");
-        } 
+        }
         if (sportClass == null) {
             throw new IllegalArgumentException("Session sport class cannot be empty!");
         }
@@ -71,7 +70,8 @@ public class SessionService {
      * This method updates a session schedual
      */
 
-    public Session updateSession(int id, Time startTime, Time endTime, String location, Date date, String instructorName, SportClass sportClass) {
+    public Session updateSession(int id, Time startTime, Time endTime, String location, Date date,
+            String instructorName, SportClass sportClass) {
         Instructor instructor = instructorRepo.findInstructorByUsername(instructorName);
         // check if the session exists
         Session session = sessionRepo.findSessionById(id);
@@ -96,9 +96,11 @@ public class SessionService {
         }
         if (endTime != null && startTime != null && endTime.before(startTime)) {
             throw new IllegalArgumentException("Session end time cannot be before Session start time! ");
-        } if (instructor == null) {
+        }
+        if (instructor == null) {
             throw new IllegalArgumentException("Session instructor cannot be empty!");
-        } if (sportClass == null) {
+        }
+        if (sportClass == null) {
             throw new IllegalArgumentException("Session sport class cannot be empty!");
         }
 
@@ -117,28 +119,34 @@ public class SessionService {
      * This method gets a specific session schedule given the corresponding id
      */
     @Transactional
-    public Session getSession(int id) {
+    public List<Session> getSession(int sessionId) {
 
         // return dailyschedule with the inputed id
-        Session session = sessionRepo.findSessionById(id);
-        return session;
+        List<Session> sessions = new ArrayList<Session>();
+        sessions.add(sessionRepo.findSessionById(sessionId));
+        return sessions;
     }
 
     /**
      * Section: Session servive
      * Author: Stephen Huang
      * This method gets a specific session schedule given the corresponding
-     * @param sportClassName is the target sport class used to retrive all Sessions from database
-     * sportclasstype
+     * 
+     * @param sportClassName is the target sport class used to retrive all Sessions
+     *                       from database
+     *                       sportclasstype
      */
     @Transactional
     public List<Session> getSessionBySportClass(String sportClassName) {
+        System.out.println(sportClassName);
         // return dailyschedule with the inputed id
         SportClass sportClass = sportClassRepo.findSportClassByName(sportClassName);
-        if (sportClass == null){
+        System.out.println(sportClassName);
+        if (sportClass == null) {
             throw new IllegalArgumentException("Sport Class does not exist!");
         }
         List<Session> sessions = sessionRepo.findSessionBySportClass(sportClass);
+        System.out.println("hh");
         return sessions;
     }
 
@@ -164,7 +172,7 @@ public class SessionService {
 
         // delete dailyschedule
         sessionRepo.delete(session);
-//        session.delete();
+        // session.delete();
         return true;
     }
 
