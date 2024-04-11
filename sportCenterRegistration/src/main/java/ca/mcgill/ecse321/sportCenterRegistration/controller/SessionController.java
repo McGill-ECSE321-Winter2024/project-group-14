@@ -41,7 +41,7 @@ public class SessionController {
 	 */
 	@GetMapping(value = { "/view_sessions", "/view_sessions/" })
 	public ResponseEntity<?> getSessions(
-			@RequestParam(value = "id", required = false) String sessionId,
+			@RequestParam(value = "sessionId", required = false) String sessionId,
 			@RequestParam(value = "sportclassName", required = false) String sportclassName)
 			throws IllegalArgumentException {
 		if (sessionId == null && sportclassName == null) {
