@@ -17,7 +17,7 @@
             <el-table-column label="Operations" align="center" width:180px>
                 <template v-slot="scope">
                     <el-button size="mini" type="primary" round @click="edit(scope.row)">Edit</el-button>
-                    <el-button size="mini" type="danger" round>Delete</el-button>
+                    <el-button size="mini" type="danger" round @click="open(scope.row)">Delete</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -73,6 +73,7 @@
                 <el-button @click="editFormVisible = false">Cancel</el-button>
             </div>
         </el-dialog>
+
         
     </div>
 </template>
@@ -109,11 +110,13 @@ import axios from 'axios'
             editFormVisible: false,
             form :{},
             editForm:{},
+            row:{},
             rules:{
                 username:[{required: true, message: "Please input an username", trigger:'blur'}],
                 email:[{required: true, message: "Please input an email", trigger:'blur'}],
                 password:[{required: true, message: "Please input a password", trigger:'blur'}]
-            }
+            },
+            olderUsername:""
             // pageNum:1, // current page
             // pageSize:5, // number of pages
             // username:"",
@@ -132,11 +135,21 @@ import axios from 'axios'
         showAll(){
             AXIOS.get('/instructor/all').then(response => {this.tableData = response.data}).catch(e => {this.error = e});
         },
-        delete(username){
-            AXIOS.delete(`/instructor/${username}`).then(response => {
-                this.tableData = this.tableData.filter((item) => item.id !== id);
-            }).catch(e => {this.error = e});
+
+        delete(){
+            this.username = this.row.username
+            AXIOS.delete(`/instructor/${this.row.username}`)
+            .then(() => {
+            const index = this.tableData.findIndex(instructor => instructor.username === this.username);
+            if (index !== -1) {
+                this.tableData.splice(index, 1);
+            }
+        })
+        .catch((e) => {
+            this.error = e;
+        });
         },
+
         save() {
             AXIOS.post(`/instructor/`, null, {
                 params: {
@@ -152,9 +165,22 @@ import axios from 'axios'
                 this.error = e;
                 });
             },
+
         update(){
-
-
+            AXIOS.put(`/instructor/update/${this.oldUsername}/${this.editForm.username}/${this.editForm.email}/${this.editForm.password}`, null)
+        .then((response) => {
+            const index = this.tableData.findIndex(instructor => instructor.username === this.form.oldUsername);
+            if (index !== -1) {
+                this.tableData[index] = response.data;
+            }
+        })
+        .catch((e) => {
+            this.error = e;
+        });
+        console.log(this.oldUsername)
+        console.log(this.editForm.username)
+        console.log(this.editForm.email)
+        console.log(this.editForm.password)
         },
 
         add(){
@@ -163,8 +189,29 @@ import axios from 'axios'
         },
         edit(row){
             this.editForm = JSON.parse(JSON.stringify(row))
+            this.oldUsername=this.editForm.username
             this.editFormVisible = true
         },
+        open(row) {
+            this.row = JSON.parse(JSON.stringify(row))
+
+            this.$confirm('Do you want to delete?', 'Warning', {
+                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Confirm',
+            type: 'warning'
+            }).then(() => {
+            this.$message({
+                type: 'success',
+                message: 'Delete completed',
+            }),this.delete();
+            }).catch(() => {
+            this.$message({
+                type: 'info',
+                message: 'Delete canceled'
+            });          
+            });
+      }
+
       }
     }
 </script>
