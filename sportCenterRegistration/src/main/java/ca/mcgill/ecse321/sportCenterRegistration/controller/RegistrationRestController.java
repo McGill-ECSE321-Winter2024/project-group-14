@@ -69,27 +69,31 @@ public class RegistrationRestController {
      * 
      */
 
-    // @PostMapping(value = { "/Registration/{account}/{session}/{date}", "/Registration/{account}/{session}/{date}/" })
+    // @PostMapping(value = { "/Registration/{account}/{session}/{date}",
+    // "/Registration/{account}/{session}/{date}/" })
     // public ResponseEntity<?> createRegistration(@PathVariable("date") Date date,
-    //         @PathVariable("account") Account account,
-    //         @PathVariable("session") Session session) throws IllegalArgumentException {
+    // @PathVariable("account") Account account,
+    // @PathVariable("session") Session session) throws IllegalArgumentException {
 
-    //     try {
-    //         Registration registration = registrationService.createRegistration(date, account.getUsername(),
-    //                 session.getInstructor().getUsername(), session.getSportClass().getName(), session.getStartTime());
+    // try {
+    // Registration registration = registrationService.createRegistration(date,
+    // account.getUsername(),
+    // session.getInstructor().getUsername(), session.getSportClass().getName(),
+    // session.getStartTime());
 
-    //         return ResponseEntity.ok(convertToDTO(registration));
-    //     } catch (Exception e) {
-    //         return ResponseEntity.badRequest().body(e.getMessage());
-    //     }
+    // return ResponseEntity.ok(convertToDTO(registration));
+    // } catch (Exception e) {
+    // return ResponseEntity.badRequest().body(e.getMessage());
+    // }
     // }
     @PostMapping(value = { "/registration/{accountName}/{sessionId}", "/registration/{accountName}/{sessionId}/" })
     public ResponseEntity<?> createRegistration(
-        @PathVariable("accountName") String accountName,
-        @PathVariable("sessionId") String sessionId) throws IllegalArgumentException {
+            @PathVariable("accountName") String accountName,
+            @PathVariable("sessionId") String sessionId) throws IllegalArgumentException {
 
         try {
-            Registration registration = registrationService.createRegistration(new Date(System.currentTimeMillis()), accountName, Integer.parseInt(sessionId));
+            Registration registration = registrationService.createRegistration(new Date(System.currentTimeMillis()),
+                    accountName, Integer.parseInt(sessionId));
             return ResponseEntity.ok(convertToDTO(registration));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -105,30 +109,35 @@ public class RegistrationRestController {
      * 
      * 
      */
-    // @GetMapping(value = { "/Registration/{account}/{session}", "/Registration/{account}/{session}/" })
-    // public ResponseEntity<?> getRegistration(@PathVariable("account") Account account,
-    //         @PathVariable("session") Session session)
-    //         throws IllegalArgumentException {
+    // @GetMapping(value = { "/Registration/{account}/{session}",
+    // "/Registration/{account}/{session}/" })
+    // public ResponseEntity<?> getRegistration(@PathVariable("account") Account
+    // account,
+    // @PathVariable("session") Session session)
+    // throws IllegalArgumentException {
 
-    //     try {
-    //         Registration Registration = registrationService.getRegistration(account.getUsername(),
-    //                 session.getStartTime(), session.getInstructor().getUsername(), session.getSportClass().getName());
+    // try {
+    // Registration Registration =
+    // registrationService.getRegistration(account.getUsername(),
+    // session.getStartTime(), session.getInstructor().getUsername(),
+    // session.getSportClass().getName());
 
-    //         return ResponseEntity.ok(convertToDTO(Registration));
-    //     } catch (IllegalArgumentException e) {
-    //         return ResponseEntity.badRequest().body(e.getMessage());
-    //     }
+    // return ResponseEntity.ok(convertToDTO(Registration));
+    // } catch (IllegalArgumentException e) {
+    // return ResponseEntity.badRequest().body(e.getMessage());
+    // }
     // }
     @GetMapping(value = { "/registration", "/registration/" })
     public ResponseEntity<?> getRegistration(
-        @RequestParam(name = "accountName", required = false) String accountName,
-        @RequestParam(name = "sessionId", required = false) String sessionId)
-        throws IllegalArgumentException {
+            @RequestParam(name = "accountName", required = false) String accountName,
+            @RequestParam(name = "sessionId", required = false) String sessionId)
+            throws IllegalArgumentException {
 
         try {
             List<Registration> registrations = new ArrayList<Registration>();
             if (accountName != null && sessionId != null) {
-                registrations.add(registrationService.getRegistrationByAccountAndSession(accountName, Integer.parseInt(sessionId)));
+                registrations.add(registrationService.getRegistrationByAccountAndSession(accountName,
+                        Integer.parseInt(sessionId)));
             } else {
                 if (accountName != null) {
                     registrations = registrationService.getRegistrationByAccount(accountName);
@@ -145,9 +154,6 @@ public class RegistrationRestController {
         }
     }
 
-    
-
-
     /*
      * 
      * @author Muhammad Hammad
@@ -161,18 +167,18 @@ public class RegistrationRestController {
 
     @DeleteMapping(value = { "/registration", "/registration/" })
     public ResponseEntity<?> deleteRegistration(
-        @RequestParam(name = "accountName", required = true) String accountName,
-        @RequestParam(name = "sessionId", required = true) String sessionId)
-        throws IllegalArgumentException {
+            @RequestParam(name = "accountName", required = true) String accountName,
+            @RequestParam(name = "sessionId", required = true) String sessionId)
+            throws IllegalArgumentException {
 
         try {
-            Registration deleted = registrationService.deleteRegistrationByAccountAndSessionId(accountName, Integer.parseInt(sessionId));
+            Registration deleted = registrationService.deleteRegistrationByAccountAndSessionId(accountName,
+                    Integer.parseInt(sessionId));
             return ResponseEntity.ok(deleted);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 
     /*
      * @author Muhammad Hammad
@@ -183,20 +189,26 @@ public class RegistrationRestController {
      * 
      */
 
-    // @PutMapping(value = { "/Registration/update/{oldAccount}/{oldSession}/{account}/{session}/{date}",
-    //         "/Registration/update/{oldAccount}/{oldSession}/{account}/{session}/{date}/" })
+    // @PutMapping(value = {
+    // "/Registration/update/{oldAccount}/{oldSession}/{account}/{session}/{date}",
+    // "/Registration/update/{oldAccount}/{oldSession}/{account}/{session}/{date}/"
+    // })
 
-    // public ResponseEntity<?> updateRegistration(@PathVariable("oldAccount") Account oldAccount,
-    //         @PathVariable("oldSession") Session oldSession, @PathVariable("account") Account account,
-    //         @PathVariable("session") Session session, @PathVariable("date") Date date) throws IllegalArgumentException {
+    // public ResponseEntity<?> updateRegistration(@PathVariable("oldAccount")
+    // Account oldAccount,
+    // @PathVariable("oldSession") Session oldSession, @PathVariable("account")
+    // Account account,
+    // @PathVariable("session") Session session, @PathVariable("date") Date date)
+    // throws IllegalArgumentException {
 
-    //     try {
-    //         Registration Registration = registrationService.updateRegistration(oldAccount, oldSession, account,
-    //                 session, date);
+    // try {
+    // Registration Registration =
+    // registrationService.updateRegistration(oldAccount, oldSession, account,
+    // session, date);
 
-    //         return ResponseEntity.ok(convertToDTO(Registration));
-    //     } catch (IllegalArgumentException e) {
-    //         return ResponseEntity.badRequest().body(e.getMessage());
-    //     }
+    // return ResponseEntity.ok(convertToDTO(Registration));
+    // } catch (IllegalArgumentException e) {
+    // return ResponseEntity.badRequest().body(e.getMessage());
+    // }
     // }
 }
