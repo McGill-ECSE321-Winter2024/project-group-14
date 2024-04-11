@@ -39,42 +39,63 @@ public class SessionController {
 	 * author: Stephen
 	 * This method gets all session
 	 */
-	@GetMapping(value = { "/view_sessions" })
-	public List<SessionDTO> getAllStores() {
-		return SessionService.getAllSession().stream().map(session -> convertToDTO(session))
-				.collect(Collectors.toList());
+	@GetMapping(value = { "/view_sessions", "/view_sessions/" })
+	public ResponseEntity<?> getSessions(
+			@RequestParam(value = "id", required = false) String sessionId,
+			@RequestParam(value = "sportclassName", required = false) String sportclassName)
+			throws IllegalArgumentException {
+		if (sessionId == null && sportclassName == null) {
+			return ResponseEntity.ok(SessionService.getAllSession().stream().map(session -> convertToDTO(session))
+					.collect(Collectors.toList()));
+		}
+		if (sportclassName != null) {
+			return ResponseEntity.ok(
+					SessionService.getSessionBySportClass(sportclassName).stream().map(session -> convertToDTO(session))
+							.collect(Collectors.toList()));
+		}
+		if (sessionId != null) {
+			return ResponseEntity.ok(SessionService.getSession(Integer.parseInt(sessionId)).stream()
+					.map(session -> convertToDTO(session))
+					.collect(Collectors.toList()));
+		}
+		return ResponseEntity.notFound().build();
+
 	}
 
 	/**
 	 * author: Stephen
 	 * This method gets a specific session schedule given the corresponding id
 	 */
-	@GetMapping(value = "/view_session/{id}")
-	public SessionDTO viewStore(@PathVariable("id") String id) {
-		// Correctly parsing the id from String to int
-		int sessionId = Integer.parseInt(id);
+	// @GetMapping(value = { "/view_session/{id}", "/view_session/{id}/" })
+	// public SessionDTO viewStore(@PathVariable("id") String id) {
+	// // Correctly parsing the id from String to int
+	// int sessionId = Integer.parseInt(id);
 
-		// Assuming SessionService.getSession expects an int and returns a Session
-		// object
-		// that needs to be converted to SessionDTO
-		return convertToDTO(SessionService.getSession(sessionId));
-	}
+	// // Assuming SessionService.getSession expects an int and returns a Session
+	// // object
+	// // that needs to be converted to SessionDTO
+	// return convertToDTO(SessionService.getSession(sessionId));
+	// }
 
-	@GetMapping(value = "view_sessios/{sportclassName}")
-	public List<SessionDTO> getSessionBySportClass(@PathVariable("sportclassName") String sportclassName) {
-		try {
-			return SessionService.getSessionBySportClass(sportclassName).stream().map(session -> convertToDTO(session))
-					.collect(Collectors.toList());
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
-	}
+	// @GetMapping(value = "view_sessios/{sportclassName}")
+	// public List<SessionDTO>
+	// getSessionBySportClass(@PathVariable("sportclassName") String sportclassName)
+	// {
+	// try {
+	// return
+	// SessionService.getSessionBySportClass(sportclassName).stream().map(session ->
+	// convertToDTO(session))
+	// .collect(Collectors.toList());
+	// } catch (IllegalArgumentException e) {
+	// return null;
+	// }
+	// }
 
 	/**
 	 * author: Stephen
 	 * This method creates a daily schedule
 	 */
-	@PostMapping(value = { "/create_session" })
+	@PostMapping(value = { "/create_session", "/create_session/" })
 	public ResponseEntity<?> createSession(
 			@RequestParam("startTime") String startTime,
 			@RequestParam("endTime") String endTime,
@@ -97,7 +118,7 @@ public class SessionController {
 		}
 	}
 
-	@PutMapping(value = { "/update_session" })
+	@PutMapping(value = { "/update_session", "/update_session/" })
 	public ResponseEntity<?> updateSession(@RequestParam("SessionId") String Id,
 			@RequestParam(value = "startTime", required = false) String startTime,
 			@RequestParam(value = "endTime", required = false) String endTime,
@@ -110,14 +131,14 @@ public class SessionController {
 		try {
 			session = SessionService.updateSession(Integer.parseInt(Id), Time.valueOf(startTime), Time.valueOf(endTime),
 					location, Date.valueOf(date), instructorName,
-					SessionService.getSession(Integer.parseInt(Id)).getSportClass());
+					SessionService.getSession(Integer.parseInt(Id)).get(0).getSportClass());
 			return ResponseEntity.ok(convertToDTO(session));
 		} catch (IllegalArgumentException exception) {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@DeleteMapping(value = { "/delete_session" })
+	@DeleteMapping(value = { "/delete_session", "/delete_session/" })
 	public boolean deleteSession(@RequestParam("Id") String Id) {
 
 		return SessionService.deleteSession(Integer.parseInt(Id));
