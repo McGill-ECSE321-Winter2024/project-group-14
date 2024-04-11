@@ -43,18 +43,19 @@ public class ShiftDto {
     }
 
     public Time getStartTime(){
+    public Time getStartTime() {
         return startTime;
     }
 
-    public Time getEndTime(){
+    public Time getEndTime() {
         return endTime;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public Staff geStaff(){
+    public Staff geStaff() {
         return staff;
     }
 }

@@ -14,9 +14,8 @@
     Confirm
     </button>
     <p>
-    <span v-if="errorSportClass" style="color:red">Error: {{errorSportClass}} </span>    </p>
-    <p>
-    <span v-if="!errorSportClass" style="color:green">Sport Class succesfully added</span>    </p>
+    <span v-if="errorSportClass" style="color:red">Error: {{errorSportClass}} </span>    
+    </p>
     </div>
   </div>
 </div>

@@ -44,6 +44,7 @@ export default {
             }
         },
         createSportClass: function (SportClassName) {
+
             AXIOS.post('/sport-class/'.concat(SportClassName), {}, {})
                 .then(response => {
                     // JSON responses are automatically parsed.
