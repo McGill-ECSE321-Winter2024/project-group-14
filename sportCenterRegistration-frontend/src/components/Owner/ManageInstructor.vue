@@ -6,10 +6,10 @@
         </div>
         <div style="margin:10 px 0; margin-top:10px; margin-bottom:10px">
             <el-button type="success" plain  round @click="add">Add</el-button>
-            <el-button type="danger" plain  round>Mass Delete</el-button>
+            <el-button type="danger" plain  round @click="deleteSelected">Mass Delete</el-button>
             <el-button type="primary" round @click="showAll">Show All</el-button>
         </div >
-        <el-table :data="tableData" stripe :header-cell-style="{backgroundColor:'aliceblue', color:'#666'}">
+        <el-table :data="tableData" stripe :header-cell-style="{backgroundColor:'aliceblue', color:'#666'}" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width ="55" align="center"></el-table-column>
             <el-table-column prop="id" label="ID" align="center"></el-table-column>
             <el-table-column prop="username" label="Username" align="center"></el-table-column>
@@ -124,7 +124,8 @@ import axios from 'axios'
                 email:[{required: true, message: "Please input an email", trigger:'blur'}],
                 password:[{required: true, message: "Please input a password", trigger:'blur'}]
             },
-            olderUsername:""
+            olderUsername:"",
+            selectedRows: [],
             // pageNum:1, // current page
             // pageSize:5, // number of pages
             // username:"",
@@ -135,6 +136,44 @@ import axios from 'axios'
         this.showAll();
       },
       methods:{
+        deleteSelected(){
+            this.$confirm('Do you want to delete selected instructor accounts?', 'Warning', {
+                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Confirm',
+                type: 'warning'
+            })
+            .then(() => {
+                // Map each row to a delete request and wait for all of them to complete
+                return Promise.all(this.selectedRows.map(row => {
+                this.username = row.username;
+                return AXIOS.delete(`/instructor/${this.username}`);
+                }));
+            })
+            .then(() => {
+                // After all delete requests have completed, update the table data
+                this.selectedRows.forEach(row => {
+                const index = this.tableData.findIndex(instructor => instructor.username === row.username);
+                if (index !== -1) {
+                    this.tableData.splice(index, 1);
+                }
+                });
+
+                this.$message({
+                type: 'success',
+                message: 'Delete completed'
+                });
+            })
+            .catch(() => {
+                this.$message({
+                    type: 'info',
+                message: 'Delete canceled'
+                });          
+            });
+
+        },
+        handleSelectionChange(selectedRows){
+            this.selectedRows = selectedRows;
+        },
         findByName(username){
             AXIOS.get(`/instructor/${username}`).then(response => {        
                 this.tableData = []; // Clear previous data
