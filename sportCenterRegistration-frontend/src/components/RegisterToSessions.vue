@@ -32,7 +32,8 @@
         </div>
 
         <div>
-            <button type = "button" @click="registerToSessions()">Add</button>
+            <button type = "button" @click="registerToSessions()">Register to Selected</button>
+            <button type = "button" @click="deleteRegistration()">Register to Selected</button>
         </div>
   </div>
     
