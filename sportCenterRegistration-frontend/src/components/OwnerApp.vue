@@ -31,14 +31,19 @@
                 </el-menu-item-group>
               </el-submenu>
   
-              <el-menu-item index="/4">
+              <el-menu-item index="/OwnerApp/Classes">
                 <i class="el-icon-menu"></i>
-                <span slot="title">Schedules</span>
+                <span slot="title">Approve New Class</span>
               </el-menu-item>
-  
-              <el-menu-item index="/5">
-                <i class="el-icon-setting"></i>
-                <span slot="title">Settings</span>
+
+              <el-menu-item index="/OwnerApp/Sessions">
+                <i class="el-icon-basketball"></i>
+                <span slot="title">Sessions</span>
+              </el-menu-item>       
+
+              <el-menu-item index="/OwnerApp/Registrations">
+                <i class="el-icon-s-management"></i>
+                <span slot="title">Registrations</span>
               </el-menu-item>       
   
           </el-menu>
@@ -48,9 +53,10 @@
           <el-header>
             <i :class="collapseIcon" style="font-size:25px ;" @click="handleCollapse"></i>
             <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-left:20px">
-              <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ path: '/ManageInstructor' }">Instructor Management</el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item>
+              Welcome back, {{ username }}
+              <!-- <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item> -->
+              <!-- <el-breadcrumb-item :to="{ path: '/ManageInstructor' }">Instructor Management</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item> -->
             </el-breadcrumb>
           </el-header>
   
@@ -93,7 +99,8 @@
         asideWidth: '200px',
         collapseIcon: 'el-icon-s-fold',
         classes:[],
-        errorClass:""
+        errorClass:"",
+        username: localStorage.getItem('username').toUpperCase()
       }
     },
     created: function(){
