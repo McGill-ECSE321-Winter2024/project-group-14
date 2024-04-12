@@ -59,8 +59,22 @@ export default {
 	methods: {
 		/*** Function to sign up a customer into the system. */
 		signup: function (email, password, confirmPassword, username) {
+			if (username === '') {
+				this.errorSignUp = 'Please enter a username'
+				return
+			}
+			if (email === '' || !email.includes('@') || !email.includes('.')) {
+				this.errorSignUp = 'Please enter a valid email'
+				return
+			}
+			if (password === '') {
+				this.errorSignUp = 'Please enter a password'
+				return
+			}
+
 			if (password != confirmPassword) {
 				this.errorSignUp = "Passwords do not match."
+				return
 			} else {
 				AXIOS.post('/customer', null, {
 					params: {

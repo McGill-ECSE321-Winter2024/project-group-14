@@ -32,6 +32,9 @@
           <div class="confirm-password2">Confirm Password</div>
         </div>
 
+        <router-link to="/Login" class="toLogin"> Already a member? Log in
+            <!-- <a href="/#/SignUp" class="signup-button" id="signup">Sign up</a> -->
+        </router-link>
         <!-- Check if password are same  -->
         <!-- <div v-if="!passwordsMatch"></div> -->
 
@@ -42,15 +45,15 @@
         </div> -->
 
         <!-- Error Sign up -->
-        <div class="error-signup">
-          <h5 v-if="errorSignUp" style="color: red; padding-top: 20px">
+        <div class="error-signup" v-if="errorSignUp">
+          <h5 style="color: red; padding-top: 20px">
             Error: {{ errorSignUp }}
           </h5>
         </div>
 
         <!-- Successful sign up  -->
-        <div class="succ-signup">
-          <h5 v-if="successSignUp" style="color: green; padding-top: 20px">
+        <div class="succ-signup" v-if="successSignUp">
+          <h5 style="color: green; padding-top: 20px">
             {{ successSignUp }}
           </h5>
         </div>
@@ -103,6 +106,16 @@ h5,
   -webkit-font-smoothing: antialiased;
 }
 
+.toLogin{
+  position: absolute;
+  top: 442px;
+  font-size: 15px;
+  right: 50px;
+}
+.toLogin:hover{
+  text-decoration: underline;
+}
+
 .sign-up-page * {
   box-sizing: border-box;
 }
@@ -126,11 +139,11 @@ h5,
   gap: 31px;
   align-items: center;
   justify-content: flex-start;
-  width: 502px;
+  /* width: 502px; */
   /* height: 800px; */
   position: absolute;
-  left: 469px;
-  top: 168px;
+  left: 493px;
+  top: 292px;
 }
 .username {
   flex-shrink: 0;
@@ -146,7 +159,7 @@ h5,
   width: 360px;
   height: 45px;
   position: absolute;
-  left: 71px;
+  left: 47px;
   top: 93px;
   font-size: 30px;
   padding-left: 10px;
@@ -158,7 +171,7 @@ h5,
   font-size: 16px;
   font-weight: 500;
   position: absolute;
-  left: 77px;
+  left: 53px;
   top: 70px;
   width: 95px;
 }
@@ -176,7 +189,7 @@ h5,
   width: 360px;
   height: 45px;
   position: absolute;
-  left: 71px;
+  left: 47px;
   top: 192px;
   font-size: 30px;
   padding-left: 10px;
@@ -188,7 +201,7 @@ h5,
   font-size: 16px;
   font-weight: 500;
   position: absolute;
-  left: 77px;
+  left: 53px;
   top: 169px;
 }
 .password {
@@ -205,7 +218,7 @@ h5,
   width: 360px;
   height: 45px;
   position: absolute;
-  left: 71px;
+  left: 47px;
   top: 290px;
   font-size: 30px;
   padding-left: 10px;
@@ -217,7 +230,7 @@ h5,
   font-size: 16px;
   font-weight: 500;
   position: absolute;
-  left: 77px;
+  left: 53px;
   top: 268px;
 }
 .confirm-password {
@@ -234,7 +247,7 @@ h5,
   width: 360px;
   height: 45px;
   position: absolute;
-  left: 71px;
+  left: 47px;
   top: 388px;
   font-size: 30px;
   padding-left: 10px;
@@ -246,7 +259,7 @@ h5,
   font-size: 16px;
   font-weight: 500;
   position: absolute;
-  left: 77px;
+  left: 53px;
   top: 366px;
   width: 186px;
 }
@@ -294,6 +307,8 @@ h5,
   flex-shrink: 0;
   position: relative;
   color: #ffffff;
+  width: 370px;
+  margin-top: 10px;
 }
 .signup-button {
   color: var(--white, #ffffff);
@@ -317,9 +332,9 @@ h5,
   font-size: 48px;
   font-weight: 700;
   position: absolute;
-  left: calc(50% - 120px);
-  top: 79px;
-  width: 263px;
+  left: 600px;
+  top: 193px;
+  width: 392px;
   height: 66px;
 }
 .purple-square {

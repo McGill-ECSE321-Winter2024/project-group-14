@@ -54,6 +54,14 @@ export default {
 	methods: {
 		// Function to login the user
 		login: function (email, password) {
+			if (email === '') {
+				this.errorLogin = 'Please enter a username or email'
+				return
+			}
+			if (password === '') {
+				this.errorLogin = 'Please enter a password'
+				return
+			}
 			console.log(decodeURIComponent(email));
 			var params;
 			if (email.includes("@")) {
