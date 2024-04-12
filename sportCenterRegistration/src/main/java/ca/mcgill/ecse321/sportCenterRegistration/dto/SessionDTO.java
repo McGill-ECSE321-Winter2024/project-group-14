@@ -27,7 +27,7 @@ public class SessionDTO {
 		this.location = location;
 		this.instructor = new InstructorDTO(instructor.getId(), instructor.getUsername(), instructor.getEmail(),
 				instructor.getPassword(), "instructor");
-		this.sportClass = new SportClassDTO(location, sportClass.getApproved());
+		this.sportClass = new SportClassDTO(sportClass.getName(), sportClass.getApproved());
 		this.id = id;
 	}
 
@@ -59,4 +59,3 @@ public class SessionDTO {
 		return sportClass;
 	}
 }
-
