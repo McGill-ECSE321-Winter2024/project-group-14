@@ -36,10 +36,10 @@
         <!-- <div v-if="!passwordsMatch"></div> -->
 
         <!-- Enter you password Account Type here  -->
-        <div class="enter-accounttype">
+        <!-- <div class="enter-accounttype">
           <input type="text" class="text-field5" v-model="accounttype" placeholder="" />
           <div class="enter-accounttype2">Enter account type(Enter O,I,C)</div>
-        </div>
+        </div> -->
 
         <!-- Error Sign up -->
         <div class="error-signup">
@@ -56,17 +56,8 @@
         </div>
 
         <!-- Make "Sign Up" button  -->
-        <div class="button-primary">
-          <button
-            type="button"
-            class="signup-button"
-            v-bind:disabled="
-              !email || !password || !accounttype || !confirmPassword || !username
-            "
-            @click="signup(email, password, confirmPassword, username, accounttype)"
-          >
+        <div class="button-primary" v-bind:disabled="!email || !password || !confirmPassword || !username" @click="signup(email, password, confirmPassword, username)">
             Sign Up
-          </button>
         </div>
       </div>
 
@@ -136,7 +127,7 @@ h5,
   align-items: center;
   justify-content: flex-start;
   width: 502px;
-  height: 800px;
+  /* height: 800px; */
   position: absolute;
   left: 469px;
   top: 168px;
@@ -302,6 +293,7 @@ h5,
   justify-content: flex-end;
   flex-shrink: 0;
   position: relative;
+  color: #ffffff;
 }
 .signup-button {
   color: var(--white, #ffffff);

@@ -38,7 +38,6 @@ export default {
 		return {
 			email: '',
 			password: '',
-			accounttype: '',
 			username: '',
 			errorSignUp: '',
 			successSignUp: '',
@@ -47,19 +46,19 @@ export default {
 	},
 
 	// Watch the account type to ensure that it is one of O, I, C
-	watch: {
-		accounttype(newVal) {
-			if (!/^[OIC]*$/i.test(newVal)) {
-				this.accounttype = '';
-				this.errorSignUp = 'Account type must be one of O, I, C';
-			}
-		},
-	},
+	// watch: {
+	// 	accounttype(newVal) {
+	// 		if (!/^[OIC]*$/i.test(newVal)) {
+	// 			this.accounttype = '';
+	// 			this.errorSignUp = 'Account type must be one of O, I, C';
+	// 		}
+	// 	},
+	// },
 
 
 	methods: {
 		/*** Function to sign up a customer into the system. */
-		signup: function (email, password, confirmPassword, username, accounttype) {
+		signup: function (email, password, confirmPassword, username) {
 			if (password != confirmPassword) {
 				this.errorSignUp = "Passwords do not match."
 			} else {
@@ -74,14 +73,19 @@ export default {
 						if (response.status === 200) {
 							// If the creatin of the customer was successfull, empty all the fields and display a success message!
 							console.log(response.data)
+							this.user = response.data
+							// Store the customer information
+							localStorage.setItem('username', this.user.username)
+							localStorage.setItem('email', this.user.email)
+							localStorage.setItem('type', this.user.type)
+
+							window.location.href = "/#/customerapp"
 							this.password = '',
 								this.confirmPassword = '',
-								this.accounttype = '',
 								this.username = '',
 								this.email = '',
 								this.successSignUp = 'Account created successfully!',
 								localStorage.setItem('email', this.user.email)
-							localStorage.setItem('type', this.type)
 						}
 					})
 					.catch(e => {
