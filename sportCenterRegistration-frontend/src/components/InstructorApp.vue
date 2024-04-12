@@ -15,27 +15,21 @@
                 <span slot ="title">Home</span>
             </el-menu-item>
   
-            <el-submenu>
-              <template slot="title">
-                <i class="el-icon-s-custom"></i>
-                  <span>User Management</span>
-              </template>
-                <el-menu-item-group>
-                  <el-menu-item index="/OwnerApp/ManageInstructor">
-                    <!-- <i class="el-icon-s-custom"></i> -->
-                    <span>Instructor Management</span>
-                  </el-menu-item>
-                  <el-menu-item index="/OwnerApp/ManageCustomer">
-                    <!-- <i class="el-icon-user-solid"></i> -->
-                    <span>Customer Management</span>
-                  </el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
+            <el-menu-item index="/Instructorapp/ViewSportClasses">
+              <i class="el-icon-s-data"></i>
+              <span slot="title">View Sport Classes</span>
+            </el-menu-item>
+            <el-menu-item index="/Instructorapp/addclasses">
+              <i class="el-icon-s-custom"></i>
+              <span>Apply new sport class</span>
+            </el-menu-item>
+            <el-menu-item index="/Instructorapp/viewmysessions">
+              <i class="el-icon-user-solid"></i>
+              <span>View my Sessions</span>
+            </el-menu-item>
+
+              
   
-              <el-menu-item index="/4">
-                <i class="el-icon-menu"></i>
-                <span slot="title">Schedules</span>
-              </el-menu-item>
   
               <el-menu-item index="/5">
                 <i class="el-icon-setting"></i>
@@ -49,22 +43,23 @@
           <el-header>
             <i :class="collapseIcon" style="font-size:25px ;" @click="handleCollapse"></i>
             <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-left:20px">
-              <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
+              Welcome back, {{ username }}
+              <!-- <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
               <el-breadcrumb-item :to="{ path: '/ManageInstructor' }">Instructor Management</el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item> -->
             </el-breadcrumb>
           </el-header>
   
           <el-main>
             <router-view/>
-           <div class="action-buttons">
-            <el-button type="primary">
-              <router-link to="/instructorApp/addClasses">Add Classes</router-link>
-            </el-button>
-            <el-button type="success">
-              <router-link to="/instructorApp/approveClasses">Approve Classes</router-link>
-            </el-button>
-          </div>
+            <!-- <div class="action-buttons">
+              <el-button type="primary">
+                <router-link to="/instructorApp/addClasses">Add Classes</router-link>
+              </el-button>
+              <el-button type="success">
+                <router-link to="/instructorApp/approveClasses">Approve Classes</router-link>
+              </el-button>
+            </div> -->
 
           </el-main>
 
@@ -103,7 +98,8 @@
         asideWidth: '200px',
         collapseIcon: 'el-icon-s-fold',
         classes:[],
-        errorClass:""
+        errorClass:"",
+        username: localStorage.getItem('username').toUpperCase()
       }
     },
     created: function(){
