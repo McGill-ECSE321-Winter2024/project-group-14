@@ -38,6 +38,7 @@ function SessionDTO(date, startTime, endTime, id, location, instructorName, spor
     this.sportClassName = sportClassName;
 }
 
+
 export default {
     name: 'addClasses',
     data() {
@@ -52,12 +53,20 @@ export default {
             currentSession: '',
             sessions: [],
             error: '',
-            selectedSessions: [],
+            selectedToRegisterSessions: [],
+            toDeleteSession: '',
+            //key value pairs of session ids and registrations
+            successfulRegistrations: {},
             response: []
         }
     },
-    created() {
+    mounted() {
         this.getSessions();
+
+        setTimeout(() => {
+            this.colorTable();
+        }, 50);
+
     },
     methods: {
         makeSessionIntoDto: function (date, startTime, endTime, id, location, instructorName, sportClassName) {
@@ -74,6 +83,31 @@ export default {
             this.instructorName = '';
             this.sportClassName = '';
             this.session = '';
+        },
+        colorTable() {
+            var placeHolderTable = document.getElementById("sessionTableList");
+
+            let registrationList = '';
+            if (localStorage.getItem(localStorage.getItem("username")) !== null
+                && localStorage.getItem(localStorage.getItem("username")) !== undefined
+                && localStorage.getItem(localStorage.getItem("username")) !== ''
+                && Object.keys(localStorage.getItem(localStorage.getItem("username"))).length > 0) {
+                registrationList = localStorage.getItem(localStorage.getItem("username"));
+            } else {
+                registrationList = this.successfulRegistrations;
+            }
+
+            for (let i = 0; i < placeHolderTable.rows.length; i++) {
+                let currentId = placeHolderTable.rows[i].cells[0].innerText;
+
+                if (registrationList == '') {
+                    placeHolderTable.rows[i].style.backgroundColor = "white";
+                } else if (registrationList[currentId] !== null && registrationList[currentId] !== undefined) {
+                    placeHolderTable.rows[i].style.backgroundColor = "green";
+                } else {
+                    placeHolderTable.rows[i].style.backgroundColor = "white";
+                }
+            }
         },
         getSessions() {
             AXIOS.get("/view_sessions/")
@@ -97,8 +131,10 @@ export default {
                     this.error = e.data;
                     console.log(this.error);
                 });
+
+
         },
-        //user clicks on the row with the session they want to add and it gets stored so when they press add it adds them all
+        //user clicks on the row with the session they want to add/delete and it gets stored so when they press add it adds them all
         selectSession(session) {
             var placeHolderTable = document.getElementById("sessionTableList");
             let i = 0;
@@ -113,29 +149,140 @@ export default {
                 placeHolderRow = placeHolderTable.tBodies[0].rows[i];
             }
 
-            //check if it is already added (bg would be red)
+            //check if it is white (not added / successfully registered to / unsuccessfully registered to)
             if (placeHolderRow !== '' && placeHolderRow !== null
                 && placeHolderRow !== undefined
-                && placeHolderRow.style.backgroundColor !== "red") {
+                && placeHolderRow.style.backgroundColor !== "red"
+                && placeHolderRow.style.backgroundColor !== "green"
+                && placeHolderRow.style.backgroundColor !== "orange") {
 
                 placeHolderRow.style.backgroundColor = "red";
 
                 //store in selected sessions so that when the user presses add
                 //, it attempts to register them to all the selected sessions
-                this.selectedSessions.push(session);
+                this.selectedToRegisterSessions.push(session);
             }
+
             //remove it since user clicked it again to deselect it
-            else {
+            else if (placeHolderRow !== '' && placeHolderRow !== null
+                && placeHolderRow !== undefined
+                && placeHolderRow.style.backgroundColor === "red") {
+
                 placeHolderRow.style.backgroundColor = "white";
-                this.selectedSessions.splice(this.selectedSessions.indexOf(session), 1);
+                this.selectedToRegisterSessions.splice(this.selectedToRegisterSessions.indexOf(session), 1);
+            }
+            //green/orange that the user already registered for and can't register for respectively
+            else {
+                this.toDeleteSession = session;
             }
 
         },
 
         registerToSessions() {
-            this.selectedSessions.forEach(session => {
+            this.selectedToRegisterSessions.forEach(session => {
+
+                //get the row to alter to signify successful registration or failed registration
+                var placeHolderTable = document.getElementById("sessionTableList");
+                let i = 0;
+
+                //find row with the same id as session
+                for (i = 0; i < placeHolderTable.tBodies[0].rows.length && session.id != placeHolderTable.tBodies[0].rows[i].cells[0].innerText; i++) {
+                }
+
+                var placeHolderRow = '';
+                //if table body is empty (no sessions)
+                if (placeHolderTable.tBodies[0].rows.length > 0) {
+                    placeHolderRow = placeHolderTable.tBodies[0].rows[i];
+                }
+
+                console.log(session.id);
+                console.log(localStorage.getItem("username"));
                 //do a POST request with register
+                AXIOS.post("/registration/" + localStorage.getItem("username") + "/" + session.id)
+                    .then(response => {
+                        //registration was a success
+
+                        if (placeHolderRow !== '' && placeHolderRow !== null
+                            && placeHolderRow !== undefined) {
+
+                            placeHolderRow.style.backgroundColor = "green";
+
+                            //saving successful registration
+                            let idToSave = session.id;
+                            console.log("this is response.data.id for registerations: " + response.data.id);
+                            this.successfulRegistrations.idToSave = response.data.id;
+
+                            //registrations already exist
+                            if (localStorage.getItem(localStorage.getItem("username")) !== null
+                                && localStorage.getItem(localStorage.getItem("username")) !== undefined
+                                && localStorage.getItem(localStorage.getItem("username")) !== ''
+                                && Object.keys(localStorage.getItem(localStorage.getItem("username"))) !== null
+                                && Object.keys(localStorage.getItem(localStorage.getItem("username"))) !== undefined
+                                && Object.keys(localStorage.getItem(localStorage.getItem("username"))) !== ''
+                                && Object.keys(localStorage.getItem(localStorage.getItem("username"))).length > 0) {
+
+
+                                localStorage.setItem(localStorage.getItem("username"),
+                                    Object.assign({}, localStorage.getItem(localStorage.getItem("username"), this.successfulRegistrations)));
+
+                                // console.log("this is if: " + localStorage.getItem(localStorage.getItem("username")));
+                            }
+
+                            else { //first registration saved to local storage
+                                localStorage.setItem(localStorage.getItem("username"), this.successfulRegistrations);
+
+                                // console.log("this is else: " + localStorage.getItem(localStorage.getItem("username")));
+                            }
+                        }
+                    })
+                    .catch(e => {
+                        //failed to register
+                        if (placeHolderRow !== '' && placeHolderRow !== null
+                            && placeHolderRow !== undefined) {
+
+                            placeHolderRow.style.backgroundColor = "orange";
+                        }
+
+                        this.error = e.data;
+                        console.log(e);
+                        console.log(e.data);
+                        alert(e.data);
+                    })
             })
+            //reset the list of selected sessions
+            this.selectedToRegisterSessions = [];
+        },
+        deleteRegistration() {
+            let toDeleteSessionId = this.toDeleteSession.id;
+            let registrations = Object.assign({}, localStorage.getItem(localStorage.getItem("username")), this.successfulRegistrations);
+            this.successfulRegistrations = Object.assign({}, localStorage.getItem(localStorage.getItem("username")), this.successfulRegistrations);
+
+            if (registrations[toDeleteSessionId] !== null && registrations[toDeleteSessionId] !== undefined) {
+                //dictionary where value is the registrationid and the key is the sessionid
+                AXIOS.delete("/registration/" + registrations[toDeleteSessionId])
+                    .then(response => {
+                        // Successful deletion
+                        alert("Success!");
+                        delete registrations[toDeleteSessionId];
+                        //update localstorage
+                        localStorage.setItem(localStorage.getItem("username"), registrations);
+
+                        // Update the row color to white
+                        let placeHolderTable = document.getElementById("sessionTableList");
+                        for (let i = 0; i < placeHolderTable.rows.length; i++) {
+                            if (placeHolderTable.rows[i].cells[0].innerText === toDeleteSessionId.toString()) {
+                                placeHolderTable.rows[i].style.backgroundColor = "white";
+                                break; // Exit the loop once the row is found and updated
+                            }
+                        }
+                    })
+                    .catch(e => {
+                        this.error = e.data;
+                        console.log(e);
+                        console.log(e.data);
+                        alert("error")
+                    });
+            }
         }
     }
 }

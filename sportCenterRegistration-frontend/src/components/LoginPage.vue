@@ -86,11 +86,8 @@ h5,
 }
 
 .login-page {
-  background: linear-gradient(
-    180deg,
-    rgba(97, 237, 237, 1) 0%,
-    rgba(153, 153, 153, 1) 100%
-  );
+    background: linear-gradient(to right, #cccccc, #003366);
+
   height: 1024px;
   position: relative;
   overflow: hidden;
@@ -200,11 +197,8 @@ h5,
   z-index: 2;
 }
 .welcome-back {
-  background: linear-gradient(
-    108.92deg,
-    rgba(223, 112, 132, 1) 10.000000149011612%,
-    rgba(255, 0, 153, 1) 100%
-  );
+    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
