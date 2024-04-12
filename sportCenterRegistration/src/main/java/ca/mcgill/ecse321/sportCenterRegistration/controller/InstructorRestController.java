@@ -37,7 +37,7 @@ public class InstructorRestController {
             throw new IllegalArgumentException("There is no such Instructor!");
         }
         InstructorDTO InstructorDTO = new InstructorDTO(Instructor.getId(), Instructor.getUsername(),
-                Instructor.getEmail(), Instructor.getPassword());
+                Instructor.getEmail(), Instructor.getPassword(), "Instructor");
         return InstructorDTO;
     }
 

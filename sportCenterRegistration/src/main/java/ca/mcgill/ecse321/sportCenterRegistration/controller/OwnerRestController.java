@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.sportCenterRegistration.dto.OwnerDTO;
@@ -35,7 +36,8 @@ public class OwnerRestController {
         if (Owner == null) {
             throw new IllegalArgumentException("There is no such Owner!");
         }
-        OwnerDTO OwnerDTO = new OwnerDTO(Owner.getId(), Owner.getUsername(), Owner.getEmail(), Owner.getPassword());
+        OwnerDTO OwnerDTO = new OwnerDTO(Owner.getId(), Owner.getUsername(), Owner.getEmail(), Owner.getPassword(),
+                "Owner");
         return OwnerDTO;
     }
 
@@ -63,9 +65,11 @@ public class OwnerRestController {
      * 
      */
 
-    @PostMapping(value = { "/owner/{username}/{email}/{password}", "/owner/{username}/{email}/{password}/" })
-    public ResponseEntity<?> createOwner(@PathVariable("username") String username, @PathVariable("email") String email,
-            @PathVariable("password") String password) throws IllegalArgumentException {
+    @PostMapping(value = { "/owner", "/owner/" })
+    public ResponseEntity<?> createOwner(
+            @RequestParam("username") String username,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password) throws IllegalArgumentException {
         try {
             Owner Owner = OwnerService.createOwner(username, email, password);
             return ResponseEntity.ok(convertToDTO(Owner));

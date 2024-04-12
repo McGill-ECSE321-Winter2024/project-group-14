@@ -34,7 +34,8 @@ public class CustomerRestController {
      * 
      */
     private CustomerDTO convertToDTO(Customer customer) {
-        return new CustomerDTO(customer.getId(), customer.getUsername(), customer.getEmail(), customer.getPassword());
+        return new CustomerDTO(customer.getId(), customer.getUsername(), customer.getEmail(), customer.getPassword(),
+                "Customer");
     }
 
     /*
@@ -67,6 +68,7 @@ public class CustomerRestController {
             @RequestParam("email") String email,
             @RequestParam("password") String password)
             throws IllegalArgumentException {
+        System.out.println("hh");
         try {
             Customer customer = customerService.createCustomer(username, email, password);
             return ResponseEntity.ok(convertToDTO(customer));
