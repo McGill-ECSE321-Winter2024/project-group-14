@@ -8,8 +8,8 @@
           </div>
   
   
-          <el-menu router :collapse="isCollapse":collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
-            <el-menu-item index="/1">
+          <el-menu router :collapse="isCollapse" :collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
+            <el-menu-item index="/OwnerApp/Home">
                 <i class="el-icon-house"></i>
                 <span slot ="title">Home</span>
             </el-menu-item>
@@ -31,10 +31,20 @@
                 </el-menu-item-group>
               </el-submenu>
   
-              <el-menu-item index="/4">
+              <el-menu-item index="/OwnerApp/Classes">
                 <i class="el-icon-menu"></i>
-                <span slot="title">Schedules</span>
+                <span slot="title">Approve New Class</span>
               </el-menu-item>
+
+              <el-menu-item index="/OwnerApp/Sessions">
+                <i class="el-icon-basketball"></i>
+                <span slot="title">Sessions</span>
+              </el-menu-item>       
+
+              <el-menu-item index="/OwnerApp/Registrations">
+                <i class="el-icon-s-management"></i>
+                <span slot="title">Registrations</span>
+              </el-menu-item>       
   
               <el-menu-item index="/5">
                 <i class="el-icon-setting"></i>
@@ -47,16 +57,10 @@
         <el-container>
           <el-header>
             <i :class="collapseIcon" style="font-size:25px ;" @click="handleCollapse"></i>
-            <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-left:20px">
-              <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ path: '/ManageInstructor' }">Instructor Management</el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item>
-            </el-breadcrumb>
           </el-header>
   
           <el-main>
             <router-view/>
-
 
           </el-main>
   
@@ -90,7 +94,7 @@
     data(){
       return{
         isCollapse: false,
-        asideWidth: '200px',
+        asideWidth: '250px',
         collapseIcon: 'el-icon-s-fold',
         classes:[],
         errorClass:""
@@ -102,7 +106,7 @@
     methods:{
       handleCollapse(){
         this.isCollapse = !this.isCollapse
-        this.asideWidth = this.isCollapse ? '64px': '200px'
+        this.asideWidth = this.isCollapse ? '65px': '250px'
         this.collapseIcon = this.isCollapse ? 'el-icon-s-unfold': 'el-icon-s-fold'
       }
     }

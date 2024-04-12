@@ -8,7 +8,7 @@
           </div>
   
   
-          <el-menu router :collapse="isCollapse":collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
+          <el-menu router :collapse="isCollapse" :collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
             <el-menu-item index="/1">
                 <i class="el-icon-house"></i>
                 <span slot ="title">Home</span>
@@ -90,7 +90,7 @@
     data(){
       return{
         isCollapse: false,
-        asideWidth: '200px',
+        asideWidth: '250px',
         collapseIcon: 'el-icon-s-fold',
         classes:[],
         errorClass:""
@@ -102,7 +102,7 @@
     methods:{
       handleCollapse(){
         this.isCollapse = !this.isCollapse
-        this.asideWidth = this.isCollapse ? '64px': '200px'
+        this.asideWidth = this.isCollapse ? '65px': '250px'
         this.collapseIcon = this.isCollapse ? 'el-icon-s-unfold': 'el-icon-s-fold'
       }
     }

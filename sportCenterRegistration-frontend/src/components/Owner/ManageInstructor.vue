@@ -1,16 +1,16 @@
 <template>
     <div>
         <div> 
-            <el-input v-model="username" style="width:200px" placeholder="Input an username" ></el-input>
-            <el-button type="primary" round @click="findByName(username)"> Search</el-button>
+            <el-input v-model="name" style="width:200px" placeholder="Input an username" ></el-input>
+            <el-button type="primary" round @click="findByName(name)"> Search</el-button>
         </div>
         <div style="margin:10 px 0; margin-top:10px; margin-bottom:10px">
             <el-button type="success" plain  round @click="add">Add</el-button>
-            <el-button type="danger" plain  round>Mass Delete</el-button>
+            <el-button type="danger" plain  round @click="massDelete">Mass Delete</el-button>
             <el-button type="primary" round @click="showAll">Show All</el-button>
         </div >
-        <el-table :data="tableData" stripe :header-cell-style="{backgroundColor:'aliceblue', color:'#666'}">
-            <el-table-column type="selection" width ="55" align="center"></el-table-column>
+        <el-table :data="tableData" stripe :header-cell-style="{backgroundColor:'aliceblue', color:'#666'}" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width ="50px" align="center"></el-table-column>
             <el-table-column prop="id" label="ID" align="center"></el-table-column>
             <el-table-column prop="username" label="Username" align="center"></el-table-column>
             <el-table-column prop="email" label="Email" align="center"></el-table-column>
@@ -81,7 +81,7 @@
 <script>
 
 import axios from 'axios'
-    var config = require('../../config')
+    var config = require('../../../config')
 
     var backendConfigurer = function(){
         switch(process.env.NODE_ENV){
@@ -116,7 +116,9 @@ import axios from 'axios'
                 email:[{required: true, message: "Please input an email", trigger:'blur'}],
                 password:[{required: true, message: "Please input a password", trigger:'blur'}]
             },
-            olderUsername:""
+            olderUsername:"",
+            selectedRows:[],
+            name:""
             // pageNum:1, // current page
             // pageSize:5, // number of pages
             // username:"",
@@ -127,8 +129,8 @@ import axios from 'axios'
         this.showAll();
       },
       methods:{
-        findByName(username){
-            AXIOS.get(`/instructor/${username}`).then(response => {        
+        findByName(name){
+            AXIOS.get(`/instructor/${name}`).then(response => {        
                 this.tableData = []; // Clear previous data
                 this.tableData.push(response.data);}).catch(e => {this.error = e});
         },
@@ -159,10 +161,15 @@ import axios from 'axios'
                 },
             })
                 .then((response) => {
-                this.tableData.push(response.data);
-                })
+                    this.tableData.push(response.data);
+                    // Close the user form after saving
+                    this.userFormVisible = false;
+                    // Reset the form fields
+                    this.form = {};
+                },)
                 .catch((e) => {
                 this.error = e;
+                this.$message.error('Error adding new instructor: Please input correct parameters');
                 });
             },
 
@@ -173,9 +180,14 @@ import axios from 'axios'
             if (index !== -1) {
                 this.tableData[index] = response.data;
             }
+            this.editFormVisible = false;
+                    // Reset the form fields
+            this.editForm = {};
+            this.showAll();
         })
         .catch((e) => {
             this.error = e;
+            this.$message.error('Error editing instructor: Please input correct parameters');
         });
         console.log(this.oldUsername)
         console.log(this.editForm.username)
@@ -196,8 +208,8 @@ import axios from 'axios'
             this.row = JSON.parse(JSON.stringify(row))
 
             this.$confirm('Do you want to delete?', 'Warning', {
-                cancelButtonText: 'Cancel',
                 confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel',
             type: 'warning'
             }).then(() => {
             this.$message({
@@ -210,8 +222,28 @@ import axios from 'axios'
                 message: 'Delete canceled'
             });          
             });
-      }
+      },
+      handleSelectionChange(selection){
+        this.selectedRows = selection;
+      },
 
+      massDelete() {
+        if (this.selectedRows.length === 0) {
+            // No rows selected
+            return;
+        }
+
+        // Iterate through selected rows and call delete() for each one
+        this.selectedRows.forEach(row => {
+            this.row = JSON.parse(JSON.stringify(row))
+            // Call delete() method to delete the current row
+            this.delete();
+        });
+
+        // Clear selectedRows array
+        this.selectedRows = [];
+        this.showAll();
+        }
       }
     }
 </script>
