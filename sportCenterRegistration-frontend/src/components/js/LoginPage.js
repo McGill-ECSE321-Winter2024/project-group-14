@@ -5,6 +5,13 @@
 
 import axios from 'axios';
 var config = require('../../../config')
+const crypto = require('crypto');
+
+function hashPassword(password) {
+	const hash = crypto.createHash('sha256');
+	hash.update(password);
+	return hash.digest('hex');
+}
 
 // Setup the backend and frontend urls
 var backendConfigurer = function () {
@@ -62,7 +69,11 @@ export default {
 				this.errorLogin = 'Please enter a password'
 				return
 			}
-			console.log(decodeURIComponent(email));
+
+			// Hash the password
+			password = hashPassword(password);
+
+
 			var params;
 			if (email.includes("@")) {
 				params = {
@@ -107,8 +118,7 @@ export default {
 				})
 				.catch(e => {
 					// Display the error
-					this.errorLogin = e.data
-					console.log(this.errorLogIn)
+					this.errorLogin = "Invalid username or password. Please try again."
 				})
 		}
 	}

@@ -2,6 +2,13 @@ import axios from 'axios';
 import { sign } from 'crypto';
 import { data } from 'jquery';
 var config = require('../../../config')
+const crypto = require('crypto');
+
+function hashPassword(password) {
+	const hash = crypto.createHash('sha256');
+	hash.update(password);
+	return hash.digest('hex');
+}
 
 // Setup frontend and backend urls
 var backendConfigurer = function () {
@@ -76,11 +83,14 @@ export default {
 				this.errorSignUp = "Passwords do not match."
 				return
 			} else {
+				const hashedPassword = hashPassword(password);
+
+				console.log(hashedPassword);
 				AXIOS.post('/customer', null, {
 					params: {
 						username: username,
 						email: email,
-						password: password
+						password: hashedPassword
 					}
 				})
 					.then(response => {
