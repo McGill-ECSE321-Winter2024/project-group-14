@@ -5,13 +5,8 @@
         <!-- Enter you email here  -->
         <div class="email">
           <input type="text" class="text-field" v-model="email" placeholder="" />
-          <div class="email2">Email</div>
+          <div class="email2">Email or Username</div>
         </div>
-        <!-- Enter you username here  -->
-        <!-- <div class="email">
-          <input type="text" class="text-field" v-model="username" placeholder="" />
-          <div class="email2">Username</div>
-        </div> -->
         <!-- Enter you password here  -->
         <div class="password">
           <input type="password" class="text-field2" v-model="password" placeholder="" />
@@ -29,7 +24,7 @@
             Log in
           </div>
         </router-link> -->
-        <div class="button-primary" v-bind:disabled="(!email && !username) || !password" @click="login(email, username, password)">
+        <div class="button-primary" v-bind:disabled="!email || !password" @click="login(email, password)">
             Log in
         </div>
         <!-- Make "Sign Up" button  -->

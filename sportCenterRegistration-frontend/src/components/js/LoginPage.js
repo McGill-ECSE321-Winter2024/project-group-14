@@ -53,13 +53,22 @@ export default {
 
 	methods: {
 		// Function to login the user
-		login: function (email, username, password) {
+		login: function (email, password) {
 			console.log(decodeURIComponent(email));
-			AXIOS.get('/login', {
-				params: {
+			var params;
+			if (email.includes("@")) {
+				params = {
 					email: email,
-					password: password,
+					password: password
 				}
+			} else {
+				params = {
+					username: email,
+					password: password
+				}
+			}
+			AXIOS.get('/login', {
+				params: params
 			})
 				.then(response => {
 					if (response.status === 200) {
