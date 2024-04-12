@@ -66,7 +66,7 @@ public class LoginController {
 			throw new IllegalArgumentException("There is no such Customer!");
 		}
 		CustomerDTO customerDto = new CustomerDTO(customer.getId(), customer.getUsername(), customer.getEmail(),
-				customer.getPassword());
+				customer.getPassword(), "Customer");
 		return customerDto;
 	}
 
@@ -75,14 +75,14 @@ public class LoginController {
 			throw new IllegalArgumentException("There is no such Instrutor!");
 		}
 		InstructorDTO InstructorDTO = new InstructorDTO(instrutor.getId(), instrutor.getUsername(),
-				instrutor.getEmail(), instrutor.getPassword());
+				instrutor.getEmail(), instrutor.getPassword(), "Instructor");
 		return InstructorDTO;
 	}
 
 	public static OwnerDTO convertToOwnerDTO(Owner owner) {
 		if (owner == null)
 			return null;
-		return new OwnerDTO(owner.getId(), owner.getUsername(), owner.getEmail(), owner.getPassword());
+		return new OwnerDTO(owner.getId(), owner.getUsername(), owner.getEmail(), owner.getPassword(), "Owner");
 	}
 
 }

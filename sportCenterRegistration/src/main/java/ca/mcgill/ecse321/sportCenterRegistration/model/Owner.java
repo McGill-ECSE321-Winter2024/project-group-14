@@ -15,12 +15,11 @@ public class Owner extends Staff {
   // ------------------------
 
   @SuppressWarnings("unused")
-  private Owner() {}
+  private Owner() {
+  }
 
   public Owner(String aUsername, String aEmail, String aPassword) {
-    super(aUsername, "admin@gmail.com", "admin123");
-    // this.email = "admin@sportcenter.com";
-    // this.password = "12345678999";
+    super(aUsername, aEmail, aPassword);
   }
 
   public String toString() {

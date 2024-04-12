@@ -4,6 +4,8 @@ import Home from '@/components/Home'
 import ManageInstructor from '@/components/ManageInstructor'
 import ManageCustomer from '@/components/ManageCustomer'
 import OwnerApp from '@/components/OwnerApp'
+import LoginPage from '@/components/LoginPage'
+import SignupPage from '@/components/SignupPage'
 
 Vue.use(Router)
 
@@ -18,6 +20,16 @@ export default new Router({
         { path: 'manageInstructor', name: 'ManageInstructor', component: ManageInstructor },
         { path: 'manageCustomer', name: 'ManageCustomer', component: ManageCustomer },
       ]
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginPage
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: SignupPage
     }
   ]
 })
