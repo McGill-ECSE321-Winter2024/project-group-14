@@ -39,7 +39,8 @@ public class RegistrationRestController {
         if (registration == null) {
             throw new IllegalArgumentException("There is no such Registration!");
         }
-        RegistrationDTO RegistrationDTO = new RegistrationDTO(registration.getDate(), registration.getAccount(),
+        RegistrationDTO RegistrationDTO = new RegistrationDTO(registration.getId(), registration.getDate(),
+                registration.getAccount(),
                 registration.getSession());
         return RegistrationDTO;
     }
@@ -154,6 +155,16 @@ public class RegistrationRestController {
         }
     }
 
+    @DeleteMapping(value = { "/registration/{id}", "/registration/{id}/" })
+    public ResponseEntity<?> deleteRegistration(@PathVariable("id") String id) throws IllegalArgumentException {
+        try {
+            Registration deleted = registrationService.deleteById(Integer.parseInt(id));
+            return ResponseEntity.ok(deleted);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     /*
      * 
      * @author Muhammad Hammad
@@ -164,7 +175,6 @@ public class RegistrationRestController {
      * 
      * 
      */
-
     @DeleteMapping(value = { "/registration", "/registration/" })
     public ResponseEntity<?> deleteRegistration(
             @RequestParam(name = "accountName", required = true) String accountName,
