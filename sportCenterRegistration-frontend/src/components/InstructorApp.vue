@@ -1,6 +1,7 @@
 <template>
     <div>
       <el-container>
+      
         <el-aside :width="asideWidth" style="min-height:100vh; background-color: #001529">
           <div style="height:60px; color:white; display:flex; align-items:center; justify-content:center">
             <img class="logo" :src="require('@/assets/logo.png')" alt="logoIcon"/>
@@ -56,9 +57,18 @@
   
           <el-main>
             <router-view/>
-
+           <div class="action-buttons">
+            <el-button type="primary">
+              <router-link to="/instructorApp/addClasses">Add Classes</router-link>
+            </el-button>
+            <el-button type="success">
+              <router-link to="/instructorApp/approveClasses">Approve Classes</router-link>
+            </el-button>
+          </div>
 
           </el-main>
+
+
   
         </el-container>
   
@@ -160,4 +170,11 @@
     display: flex;
     align-items: center;
   }
+  .action-buttons{
+    padding-top: 10px;
+    padding-left: 10px;
+    color: black;
+  }
+
+
   </style>
