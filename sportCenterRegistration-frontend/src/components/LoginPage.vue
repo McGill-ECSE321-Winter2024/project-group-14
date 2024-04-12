@@ -24,11 +24,14 @@
           </h5>
         </div>
         <!-- Make "Log in" button  -->
-        <router-link to="/ownerapp/ManageInstructor">
+        <!-- <router-link to="/ownerapp/ManageInstructor">
           <div class="button-primary" v-bind:disabled="(!email && !username) || !password" @click="login(email, username, password)">
             Log in
           </div>
-        </router-link>
+        </router-link> -->
+        <div class="button-primary" v-bind:disabled="(!email && !username) || !password" @click="login(email, username, password)">
+            Log in
+        </div>
         <!-- Make "Sign Up" button  -->
         <!-- <div class="button-primary" onclick="">
           <a href="/#/SignUp" class="signup-button" id="signup">Sign up</a>

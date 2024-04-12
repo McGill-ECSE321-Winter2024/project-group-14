@@ -57,7 +57,7 @@ export default {
 			console.log(decodeURIComponent(email));
 			AXIOS.get('/login', {
 				params: {
-					email: decodeURIComponent(email),
+					email: email,
 					password: password,
 				}
 			})
@@ -65,22 +65,24 @@ export default {
 					if (response.status === 200) {
 						this.user = response.data
 						// Get the user type to determine the corresponding page it should be sent to.
-						this.type = this.user.userType
 						console.log(this.user)
 
 						// Store the customer information
+						localStorage.setItem('username', this.user.username)
 						localStorage.setItem('email', this.user.email)
-						localStorage.setItem('type', this.type)
+						localStorage.setItem('type', this.user.type)
 
-						if (this.type.localeCompare("customer") == 0) {
+						console.log(localStorage.getItem('type'))
 
-							window.location.href = "/#/customermenu"
+						if (this.user.type.localeCompare("Customer") == 0) {
+
+							window.location.href = "/#/customerapp"
 						}
-						else if (this.type.localeCompare("employee") == 0) {
-							window.location.href = "/#/employeemenu"
+						else if (this.user.type.localeCompare("Instructor") == 0) {
+							window.location.href = "/#/instructorApp"
 						}
 						else {
-							window.location.href = "/#/ownermenu"
+							window.location.href = "/#/ownerapp"
 						}
 						// Send the customer to the next page
 						location.reload();
