@@ -118,20 +118,42 @@ public class SessionController {
 		}
 	}
 
-	@PutMapping(value = { "/update_session", "/update_session/" })
-	public ResponseEntity<?> updateSession(@RequestParam("SessionId") String Id,
+	@PutMapping(value = { "/update_session/{sessionId}", "/update_session/{sessionId}/" })
+	public ResponseEntity<?> updateSession(@PathVariable("sessionId") String Id,
 			@RequestParam(value = "startTime", required = false) String startTime,
 			@RequestParam(value = "endTime", required = false) String endTime,
 			@RequestParam(value = "location", required = false) String location,
 			@RequestParam(value = "date", required = false) String date,
 			@RequestParam(value = "instructorName", required = false) String instructorName) {
 
-		Session session = null;
+		Session session = SessionService.getSession(Integer.parseInt(Id)).get(0);
+
+		if (startTime != null) {
+			startTime = startTime + ":00";
+		} else {
+			startTime = session.getStartTime().toString();
+		}
+		if (endTime != null) {
+			endTime = endTime + ":00";
+		} else {
+			endTime = session.getEndTime().toString();
+		}
+
+		if (location == null) {
+			location = session.getLocation();
+		}
+
+		if (date == null) {
+			date = session.getDate().toString();
+		}
+
+		if (instructorName == null) {
+			instructorName = session.getInstructor().getUsername();
+		}
 
 		try {
 			session = SessionService.updateSession(Integer.parseInt(Id), Time.valueOf(startTime), Time.valueOf(endTime),
-					location, Date.valueOf(date), instructorName,
-					SessionService.getSession(Integer.parseInt(Id)).get(0).getSportClass());
+					location, Date.valueOf(date), instructorName, session.getSportClass());
 			return ResponseEntity.ok(convertToDTO(session));
 		} catch (IllegalArgumentException exception) {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

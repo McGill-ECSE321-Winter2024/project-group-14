@@ -78,7 +78,6 @@ public class SessionService {
         if (session == null) {
             throw new IllegalArgumentException("No Session found");
         }
-        System.out.println("ok");
 
         // check if all the inputs are vaild
         String error = "";
@@ -103,7 +102,6 @@ public class SessionService {
         if (sportClass == null) {
             throw new IllegalArgumentException("Session sport class cannot be empty!");
         }
-
         // update session
         session.setDate(date);
         session.setStartTime(startTime);
