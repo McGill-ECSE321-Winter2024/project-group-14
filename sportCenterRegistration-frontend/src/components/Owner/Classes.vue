@@ -167,12 +167,15 @@
             // Make the POST request with the correct URL
             AXIOS.post(`/sport-class/${name}`)
             .then((response) => {
-                this.tableData.push(response.data);
-                
-                this.userFormVisible = false;
-                
-                this.form = {};
-                this.showAll();
+                if (response.status === 200){
+                    AXIOS.put(`/sport-class/approve/${name}`).then(() => {
+                        this.tableData.push(response.data);
+                    this.userFormVisible = false;
+                    
+                    this.form = {};
+                    this.showAll();
+                    })
+                }
             })
             .catch((error) => {
                 this.error = error.response.data; 
