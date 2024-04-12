@@ -10,6 +10,9 @@ import OwnerApp from '@/components/OwnerApp'
 import ReviewClasses from '@/components/Customer/ReviewClasses'
 import AddClasses from '@/components/Customer/AddClasses'
 import CustomerApp from '@/components/CustomerApp'
+import ApproveClass from '@/components/ApproveClass'
+import NewClassTable from '@/components/NewClassTable'
+
 
 Vue.use(Router)
 
@@ -45,7 +48,19 @@ export default new Router({
         { path: 'addClass', name: 'AddClasses', component: NewClassTable },
         { path: 'reviewClasses', name: 'ReviewClasses', component: ReviewClasses },
       ]
+    },
+    {
+      path: '/approveClass',
+      name: 'ApproveClass',
+      component: ApproveClass,
+    },
+
+    {
+      path: '/newClass',
+      name: 'NewClass',
+      component: NewClassTable,
     }
+
 
 
 
