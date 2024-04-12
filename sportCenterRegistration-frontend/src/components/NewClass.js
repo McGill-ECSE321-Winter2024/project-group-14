@@ -36,12 +36,15 @@ export default {
     },
     methods: {
         sameInput: function () {
+
+
             if (this.SportClassName1 == this.SportClassName2) {
                 this.createSportClass(this.SportClassName1);
             }
             else {
                 this.errorSportClass = "Sport Class Names do not Match";
             }
+
         },
         createSportClass: function (SportClassName) {
 
@@ -55,9 +58,11 @@ export default {
                 })
 
                 .catch(e => {
+
                     const errorMsg = e.response.data.message
                     console.log(errorMsg)
                     this.errorSportClass = errorMsg
+
                 })
         }
     }

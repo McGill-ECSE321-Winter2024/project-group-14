@@ -18,6 +18,7 @@ export default {
     data() {
         return {
             SportClasses: [],
+            SportClassNames: [],
             SportClassName1: '',
             SportClassName2: '',
             errorSportClass: '',
@@ -36,12 +37,18 @@ export default {
     },
     methods: {
         sameInput: function () {
-            if (this.SportClassName1 == this.SportClassName2) {
+            if (this.SportClassName1 != this.SportClassName2) {
+                this.errorSportClass = "Sport Class names do not match";
+            }
+
+            else if (this.SportClassNames.includes(this.SportClassName1)) {
+                this.errorSportClass = "A Sport Class with this name already exists";
+            }
+
+            else if (this.SportClassName1 == this.SportClassName2 && this.errorSportClass == '') {
                 this.createSportClass(this.SportClassName1);
             }
-            else {
-                this.errorSportClass = "Sport Class Names do not Match";
-            }
+
         },
         createSportClass: function (SportClassName) {
 
@@ -52,6 +59,7 @@ export default {
                     this.errorSportClass = ''
                     this.SportClassName1 = ''
                     this.SportClassName2 = ''
+                    this.SportClassNames.push(this.SportClassName1)
                 })
 
                 .catch(e => {
