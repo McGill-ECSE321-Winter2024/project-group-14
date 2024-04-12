@@ -9,6 +9,10 @@ import AddClasses from '@/components/Customer/AddClasses'
 import ReviewClasses from '@/components/Customer/ReviewClasses'
 import LoginPage from '@/components/LoginPage'
 import SignupPage from '@/components/SignupPage'
+import InstructorApp from '@/components/InstructorApp'
+import AddNewClass from '@/components/AddNewClass'
+
+
 
 Vue.use(Router)
 
@@ -43,6 +47,15 @@ export default new Router({
       path: '/signup',
       name: 'Signup',
       component: SignupPage
+    },
+    {
+      path: '/addClass',
+      name: 'addNewClass',
+      component: AddNewClass
     }
+
+
+
+
   ]
 })
