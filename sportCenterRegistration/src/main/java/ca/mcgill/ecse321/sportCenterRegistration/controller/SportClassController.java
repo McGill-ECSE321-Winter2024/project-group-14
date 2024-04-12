@@ -53,6 +53,6 @@ public class SportClassController {
     }
 
     private SportClassDTO convertToDto(SportClass s) throws IllegalArgumentException {
-        return new SportClassDTO(s.getName(), s.getApproved());
+        return new SportClassDTO(s.getId(), s.getName(), s.getApproved());
     }
 }
