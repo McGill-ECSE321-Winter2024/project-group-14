@@ -98,6 +98,6 @@ The project report for this deliverable can be found [here](https://github.com/M
 | Huang Stephen |  |  |
 | Luo Loridy |  |  |
 
-## Sprint 2 Project report
+## Sprint 3 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-3)
 
