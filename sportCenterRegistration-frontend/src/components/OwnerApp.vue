@@ -8,8 +8,8 @@
           </div>
   
   
-          <el-menu router :collapse="isCollapse":collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
-            <el-menu-item index="/1">
+          <el-menu router :collapse="isCollapse" :collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
+            <el-menu-item index="/OwnerApp/Home">
                 <i class="el-icon-house"></i>
                 <span slot ="title">Home</span>
             </el-menu-item>
@@ -46,23 +46,31 @@
                 <span slot="title">Registrations</span>
               </el-menu-item>       
   
+              <el-menu-item index="/5">
+                <i class="el-icon-setting"></i>
+                <span slot="title">Settings</span>
+              </el-menu-item>       
+
+              <el-menu-item style="margin-top: 330px;" @click="logout">
+                <i class="el-icon-switch-button"></i>
+                <span slot="title">Log out</span>
+              </el-menu-item>   
+  
           </el-menu>
+
+          <!-- <div style="height:60px; color:white; display:flex; align-items:center; justify-content:center">
+            <img class="logo" :src="require('@/assets/logo.png')" alt="logoIcon"/>
+            <span style="margin-left: 4px; font-size:18px" v-show="!isCollapse">SPCR</span>
+          </div> -->
         </el-aside>
   
         <el-container>
           <el-header>
             <i :class="collapseIcon" style="font-size:25px ;" @click="handleCollapse"></i>
-            <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-left:20px">
-              Welcome back, {{ username }}
-              <!-- <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item> -->
-              <!-- <el-breadcrumb-item :to="{ path: '/ManageInstructor' }">Instructor Management</el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item> -->
-            </el-breadcrumb>
           </el-header>
   
           <el-main>
             <router-view/>
-
 
           </el-main>
   
@@ -96,11 +104,10 @@
     data(){
       return{
         isCollapse: false,
-        asideWidth: '200px',
+        asideWidth: '250px',
         collapseIcon: 'el-icon-s-fold',
         classes:[],
-        errorClass:"",
-        username: localStorage.getItem('username').toUpperCase()
+        errorClass:""
       }
     },
     created: function(){
@@ -109,8 +116,27 @@
     methods:{
       handleCollapse(){
         this.isCollapse = !this.isCollapse
-        this.asideWidth = this.isCollapse ? '64px': '200px'
+        this.asideWidth = this.isCollapse ? '65px': '250px'
         this.collapseIcon = this.isCollapse ? 'el-icon-s-unfold': 'el-icon-s-fold'
+      },
+      logout(){
+        this.$confirm('Are you sure you want to log out?', 'Log out', {
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Log out successfully!'
+          });
+          localStorage.clear();
+          this.$router.push('/');
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Log out canceled'
+          });
+        });
       }
     }
   }

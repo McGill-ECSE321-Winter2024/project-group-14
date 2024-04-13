@@ -230,7 +230,7 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 1254px;
+  right: 20px;
   top: 63px;
 }
 .sign-up {
@@ -260,7 +260,7 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 1128px;
+  right: 200px;
   top: 63px;
 }
 .log-in {
