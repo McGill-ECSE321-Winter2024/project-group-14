@@ -52,7 +52,7 @@
   }
 
   #NewClassTable input {
-    border=color : white;
+    border-color : white;
     border-radius: 5px;
     width: 100%;
   }

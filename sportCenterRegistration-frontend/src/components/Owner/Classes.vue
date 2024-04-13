@@ -164,7 +164,6 @@
             // Extract the name from the form data
             const name = this.form.name;
 
-            // Make the POST request with the correct URL
             AXIOS.post(`/sport-class/${name}`)
             .then((response) => {
                 if (response.status === 200){
