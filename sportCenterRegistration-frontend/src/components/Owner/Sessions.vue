@@ -3,6 +3,7 @@
         <div> 
             <el-input v-model="sportclass" style="width:200px" placeholder="Input a sport class" ></el-input>
             <el-button type="primary" round @click="findByName"> Search </el-button>
+            
         </div>
         <div style="margin:10 px 0; margin-top:10px; margin-bottom:10px">
             <el-button type="success" plain  round @click="add">Add</el-button>
@@ -38,11 +39,11 @@
         <el-dialog title="Create New Session" :visible.sync="userFormVisible" width="30%" align="center">
             <el-form :model="form" label-width="100px" style="padding-right: 50px" :rules="rules" ref="ref">
                 <el-form-item label="Start Time:" prop="startTime">
-                    <el-input v-model="form.startTime" placeholder="endTime"></el-input>
+                    <el-input v-model="form.startTime" placeholder="StartTime xx:xx"></el-input>
                 </el-form-item>
 
                 <el-form-item label="End Time:" prop="endTime">
-                    <el-input v-model="form.endTime" placeholder="StartTime"></el-input>
+                    <el-input v-model="form.endTime" placeholder="endTime xx:xx"></el-input>
                 </el-form-item>
 
                 <el-form-item label="Location:" prop="location">
@@ -146,7 +147,6 @@
                 sportClassName: ''
             },
             editForm: {
-                id: '',
                 startTime: '', // Initialize with default values if needed
                 endTime: '',
                 location: '',
@@ -240,7 +240,6 @@
 
         update(){
             const sessionData = {
-                sessionId: this.editForm.id,
                 startTime: this.editForm.startTime,
                 endTime: this.editForm.endTime,
                 location: this.editForm.location,
@@ -248,7 +247,7 @@
                 instructorName: this.editForm.instructorName
             };
 
-            AXIOS.put('/update_session/${sessionId}', null, {
+            AXIOS.put(`/update_session/${this.id}`, null, {
                 params: sessionData
             })
             .then((response) => {
@@ -276,8 +275,8 @@
 
         edit(row) {
             this.editForm = Object.assign({}, row); 
+            this.id = row.id;
             this.$set(this.editForm, 'instructorName', row.instructor.username); 
-            this.$set(this.editForm, 'instructorName', row.instructor.username);
             this.$set(this.editForm, 'sportClassName', row.sportClass.name);
             this.editFormVisible = true;
         },

@@ -128,14 +128,10 @@ public class SessionController {
 
 		Session session = SessionService.getSession(Integer.parseInt(Id)).get(0);
 
-		if (startTime != null) {
-			startTime = startTime + ":00";
-		} else {
+		if (startTime == null) {
 			startTime = session.getStartTime().toString();
 		}
-		if (endTime != null) {
-			endTime = endTime + ":00";
-		} else {
+		if (endTime == null) {
 			endTime = session.getEndTime().toString();
 		}
 

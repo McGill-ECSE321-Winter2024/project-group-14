@@ -34,7 +34,7 @@
         <el-dialog title="Create New Sport Class" :visible.sync="userFormVisible" width="30%" align="center">
             <el-form :model="form" label-width="100px" style="padding-right: 50px" :rules="rules" ref="ref">
                 <el-form-item label="Name:" prop="name">
-                    <el-input v-model="form.startTime" placeholder="Name"></el-input>
+                    <el-input v-model="form.name" placeholder="Name"></el-input>
                 </el-form-item>
             </el-form>
 
@@ -47,7 +47,7 @@
         <el-dialog title="Update New Sport Class" :visible.sync="editFormVisible" width="30%" align="center">
             <el-form :model="editForm" label-width="100px" style="padding-right: 50px" :rules="rules" ref="ref">
                 <el-form-item label="Name:" prop="name">
-                    <el-input v-model="editForm.startTime" placeholder="Name"></el-input>
+                    <el-input v-model="form.toApprove" placeholder="Name"></el-input>
                 </el-form-item>
 
             </el-form>
@@ -164,14 +164,17 @@
             // Extract the name from the form data
             const name = this.form.name;
 
-            // Make the POST request with the correct URL
             AXIOS.post(`/sport-class/${name}`)
             .then((response) => {
-                this.tableData.push(response.data);
-                
-                this.userFormVisible = false;
-                
-                this.form = {};
+                if (response.status === 200){
+                    AXIOS.put(`/sport-class/approve/${name}`).then(() => {
+                        this.tableData.push(response.data);
+                    this.userFormVisible = false;
+                    
+                    this.form = {};
+                    this.showAll();
+                    })
+                }
             })
             .catch((error) => {
                 this.error = error.response.data; 
@@ -180,29 +183,17 @@
         },
 
         update(){
-            const sessionData = {
-                sessionId: this.editForm.id,
-                startTime: this.editForm.startTime,
-                endTime: this.editForm.endTime,
-                location: this.editForm.location,
-                date: new Date(this.editForm.date).toISOString().split('T')[0], 
-                instructorName: this.editForm.instructorName
-            };
+            // Extract the name from the form data
+            const name = this.editForm.name;
 
-            AXIOS.put('/update_session/${sessionId}', null, {
-                params: sessionData
-            })
+            // Make the PUT request with the correct URL
+            AXIOS.put(`/sport-class/approve/${this.form.toApprove}`)
             .then((response) => {
-                
-                const updatedSession = response.data;
-                const index = this.tableData.findIndex(session => session.id === updatedSession.id);
-                if (index !== -1) {
-                    this.$set(this.tableData, index, updatedSession);
+                if (response.status === 200){
+                    this.editFormVisible = false;
+                    this.editForm = {};
+                    this.showAll();
                 }
-                
-                this.editFormVisible = false;
-                
-                this.editForm = {};
             })
             .catch((error) => {
                 this.error = error.response.data; 
@@ -217,6 +208,8 @@
 
         edit(row) {
             this.editForm = Object.assign({}, row); 
+            this.form.toApprove = row.name;
+            console.log(this.editForm);
             this.$set(this.editForm, 'name', row.name); 
             this.editFormVisible = true;
         },
@@ -257,7 +250,7 @@
         this.selectedRows.forEach(row => {
             deletePromises.push(
                 new Promise((resolve, reject) => {
-                    AXIOS.delete(`/delete_session?Id=${row.id}`)
+                    AXIOS.delete(`/sport-class/${row.name}`)
                         .then(() => {
                             resolve();
                         })

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
         <div class="home-page">
           <!-- Footer -->
@@ -387,4 +387,4 @@
   right:70px;
   font-size: 2vw;
 }
-</style>
+</style> -->

@@ -17,6 +17,7 @@ import java.util.List;
 public class RegistrationDTO {
     // we don't know if the registration will be by a customer, owner, or
     // instructor.
+    private int id;
     private AccountDTO registeringAccount;
 
     private Date registrationDate;
@@ -41,13 +42,18 @@ public class RegistrationDTO {
 
     }
 
-    public RegistrationDTO(Date date, Account account, Session session) {
+    public RegistrationDTO(int id, Date date, Account account, Session session) {
+        this.id = id;
         this.setAccount(account);
 
         // clone the date so that the user can't alter the original date object
         this.registrationDate = (Date) date.clone();
 
         this.setSession(session);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public AccountDTO getAccount() {
