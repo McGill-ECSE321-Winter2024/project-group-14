@@ -22,11 +22,11 @@
                 <el-menu-item-group>
                   <el-menu-item index="/CustomerApp/AddClasses">
                     <!-- <i class="el-icon-s-custom"></i> -->
-                    <span>Add and Drop Classes</span>
+                    <span>View Sessions</span>
                   </el-menu-item>
                   <el-menu-item index="/CustomerApp/ReviewClasses">
                     <!-- <i class="el-icon-user-solid"></i> -->
-                    <span>Review Classes</span>
+                    <span>Review Registrations</span>
                   </el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
@@ -41,6 +41,10 @@
                 <span slot="title">Settings</span>
               </el-menu-item>       
   
+              <el-menu-item style="margin-top: 330px;" @click="logout">
+                <i class="el-icon-switch-button"></i>
+                <span slot="title">Log out</span>
+              </el-menu-item>  
           </el-menu>
         </el-aside>
   
@@ -48,9 +52,10 @@
           <el-header>
             <i :class="collapseIcon" style="font-size:25px ;" @click="handleCollapse"></i>
             <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-left:20px">
-              <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
+              Welcome back, {{ username }}
+              <!-- <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
               <el-breadcrumb-item :to="{ path: '/ManageInstructor' }">Instructor Management</el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/ManageCustomer' }">Customer Management</el-breadcrumb-item> -->
             </el-breadcrumb>
           </el-header>
   
@@ -93,7 +98,8 @@
         asideWidth: '200px',
         collapseIcon: 'el-icon-s-fold',
         classes:[],
-        errorClass:""
+        errorClass:"",
+        username: localStorage.getItem('username').toUpperCase()
       }
     },
     created: function(){
@@ -104,6 +110,25 @@
         this.isCollapse = !this.isCollapse
         this.asideWidth = this.isCollapse ? '64px': '200px'
         this.collapseIcon = this.isCollapse ? 'el-icon-s-unfold': 'el-icon-s-fold'
+      },
+      logout(){
+        this.$confirm('Are you sure you want to log out?', 'Log out', {
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Log out successfully!'
+          });
+          localStorage.clear();
+          this.$router.push('/');
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Log out canceled'
+          });
+        });
       }
     }
   }

@@ -138,7 +138,7 @@ h5,
   /* width: 502px; */
   /* height: 800px; */
   position: absolute;
-  left: 493px;
+  left: 34%;
   top: 292px;
 }
 .username {
@@ -324,7 +324,7 @@ h5,
   font-size: 48px;
   font-weight: 700;
   position: absolute;
-  left: 600px;
+  left: 42%;
   top: 193px;
   width: 392px;
   height: 66px;
@@ -334,8 +334,8 @@ h5,
   height: 64px; /* adjust as needed */
   background-color: #da73eb;
   border-radius: 10px;
-  position: relative; /* changed from absolute to relative */
-  left: 1210px;
+  position: absolute; /* changed from absolute to relative */
+  right: 5%;
   top: 56px;
 }
 

@@ -35,6 +35,11 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">Settings</span>
               </el-menu-item>       
+
+              <el-menu-item style="margin-top: 330px;" @click="logout">
+                <i class="el-icon-switch-button"></i>
+                <span slot="title">Log out</span>
+              </el-menu-item>  
   
           </el-menu>
         </el-aside>
@@ -110,6 +115,25 @@
         this.isCollapse = !this.isCollapse
         this.asideWidth = this.isCollapse ? '64px': '200px'
         this.collapseIcon = this.isCollapse ? 'el-icon-s-unfold': 'el-icon-s-fold'
+      },
+      logout(){
+        this.$confirm('Are you sure you want to log out?', 'Log out', {
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Log out successfully!'
+          });
+          localStorage.clear();
+          this.$router.push('/');
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Log out canceled'
+          });
+        });
       }
     }
   }
