@@ -50,12 +50,12 @@ To run the tests locally, follow these steps:
 
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
 | -- | -- | --  | -- | -- |
-| Hammad Muhammad | 35 | 60| --  | -- |
-| Motta Vivek | 35 | 30 | -- | -- |
-| Marji David | 30 | 60 | -- | -- |
-| Yue Ming Xuan | 35 | 60 | -- | -- |
-| Huang Stephen | 40 | 60 | -- | -- |
-| Luo Loridy | 40 | 70 | -- | -- |
+| Hammad Muhammad | 35 | 60| 70  | 165 |
+| Motta Vivek | 40 | 30 | 40 | 110 |
+| Marji David | 30 | 60 | 65 | 155 |
+| Yue Ming Xuan | 35 | 60 | 75 | 170 |
+| Huang Stephen | 40 | 60 | 80 | 180 |
+| Luo Loridy | 40 | 70 | 75 | 185 |
 
 # Deliverable 1
 ## Sprint 1 effort table
@@ -63,7 +63,7 @@ To run the tests locally, follow these steps:
 | Team Member | Contributions  | Effort (Hours) |
 | -- | -- | -- | 
 | Hammad Muhammad | Functional Requirements, Non-Functional Requirements, Use Case Specifications, Persistence Layer Testing, Domain Model | 35 |
-| Motta Vivek | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Use Case Specifications | 35 |
+| Motta Vivek | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Use Case Specifications | 40 |
 | Marji David | Functional Requirements, Non-Functional Requirements, Project Report, Domain Model, Meeting Minutes, Use Case Specifications | 30 | 
 | Yue Ming Xuan | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications | 35 | 
 | Huang Stephen | Functional Requirements, Non-Functional Requirements, Domain Model, Use Case Specifications, Use Case Diagrams | 40 |
@@ -91,12 +91,12 @@ The project report for this deliverable can be found [here](https://github.com/M
 ## Sprint 3 effort table
 | Team Member | Contributions  | Effort (Hours) |
 | -- | -- | -- | 
-| Hammad Muhammad | |  |
-| Motta Vivek |  |  |
-| Marji David |  |  | 
-| Yue Ming Xuan | |  | 
-| Huang Stephen |  |  |
-| Luo Loridy |  |  |
+| Hammad Muhammad | Wrote create, delete and edit sport class | 70 |
+| Motta Vivek | Worked on presentation and did the sprint report | 40 |
+| Marji David | Worked on presentation and wrote create registration and sessions | 65 | 
+| Yue Ming Xuan | Wrote manage instructor and customers, created the sidebar, wrote home page for the owner | 75 | 
+| Huang Stephen | Created the Figma UI, wrote login and signup,  wrote home page for instructor and owner  | 80 |
+| Luo Loridy | Fixed the backend, wrote login and signup, wrote home page for owner, customer and instructor  | 75 |
 
 ## Sprint 3 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-3)
