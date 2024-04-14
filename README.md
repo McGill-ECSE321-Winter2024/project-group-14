@@ -94,9 +94,9 @@ The project report for this deliverable can be found [here](https://github.com/M
 | Hammad Muhammad | Wrote create, delete and edit sport class | 70 |
 | Motta Vivek | Worked on presentation and did the sprint report | 40 |
 | Marji David | Worked on presentation and wrote create registration and sessions | 65 | 
-| Yue Ming Xuan | Wrote manage instructor and customers, created the sidebar, wrote home page for the owner | 75 | 
+| Yue Ming Xuan | Wrote homepage for all accounts(sidebars) and all features for OwnerApp (user management, approve new classes, sessions and registration) | 80 | 
 | Huang Stephen | Created the Figma UI, wrote login and signup,  wrote home page for instructor and owner  | 80 |
-| Luo Loridy | Fixed the backend, wrote login and signup, wrote home page for owner, customer and instructor  | 75 |
+| Luo Loridy | Fixed the backend, wrote login and signup, wrote home page for owner, customer and instructor, Logout  | 80 |
 
 ## Sprint 3 Project report
 The project report for this deliverable can be found [here](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki/Sprint-Report-3)
