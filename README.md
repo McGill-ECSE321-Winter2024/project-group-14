@@ -43,6 +43,10 @@ To run the tests locally, follow these steps:
 - Open the `application.properties` file located at `sportCenterRegistration/src/main/resources/` and change the value of `spring.datasource.password` to your own database password.
 - Open a terminal in the `sportCenterRegistration/` directory and run `./gradlew test`
 
+## Running the frontend
+Our frontend was developed using Vue.js and was deployed to the port: 8087 with the host: 127.0.0.1. Our backend was developed according to what was outlined previously in deliverable 2 and was deployed to the port: 8080 with the host: 127.0.0.1. To the run backend please use the command “./gradlew bootrun” in the terminal.
+
+To run our frontend, please ensure you have node.js and npm installed (https://nodejs.org/en/learn/getting-started/how-to-install-nodejs). Open the project folder and navigate to “project-group-14\sportCenterRegistration-frontend. Enter in the following command “npm install” into the terminal. Please also ensure that you have Axios added as a dependency, (you can add it as a dependency by inputting the following command in the terminal “npm install --save axios@1.5”). To run the frontend please ensure that you have ran the backend and then enter in the command “npm run dev” into the terminal. The webpage for the frontend should appear at http://127.0.0.1:8087/#/ .
 
 
 
