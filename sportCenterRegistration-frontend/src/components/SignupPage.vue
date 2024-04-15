@@ -138,7 +138,7 @@ h5,
   /* width: 502px; */
   /* height: 800px; */
   position: absolute;
-  left: 34%;
+  left:30%;
   top: 292px;
 }
 .username {
@@ -324,7 +324,7 @@ h5,
   font-size: 48px;
   font-weight: 700;
   position: absolute;
-  left: 42%;
+  left: 40%;
   top: 193px;
   width: 392px;
   height: 66px;

@@ -4,12 +4,12 @@
       <div class="login">
         <!-- Enter you email here  -->
         <div class="email">
-          <input type="text" class="text-field" v-model="email" placeholder="" />
+          <input type="text" class="text-field" v-model="email" placeholder="Type 'admin' to access OwnerApp or 'instructor' for InstructorApp" style="font-size: 11px;"/>
           <div class="email2">Email or Username</div>
         </div>
         <!-- Enter you password here  -->
         <div class="password">
-          <input type="password" class="text-field2" v-model="password" placeholder="" />
+          <input type="password" class="text-field2" v-model="password" placeholder="Random password if 'admin' or 'instructor' " style="font-size: 12px;"/>
           <div class="password2">Password</div>
         </div>
         <!-- Error login -->
@@ -102,7 +102,7 @@ h5,
   align-items: center;
   justify-content: flex-start;
   position: absolute;
-  left: 34%;
+  left: 30%;
   top: 292px;
 }
 .email {
@@ -207,7 +207,7 @@ h5,
   font-size: 48px;
   font-weight: 700;
   position: absolute;
-  left: 38%;
+  left: 35%;
   top: 193px;
   width: 392px;
   height: 66px;
