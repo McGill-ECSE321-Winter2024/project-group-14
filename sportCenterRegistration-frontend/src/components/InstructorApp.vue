@@ -9,8 +9,8 @@
           </div>
   
   
-          <el-menu router :collapse="isCollapse":collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
-            <el-menu-item index="/1">
+          <el-menu router :collapse="isCollapse" :collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
+            <el-menu-item index="/Instructorapp/Home">
                 <i class="el-icon-house"></i>
                 <span slot ="title">Home</span>
             </el-menu-item>
@@ -31,7 +31,7 @@
               
   
   
-              <el-menu-item index="/5">
+              <el-menu-item index="/Instructorapp/Settings">
                 <i class="el-icon-setting"></i>
                 <span slot="title">Settings</span>
               </el-menu-item>       

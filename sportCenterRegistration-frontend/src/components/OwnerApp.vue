@@ -46,7 +46,7 @@
                 <span slot="title">Registrations</span>
               </el-menu-item>       
   
-              <el-menu-item index="/5">
+              <el-menu-item index="/OwnerApp/Settings">
                 <i class="el-icon-setting"></i>
                 <span slot="title">Settings</span>
               </el-menu-item>       

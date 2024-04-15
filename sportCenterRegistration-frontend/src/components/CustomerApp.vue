@@ -8,8 +8,8 @@
           </div>
   
   
-          <el-menu router :collapse="isCollapse":collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
-            <el-menu-item index="/1">
+          <el-menu router :collapse="isCollapse" :collapse-transition="false" background-color=" #001529" text-color ="rgba(255,255,255,0.65)" active-text-color="#fff" style=" border:none" :default-active="$route.path">
+            <el-menu-item index="/CustomerApp/Home">
                 <i class="el-icon-house"></i>
                 <span slot ="title">Home</span>
             </el-menu-item>
@@ -20,23 +20,18 @@
                   <span>Management</span>
               </template>
                 <el-menu-item-group>
-                  <el-menu-item index="/CustomerApp/AddClasses">
+                  <el-menu-item index="/CustomerApp/RegisterToSessions">
                     <!-- <i class="el-icon-s-custom"></i> -->
-                    <span>View Sessions</span>
+                    <span>Register to Sessions</span>
                   </el-menu-item>
-                  <el-menu-item index="/CustomerApp/ReviewClasses">
+                  <el-menu-item index="/CustomerApp/ViewRegistrations">
                     <!-- <i class="el-icon-user-solid"></i> -->
                     <span>Review Registrations</span>
                   </el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
   
-              <el-menu-item index="/4">
-                <i class="el-icon-menu"></i>
-                <span slot="title">Schedules</span>
-              </el-menu-item>
-  
-              <el-menu-item index="/5">
+              <el-menu-item index="/CustomerApp/Settings">
                 <i class="el-icon-setting"></i>
                 <span slot="title">Settings</span>
               </el-menu-item>       
