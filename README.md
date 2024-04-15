@@ -5,7 +5,41 @@
 Welcome to the Sport Center Registration Application! Our goal is to develop a web application to assist a local sports center in managing its operations effectively. This application will enable the center's owner and instructors to organize various types of classes. Additionally, customers will be able to browse available classes, register for sessions, and manage their bookings through their accounts. Stay tuned as we work to deliver a solution that simplifies the management of sports center activities for all stakeholders involved.
 
 
-### Please check our [Wiki](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki) for more details!
+Please check our [Wiki](https://github.com/McGill-ECSE321-Winter2024/project-group-14/wiki) for more details!
+
+
+## Deploying our App
+Our frontend was developed using Vue.js and was deployed to the port: 8087 with the host: 127.0.0.1. Our backend was developed according to what was outlined previously in deliverable 2 and was deployed to the port: 8080 with the host: 127.0.0.1. To the run backend please use the command “./gradlew bootrun” in the terminal.
+Before running the frontend, please ensure you have node.js and npm installed (https://nodejs.org/en/learn/getting-started/how-to-install-nodejs). 
+
+To run the app locally, follow these steps:
+1. Open the `application.properties` file located at `sportCenterRegistration/src/main/resources/` and change the value of `spring.datasource.password` to your own database password.
+2. Open a terminal at directory `sportCenterRegistration/` and run `./gradlew bootRun`
+3. Open a new terminal at directory `sportCenterRegistration-frontend/` and run `npm install` to download dependencies. Please also ensure that you have Axios added as a dependency, (you can add it as a dependency by inputting the following command in the terminal “npm install --save axios@1.5”).
+4. At current directory, run `npm run dev` and see our frontend app at [http://127.0.0.1/#/](http://127.0.0.1:8087/#/)
+
+## Features
+Our application offers distinct operating pages for Owners, Instructors, and Customers, providing a personalized experience based on your role. Upon logging in with your account credentials, you'll be seamlessly directed to the corresponding section of the app.
+### Owner Features:
+Owners have comprehensive control over the management of the platform. Key functionalities include:
+- Managing instructors and customers, including creating new instructor/customer accounts, deleting instructor/customer accounts.
+- Approving new sport classes proposed by instructors.
+- Overseeing and managing sessions.
+- Handling registrations.
+(For demonstration purposes, simply use "admin" as the username and a random password when logging in as an Owner.)
+### Instructor Features:
+Instructors enjoy a streamlined interface focused on their teaching responsibilities. Key functionalities include:
+- Viewing all available sport classes suitable for teaching.
+- Applying to create new sport classes.
+- Viewing and managing the sessions they conduct.
+(For demonstration purposes, use "instructor" as the username and a random password when logging in as an Instructor.)
+### Customer Features:
+Customers have access to essential tools for browsing and registering for sessions. Key functionalities include:
+- Browsing a list of instructors, sport classes, and sessions.
+- Registering for sessions they wish to attend.
+- Viewing a list of all registered sessions.
+(You can sign up for a customer account at the homepage)
+
 
 ## Our Team
 ### <br> Hammad Muhammad
@@ -32,6 +66,8 @@ An exchange student from the University of Hong Kong with experience in Python, 
 | Huang Stephen | Test Engineer | [stephh12](https://github.com/stephh12) |
 | Luo Loridy | Test Engineer | [loridy](https://github.com/loridy) |
 
+
+
 ## Testing
 We have implemented a comprehensive testing suite to examine the reliability of our system
 Our tests cover:
@@ -42,12 +78,6 @@ Our tests cover:
 To run the tests locally, follow these steps:
 - Open the `application.properties` file located at `sportCenterRegistration/src/main/resources/` and change the value of `spring.datasource.password` to your own database password.
 - Open a terminal in the `sportCenterRegistration/` directory and run `./gradlew test`
-
-## Running the frontend
-Our frontend was developed using Vue.js and was deployed to the port: 8087 with the host: 127.0.0.1. Our backend was developed according to what was outlined previously in deliverable 2 and was deployed to the port: 8080 with the host: 127.0.0.1. To the run backend please use the command “./gradlew bootrun” in the terminal.
-
-To run our frontend, please ensure you have node.js and npm installed (https://nodejs.org/en/learn/getting-started/how-to-install-nodejs). Open the project folder and navigate to “project-group-14\sportCenterRegistration-frontend. Enter in the following command “npm install” into the terminal. Please also ensure that you have Axios added as a dependency, (you can add it as a dependency by inputting the following command in the terminal “npm install --save axios@1.5”). To run the frontend please ensure that you have ran the backend and then enter in the command “npm run dev” into the terminal. The webpage for the frontend should appear at http://127.0.0.1:8087/#/ .
-
 
 
 ## Overview Table
