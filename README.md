@@ -54,7 +54,7 @@ To run our frontend, please ensure you have node.js and npm installed (https://n
 
 | Team Member | Sprint 1 Efforts (hours)  | Sprint 2 Efforts (hours) |Sprint 3 Efforts (hours)| Total Effort (hours) |
 | -- | -- | --  | -- | -- |
-| Hammad Muhammad | 35 | 60| 70  | 165 |
+| Hammad Muhammad | 35 | 60| 80 | 175 |
 | Motta Vivek | 40 | 30 | 40 | 110 |
 | Marji David | 30 | 60 | 65 | 155 |
 | Yue Ming Xuan | 35 | 60 | 75 | 170 |
